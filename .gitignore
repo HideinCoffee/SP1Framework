@@ -5,3 +5,8 @@ Release/
 *.suo
 *.user
 ipch/
+/.vs/SP1Framework/v16/Browse.VC.db
+/.vs/SP1Framework/v16/Browse.VC.opendb
+/.vs/Studio-Project-1-Team-17/v16/Browse.VC.db
+/.vs/ProjectSettings.json
+/.vs/slnx.sqlite

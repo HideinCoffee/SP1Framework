@@ -17,7 +17,7 @@ SGameChar   g_sChar;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 
 // Console object
-Console g_Console(80, 25, "SP1 Framework");
+Console g_Console(160, 40, "SP1 Framework");
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -318,6 +318,7 @@ void renderGame()
 {
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
+    rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you");
 }
 
 void renderMap()
@@ -442,6 +443,51 @@ void renderInputEvents()
         break;
     }
     
+}
+
+void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string str)
+{
+    COORD C;
+    std::ostringstream ss;
+    ss.str("");
+    ss << str;
+    int length = ss.str().length();
+    length = length / 2;
+    SHORT X = x;
+    SHORT Y = y;
+    for (int i = 0; i < height; i++)
+    {
+        for (int o = 0; o < width; o++)
+        {
+            if (((i == 0) || (i == height - 1)) && (o != 0) && (o != width - 1))
+            {
+                g_Console.writeToBuffer(X, Y, 32, bordercolor);
+            }
+            else if ((o != 0) && (o != width - 1) && (0 != height - 1)) // middle of the rectangle
+            {
+                g_Console.writeToBuffer(X, Y, 33, buttoncolor);
+            }
+            else if (o == 0) // left side of rectangle
+            {
+                g_Console.writeToBuffer(X, Y, 32, bordercolor);
+                g_Console.writeToBuffer(X - 1, Y, 32, bordercolor);
+            }
+            else if (o == width - 1) // right side of the rectangle
+            {
+                g_Console.writeToBuffer(X, Y, 32, bordercolor);
+                g_Console.writeToBuffer(X + 1, Y, 32, bordercolor);
+            }
+            X += 1;
+        }
+        X = x;
+        Y += 1;
+    }
+    // blitting of the string onto the rectangle
+    C.X = (x + (width / 2));
+    C.Y = (y + (height / 2));
+    C.X -= length;
+    g_Console.setConsoleFont(30, 30, L"Arial");
+    g_Console.writeToBuffer(C, ss.str(), 0x0f);
 }
 
 

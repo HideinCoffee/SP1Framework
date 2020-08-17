@@ -76,6 +76,8 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent);      // define this fun
 void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent);   // handles keyboard events for gameplay 
 void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mouse events for gameplay 
 
-void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string);
+void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
+
+void generatemap();
 
 #endif // _GAME_H

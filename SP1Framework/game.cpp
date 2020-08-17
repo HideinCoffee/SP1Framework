@@ -6,6 +6,8 @@
 #include <iostream>
 #include <iomanip>
 #include <sstream>
+#include <fstream>
+#include <string>
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -231,22 +233,22 @@ void moveCharacter()
 {    
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
-    if (g_skKeyEvent[K_UP].keyReleased && g_sChar.m_cLocation.Y > 0)
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y--;       
     }
-    if (g_skKeyEvent[K_LEFT].keyReleased && g_sChar.m_cLocation.X > 0)
+    if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X--;        
     }
-    if (g_skKeyEvent[K_DOWN].keyReleased && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.Y++;        
     }
-    if (g_skKeyEvent[K_RIGHT].keyReleased && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
     {
         //Beep(1440, 30);
         g_sChar.m_cLocation.X++;        
@@ -286,12 +288,13 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
+    
 }
 
 void clearScreen()
 {
     // Clears the buffer with this colour attribute
-    g_Console.clearBuffer(0x1F);
+    g_Console.clearBuffer(0x0F);
 }
 
 void renderToScreen()
@@ -316,27 +319,16 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
+    generatemap();
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
-    rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you");
+//rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you",false);
+   
 }
 
 void renderMap()
 {
-    // Set up sample colours, and output shadings
-    const WORD colors[] = {
-        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
-        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
-    };
-
-    COORD c;
-    for (int i = 0; i < 12; ++i)
-    {
-        c.X = 5 * i;
-        c.Y = i + 1;
-        colour(colors[i]);
-        g_Console.writeToBuffer(c, " °±²Û", colors[i]);
-    }
+    //rectangle(40, 5, 20, 20, 32, 0x00, 0xff, "well hello there", true);
 }
 
 void renderCharacter()
@@ -359,14 +351,14 @@ void renderFramerate()
     ss << 1.0 / g_dDeltaTime << "fps";
     c.X = g_Console.getConsoleSize().X - 9;
     c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str());
+ //   g_Console.writeToBuffer(c, ss.str());
 
     // displays the elapsed time
     ss.str("");
     ss << g_dElapsedTime << "secs";
     c.X = 0;
     c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str(), 0x59);
+   // g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
 
 // this is an example of how you would use the input events
@@ -396,12 +388,12 @@ void renderInputEvents()
         if (g_skKeyEvent[i].keyDown)
             ss << key << " pressed";
         else if (g_skKeyEvent[i].keyReleased)
-            ss << key << " released";
+ss << key << " released";
         else
-            ss << key << " not pressed";
+        ss << key << " not pressed";
 
         COORD c = { startPos.X, startPos.Y + i };
-        g_Console.writeToBuffer(c, ss.str(), 0x17);
+       // g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
 
     // mouse events    
@@ -431,7 +423,7 @@ void renderInputEvents()
     case DOUBLE_CLICK:
         ss.str("Double Clicked");
         g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 4, ss.str(), 0x59);
-        break;        
+        break;
     case MOUSE_WHEELED:
         if (g_mouseEvent.buttonState & 0xFF000000)
             ss.str("Mouse wheeled down");
@@ -439,13 +431,13 @@ void renderInputEvents()
             ss.str("Mouse wheeled up");
         g_Console.writeToBuffer(g_mouseEvent.mousePosition.X, g_mouseEvent.mousePosition.Y + 5, ss.str(), 0x59);
         break;
-    default:        
+    default:
         break;
     }
-    
+
 }
 
-void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string str)
+void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string str, bool fill)
 {
     COORD C;
     std::ostringstream ss;
@@ -463,7 +455,7 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
             {
                 g_Console.writeToBuffer(X, Y, 32, bordercolor);
             }
-            else if ((o != 0) && (o != width - 1) && (0 != height - 1)) // middle of the rectangle
+            else if ((o != 0) && (o != width - 1) && (0 != height - 1) && (fill != false)) // middle of the rectangle
             {
                 g_Console.writeToBuffer(X, Y, 33, buttoncolor);
             }
@@ -488,6 +480,29 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
     C.X -= length;
     g_Console.setConsoleFont(30, 30, L"Arial");
     g_Console.writeToBuffer(C, ss.str(), 0x0f);
+}
+
+
+void generatemap()
+{
+  //  int x = 10;
+   // int y = 30;
+    int row = 0;
+    int col = 0;
+    std::ifstream map;
+    std::string line;
+    map.open("map.txt");
+    if (map.is_open())
+    {
+        while (std::getline(map,line))
+        {
+            g_Console.writeToBuffer(row, col,line, 0x0f);
+            col++;
+        }
+        map.close();
+    }
+    else
+        g_Console.writeToBuffer(50, 30, "the file cant be found", 0x0f);
 }
 
 

@@ -15,6 +15,7 @@ SMouseEvent g_mouseEvent;
 
 // Game specific variables here
 SGameChar   g_sChar;
+SGameChar   g_sChar1;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 
 // Console object
@@ -38,8 +39,10 @@ void init( void )
     // sets the initial state for the game
     g_eGameState = S_SPLASHSCREEN;
 
-    g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
-    g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
+    g_sChar.m_cLocation.X = 80;
+    g_sChar.m_cLocation.Y = 20;
+    g_sChar1.m_cLocation.X = 80;
+    g_sChar1.m_cLocation.Y = 21;
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
@@ -259,8 +262,30 @@ void moveCharacter()
     {
         g_sChar.m_bActive = !g_sChar.m_bActive;        
     }
-
-   
+    if (g_skKeyEvent[K_UP].keyDown && g_sChar1.m_cLocation.Y > 0)
+    {
+        //Beep(1440, 30);
+        g_sChar1.m_cLocation.Y--;
+    }
+    if (g_skKeyEvent[K_LEFT].keyDown && g_sChar1.m_cLocation.X > 0)
+    {
+        //Beep(1440, 30);
+        g_sChar1.m_cLocation.X--;
+    }
+    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar1.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    {
+        //Beep(1440, 30);
+        g_sChar1.m_cLocation.Y++;
+    }
+    if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar1.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    {
+        //Beep(1440, 30);
+        g_sChar1.m_cLocation.X++;
+    }
+    if (g_skKeyEvent[K_SPACE].keyReleased)
+    {
+        g_sChar1.m_bActive = !g_sChar1.m_bActive;
+    }
 }
 void processUserInput()
 {
@@ -347,6 +372,12 @@ void renderCharacter()
         charColor = 0x0A;
     }
     g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+
+    if (g_sChar.m_bActive)
+    {
+        charColor = 0x0A;
+    }
+    g_Console.writeToBuffer(g_sChar1.m_cLocation, (char)1, charColor);
 }
 
 void renderFramerate()

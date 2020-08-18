@@ -23,6 +23,9 @@ public:
 	bool checkread(); 
 	// checks if the position is occupied true = occupied false = not occupied
 	bool isoccupied(Console& g_Console, int x, int y); 
+	// changes the read value to status
 	void changeread(bool status);
+
 };
+
 

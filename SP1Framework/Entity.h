@@ -5,9 +5,8 @@
 class Entity
 {
 protected:
-
+	
 	Position position;
-
 
 public:
 

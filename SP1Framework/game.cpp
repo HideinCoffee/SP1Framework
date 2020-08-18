@@ -30,7 +30,7 @@ Map map;
 // Input    : void
 // Output   : void
 //--------------------------------------------------------------
-void init( void )
+void init(void)
 {
     // Set precision for floating point output
     g_dElapsedTime = 0.0;    
@@ -40,6 +40,9 @@ void init( void )
 
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
+  
+
+
     g_sChar.m_bActive = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
@@ -231,37 +234,34 @@ void updateGame()       // gameplay logic
                         // sound can be played here too.
 }
 
-void moveCharacter()
-{    
+void moveCharacter(){    
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
-    if (g_skKeyEvent[K_UP].keyDown && g_sChar.m_cLocation.Y > 0)
+    if ((g_skKeyEvent[K_UP].keyDown) &&  (map.isoccupied(g_Console,g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y -1) == false))
     {
+        g_sChar.m_cLocation.Y--;  
         //Beep(1440, 30);
-        g_sChar.m_cLocation.Y--;       
     }
-    if (g_skKeyEvent[K_LEFT].keyDown && g_sChar.m_cLocation.X > 0)
+    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X-1 , g_sChar.m_cLocation.Y) == false))
     {
+        g_sChar.m_cLocation.X--;   
         //Beep(1440, 30);
-        g_sChar.m_cLocation.X--;        
     }
-    if (g_skKeyEvent[K_DOWN].keyDown && g_sChar.m_cLocation.Y < g_Console.getConsoleSize().Y - 1)
+    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y +1) == false))
     {
+        g_sChar.m_cLocation.Y++;  
         //Beep(1440, 30);
-        g_sChar.m_cLocation.Y++;        
     }
-    if (g_skKeyEvent[K_RIGHT].keyDown && g_sChar.m_cLocation.X < g_Console.getConsoleSize().X - 1)
+    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X+1, g_sChar.m_cLocation.Y) == false))
     {
+        g_sChar.m_cLocation.X++;   
         //Beep(1440, 30);
-        g_sChar.m_cLocation.X++;        
     }
-    if (g_skKeyEvent[K_SPACE].keyReleased)
-    {
-        g_sChar.m_bActive = !g_sChar.m_bActive;        
+    if (g_skKeyEvent[K_SPACE].keyReleased){ 
+        g_sChar.m_bActive = !g_sChar.m_bActive;
     }
-
-   
 }
+
 void processUserInput()
 {
     // quits the game if player hits the escape key

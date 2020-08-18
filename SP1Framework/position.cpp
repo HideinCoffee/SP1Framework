@@ -2,7 +2,7 @@
 
 Position::Position()
 {
-
+	//blank for now
 }
 //To randomise movement of ghost, both X and Y coordinates
 //this file is Only for randomising

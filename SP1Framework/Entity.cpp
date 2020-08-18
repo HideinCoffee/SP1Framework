@@ -3,8 +3,6 @@
 Entity::Entity() //this is a base class
 {
 	//Stuff that's needed for this is already done in other files. So this remains empty
-
-
 }
 
 Entity::~Entity()

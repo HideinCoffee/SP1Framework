@@ -6,8 +6,6 @@ private:
 	int y;
 
 public:
-
-
 	Position();
 	~Position();
 	int getX();
@@ -16,5 +14,4 @@ public:
 	void setY(int y);
 	void setPos(int x, int y);
 	Position returnPos();
-
 };

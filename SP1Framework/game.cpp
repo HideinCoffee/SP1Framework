@@ -350,7 +350,7 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame()
 {
     renderMap();        // renders the map to the buffer first
-    renderEnemies( g_Console, g_dElapsedTime);
+   // renderEnemies( g_Console, g_dElapsedTime);
     renderCharacter();  // renders the character into the buffer
 
 //rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you",false);
@@ -533,7 +533,7 @@ void renderEnemies(Console& g_Console, double g_dElapsedTime)
         M.move("string");
     }
     map.editmap(g_Console, 12, 13 , 'm');
-    map.drawmap(g_Console);
+    
 
 
     

@@ -3,6 +3,7 @@
 
 #include "Framework\timer.h"
 #include <string>
+#include "Map.h"
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -78,6 +79,5 @@ void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mous
 
 void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
 
-void generatemap();
 
 #endif // _GAME_H

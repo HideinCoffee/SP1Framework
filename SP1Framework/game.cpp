@@ -7,7 +7,6 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
-#include <string>
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -20,6 +19,9 @@ EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 
 // Console object
 Console g_Console(160, 40, "SP1 Framework");
+
+// map object
+Map map;
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -319,16 +321,21 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    generatemap();
     renderMap();        // renders the map to the buffer first
     renderCharacter();  // renders the character into the buffer
 //rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you",false);
    
 }
 
-void renderMap()
-{
-    //rectangle(40, 5, 20, 20, 32, 0x00, 0xff, "well hello there", true);
+void renderMap(){
+    if (map.checkread() == false) {
+        if (map.slotmap("map.txt", g_Console) == true) {
+            map.changeread(true);
+        }
+    }
+    if (map.checkread() == true) {
+        map.drawmap(g_Console);
+    }
 }
 
 void renderCharacter()
@@ -483,27 +490,19 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
 }
 
 
-void generatemap()
-{
-  //  int x = 10;
-   // int y = 30;
-    int row = 0;
-    int col = 0;
-    std::ifstream map;
-    std::string line;
-    map.open("map.txt");
-    if (map.is_open())
-    {
-        while (std::getline(map,line))
-        {
-            g_Console.writeToBuffer(row, col,line, 0x0f);
-            col++;
-        }
-        map.close();
-    }
-    else
-        g_Console.writeToBuffer(50, 30, "the file cant be found", 0x0f);
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

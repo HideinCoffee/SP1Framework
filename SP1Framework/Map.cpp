@@ -14,6 +14,7 @@ Map::~Map(){
 }
 
 bool Map::slotmap(std::string filename, Console &g_Console){
+	bool exception = true;
 	std::string pathway = "maps//" + filename;
 	std::ifstream map;
 	std::string line;
@@ -22,7 +23,12 @@ bool Map::slotmap(std::string filename, Console &g_Console){
 		int row = 0;
 		while (std::getline(map, line)) {
 			for (int col = 0; col < 160; col++) {
-				maparray[row][col] = line[col];
+				if (line[col] > 160)
+					continue;
+				else if (row < 40)
+					maparray[row][col] = line[col];
+				else
+					break;
 			}
 			row++;
 		}

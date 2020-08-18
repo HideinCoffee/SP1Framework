@@ -11,19 +11,18 @@ private:
 public:
 	Map();
 	~Map();
-//##!@#!#!@##!#!@# IMPORTANT for slotmap function the textfile must be precise it cannot exceed the array size OR IT WILL CRASH // remember to put a try except to stop it from crashing
-	bool slotmap(std::string filename,Console &g_Console); // sets the map array to the contents of the textfile 
 
-	
-  // draws out the map from the text file
+// depending on the file it will set the maparray to the contents of the textfile(precautions added to prevent it from crashing if it goes out of index) 
+	bool slotmap(std::string filename,Console &g_Console);
+// draws out the map from the text file
 	void drawmap(Console &g_Console);
-	// insert the position of the char to replace and what char to replace 
+// insert the position of the char to replace and what char to replace 
 	void editmap(Console &g_Console,int x, int y,char toreplace);
-	// checks if the text file has been read // true = file read false = file not read
+// checks if the text file has been read // true = file read false = file not read
 	bool checkread(); 
-	// checks if the position is occupied true = occupied false = not occupied
+// checks if the position is occupied true = occupied false = not occupied
 	bool isoccupied(Console& g_Console, int x, int y); 
-	// changes the read value to status
+// changes the read value to status
 	void changeread(bool status);
 
 };

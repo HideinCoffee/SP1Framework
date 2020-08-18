@@ -3,6 +3,7 @@
 //blah blah blooop blahh
 #include "game.h"
 #include "Framework\console.h"
+#include "Mobs.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -22,6 +23,7 @@ Console g_Console(160, 40, "SP1 Framework");
 
 // map object
 Map map;
+
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -322,7 +324,9 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame()
 {
     renderMap();        // renders the map to the buffer first
+    renderEnemies( g_Console, g_dElapsedTime);
     renderCharacter();  // renders the character into the buffer
+
 //rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you",false);
    
 }
@@ -487,8 +491,25 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
     C.X -= length;
     g_Console.setConsoleFont(30, 30, L"Arial");
     g_Console.writeToBuffer(C, ss.str(), 0x0f);
+
+
 }
 
+void renderEnemies(Console& g_Console, double g_dElapsedTime)
+{
+    int Time = g_dElapsedTime;
+    Mobs M; //Delete next time
+    if (Time % 2 == 0)
+    {
+        M.move("string");
+    }
+    map.editmap(g_Console, 12, 13 , 'm');
+    map.drawmap(g_Console);
+
+
+    
+
+}
 
 
 

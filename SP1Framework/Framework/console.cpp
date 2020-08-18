@@ -52,7 +52,7 @@ void cls( HANDLE hConsole )
     BOOL bSuccess;
     DWORD cCharsWritten;
     CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */ 
-    DWORD dwConSize;                 /* number of character cells in
+    DWORD dwConSize;                 /* number of characfter cells in
                                         the current buffer */ 
 
     /* get the number of character cells in the current buffer */ 
@@ -255,6 +255,7 @@ void Console::writeToBuffer(SHORT x, SHORT y, LPCSTR str, WORD attribute, SHORT 
     // if the length of the string exceeds the buffer size, we chop it off at the end
     while (index < m_u32ScreenDataBufferSize && str[str_idx] != 0 && str_idx < length)
     {
+
         m_ciScreenDataBuffer[index].Char.AsciiChar = str[str_idx];
         m_ciScreenDataBuffer[index].Attributes = attribute;
         ++index;

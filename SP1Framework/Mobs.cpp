@@ -14,13 +14,15 @@ void Mobs::move(std::string direction)
 {
 	//randomised mob movement section
 	bool mobMove = false;
-	while (mobMove == false)
+	time_t now = time(0);
+	
+	while (now > 0)
 	{
 		int movementRandomiser = (rand() % 4 + 1); //Makes sure that movementRandomiser != 0
 		switch (movementRandomiser)
 		{
 		case 1:
-			if (position.getY() - 1 != 0) //Check for boundaries, so ghost can't move off screen past Array row 0, in the up direction
+			if (position.getY() - 1 != 0)  //Check for boundaries, so ghost can't move off screen past Array row 0, in the up direction
 			{
 				position.setPos(position.getX(), position.getY() - 1);
 				mobMove = true;
@@ -66,4 +68,5 @@ void Mobs::move(std::string direction)
 			}
 		}
 	}
+	
 }

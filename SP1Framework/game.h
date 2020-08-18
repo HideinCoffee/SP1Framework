@@ -78,6 +78,6 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent);   // handles keyb
 void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mouse events for gameplay 
 
 void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
-
+void renderEnemies(Console& g_Console, double g_dElapsedTime);
 
 #endif // _GAME_H

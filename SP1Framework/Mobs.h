@@ -1,11 +1,12 @@
 #pragma once
 #include "Entity.h"
+#include <ctime>
 
 class Mobs :public Entity
 {
 private:
 
-
+	int tm_sec;
 
 public:
 

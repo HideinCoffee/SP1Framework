@@ -85,12 +85,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="position.cpp" />
+    <ClCompile Include="Mobs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Framework\console.h" />
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="Mobs.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>

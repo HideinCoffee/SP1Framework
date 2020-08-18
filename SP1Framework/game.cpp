@@ -240,26 +240,52 @@ void moveCharacter(){
     if ((g_skKeyEvent[K_UP].keyDown) &&  (map.isoccupied(g_Console,g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y -1) == false))
     {
         g_sChar.m_cLocation.Y--;  
+        map.movecamera(1, map.getcamera_x(), map.getcamera_y());
         //Beep(1440, 30);
     }
     if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X-1 , g_sChar.m_cLocation.Y) == false))
     {
         g_sChar.m_cLocation.X--;   
+        map.movecamera(3, map.getcamera_x(), map.getcamera_y());
         //Beep(1440, 30);
     }
     if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y +1) == false))
     {
         g_sChar.m_cLocation.Y++;  
+        map.movecamera(2, map.getcamera_x(), map.getcamera_y());
         //Beep(1440, 30);
     }
     if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X+1, g_sChar.m_cLocation.Y) == false))
     {
         g_sChar.m_cLocation.X++;   
+        map.movecamera(4, map.getcamera_x(), map.getcamera_y());
         //Beep(1440, 30);
     }
+    if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X-1, g_sChar.m_cLocation.Y - 1) == false)) {
+        g_sChar.m_cLocation.X--;
+        g_sChar.m_cLocation.Y--;
+        map.movecamera(7, map.getcamera_x(), map.getcamera_y());
+    }
+    if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y - 1) == false)) {
+        g_sChar.m_cLocation.X++;
+        g_sChar.m_cLocation.Y--;
+        map.movecamera(5, map.getcamera_x(), map.getcamera_y());
+    }
+    if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y + 1) == false)) {
+        g_sChar.m_cLocation.X--;
+        g_sChar.m_cLocation.Y++;
+        map.movecamera(8, map.getcamera_x(), map.getcamera_y());
+    }
+    if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y + 1) == false))) {
+        g_sChar.m_cLocation.X++;
+        g_sChar.m_cLocation.Y++;
+        map.movecamera(6,map.getcamera_x(),map.getcamera_y());
+    }
+       
     if (g_skKeyEvent[K_SPACE].keyReleased){ 
         g_sChar.m_bActive = !g_sChar.m_bActive;
     }
+    map.setcamera(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y);
 }
 
 void processUserInput()
@@ -333,8 +359,8 @@ void renderMap(){
             map.changeread(true);
         }
     }
-    if (map.checkread() == true) {
-        map.drawmap(g_Console);
+    else if (map.checkread() == true) {
+        map.drawmap(g_Console,map.getcamera_x(),map.getcamera_y());
     }
 }
 
@@ -346,7 +372,10 @@ void renderCharacter()
     {
         charColor = 0x0A;
     }
-    g_Console.writeToBuffer(g_sChar.m_cLocation, (char)1, charColor);
+    COORD character;
+    character.X = g_sChar.m_cLocation.X;
+    character.Y = g_sChar.m_cLocation.Y;
+    g_Console.writeToBuffer(character, (char)1, charColor);
 }
 
 void renderFramerate()
@@ -358,14 +387,14 @@ void renderFramerate()
     ss << 1.0 / g_dDeltaTime << "fps";
     c.X = g_Console.getConsoleSize().X - 9;
     c.Y = 0;
- //   g_Console.writeToBuffer(c, ss.str());
+    g_Console.writeToBuffer(c, ss.str());
 
     // displays the elapsed time
     ss.str("");
     ss << g_dElapsedTime << "secs";
     c.X = 0;
     c.Y = 0;
-   // g_Console.writeToBuffer(c, ss.str(), 0x59);
+    g_Console.writeToBuffer(c, ss.str(), 0x59);
 }
 
 // this is an example of how you would use the input events
@@ -395,7 +424,7 @@ void renderInputEvents()
         if (g_skKeyEvent[i].keyDown)
             ss << key << " pressed";
         else if (g_skKeyEvent[i].keyReleased)
-ss << key << " released";
+            ss << key << " released";
         else
         ss << key << " not pressed";
 

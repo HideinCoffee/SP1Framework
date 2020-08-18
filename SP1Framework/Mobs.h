@@ -12,5 +12,4 @@ public:
 	Mobs();
 	~Mobs();
 	void move(std::string direction); ///more parameters, but suff here must be added to the entity class
-
 };

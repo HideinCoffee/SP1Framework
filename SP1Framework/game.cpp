@@ -9,6 +9,7 @@
 #include <sstream>
 #include <fstream>
 #include "Map.h"
+#include "Entity.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -17,6 +18,7 @@ SMouseEvent g_mouseEvent;
 
 // Game specific variables here
 SGameChar   g_sChar;
+SGameChar   trigger;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 
 // Console object
@@ -45,7 +47,6 @@ void init(void)
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_cLocation1.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation1.Y = g_Console.getConsoleSize().Y / 2 + 1;
-
 
     g_sChar.m_bActive = true;
     g_sChar.abletomove = true;
@@ -393,7 +394,7 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame()
 {
     renderMap();        // renders the map to the buffer first
-   // renderEnemies( g_Console, g_dElapsedTime);
+    /*renderEnemies(g_Console, g_dElapsedTime);*/
     renderCharacter();  // renders the character into the buffer
 
 //rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you",false);
@@ -411,6 +412,7 @@ void renderMap(){
     }
 }
 
+
 void renderCharacter()
 {
     // Draw the location of the character
@@ -421,12 +423,15 @@ void renderCharacter()
     }
     COORD character;
     COORD character1;
+
     character.X = g_sChar.m_cLocation.X;
     character.Y = g_sChar.m_cLocation.Y;
     character1.X = g_sChar.m_cLocation1.X;
     character1.Y = g_sChar.m_cLocation1.Y;
+
     g_Console.writeToBuffer(character, (char)1, charColor);
     g_Console.writeToBuffer(character1, (char)1, charColor);
+    
 }
 
 void renderFramerate()
@@ -571,15 +576,13 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
 
 }
 
-void renderEnemies(Console& g_Console, double g_dElapsedTime)
-{
-    int Time = g_dElapsedTime;
-    Mobs M; //Delete next time
-    if (Time % 2 == 0)
-    {
-        M.move("string");
-    }
-    map.editmap(g_Console, 12, 13, 'm');
-}
-
-
+//void renderEnemies(Console& g_Console, double g_dElapsedTime)
+//{
+//    int Time = g_dElapsedTime;
+//    Mobs M; //Delete next time
+//    if (Time % 2 == 0)
+//    {
+//        M.move("string");
+//    }
+//    map.editmap(g_Console, 12, 13, 'm');
+//}

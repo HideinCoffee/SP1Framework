@@ -138,13 +138,57 @@ void Map::changeread(bool status) {
 	read = status;
 }
 
-bool Map::isoccupied(Console& g_Console, int x, int y){
-	if (maparray[y][x] != ' ') {
+bool Map::isoccupied(Console& g_Console, int x, int y) {
+	if (maparray[y][x] != ' ')
+	{
+		if (maparray[y][x] == 'r')
+		{
+			((maparray[y][x] = 'r') = ' ');
+			(maparray[1][150] = 't');
+			(maparray[1][151] = 'h');
+			(maparray[1][152] = 'i');
+			(maparray[1][153] = 's');
+			(maparray[2][150] = 'i');
+			(maparray[2][151] = 's');
+			(maparray[2][152] = ' ');
+			(maparray[2][153] = 'a');
+			(maparray[3][150] = 't');
+			(maparray[3][151] = 'r');
+			(maparray[3][152] = 'a');
+			(maparray[3][153] = 'i');
+			(maparray[3][154] = 'l');
+			(maparray[4][150] = 'r');
+			(maparray[4][151] = 'u');
+			(maparray[4][152] = 'n');
+			(maparray[30][30] = '@');
+		}
+		if (maparray[y][x] == '@')
+		{
+			((maparray[y][x] = '@') = ' ');
+			(maparray[1][150] = ' ');
+			(maparray[1][151] = ' ');
+			(maparray[1][152] = ' ');
+			(maparray[1][153] = ' ');
+			(maparray[2][150] = ' ');
+			(maparray[2][151] = ' ');
+			(maparray[2][152] = ' ');
+			(maparray[2][153] = ' ');
+			(maparray[3][150] = ' ');
+			(maparray[3][151] = ' ');
+			(maparray[3][152] = ' ');
+			(maparray[3][153] = ' ');
+			(maparray[3][154] = ' ');
+			(maparray[4][150] = ' ');
+			(maparray[4][151] = ' ');
+			(maparray[4][152] = ' ');
+		}
 		return true;
 	}
-	else {
+	else 
+	{
 		return false;
 	}
+
 }
 
 

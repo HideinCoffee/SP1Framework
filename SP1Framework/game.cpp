@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
+#include "Map.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -42,10 +43,12 @@ void init(void)
 
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
-  
+    g_sChar.m_cLocation1.X = g_Console.getConsoleSize().X / 2;
+    g_sChar.m_cLocation1.Y = g_Console.getConsoleSize().Y / 2 + 1;
 
 
     g_sChar.m_bActive = true;
+    g_sChar.abletomove = true;
     // sets the width, height and the font name to use in the console
     g_Console.setConsoleFont(0, 16, L"Consolas");
 
@@ -239,55 +242,95 @@ void updateGame()       // gameplay logic
 void moveCharacter(){    
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
-    if ((g_skKeyEvent[K_UP].keyDown) &&  (map.isoccupied(g_Console,g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y -1) == false))
-    {
-        g_sChar.m_cLocation.Y--;  
-        map.movecamera(1, map.getcamera_x(), map.getcamera_y());
-        //Beep(1440, 30);
-    }
-    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X-1 , g_sChar.m_cLocation.Y) == false))
-    {
-        g_sChar.m_cLocation.X--;   
-        map.movecamera(3, map.getcamera_x(), map.getcamera_y());
-        //Beep(1440, 30);
-    }
-    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y +1) == false))
-    {
-        g_sChar.m_cLocation.Y++;  
-        map.movecamera(2, map.getcamera_x(), map.getcamera_y());
-        //Beep(1440, 30);
-    }
-    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X+1, g_sChar.m_cLocation.Y) == false))
-    {
-        g_sChar.m_cLocation.X++;   
-        map.movecamera(4, map.getcamera_x(), map.getcamera_y());
-        //Beep(1440, 30);
-    }
-    if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X-1, g_sChar.m_cLocation.Y - 1) == false)) {
-        g_sChar.m_cLocation.X--;
-        g_sChar.m_cLocation.Y--;
-        map.movecamera(7, map.getcamera_x(), map.getcamera_y());
-    }
-    if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y - 1) == false)) {
-        g_sChar.m_cLocation.X++;
-        g_sChar.m_cLocation.Y--;
-        map.movecamera(5, map.getcamera_x(), map.getcamera_y());
-    }
-    if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y + 1) == false)) {
-        g_sChar.m_cLocation.X--;
-        g_sChar.m_cLocation.Y++;
-        map.movecamera(8, map.getcamera_x(), map.getcamera_y());
-    }
-    if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y + 1) == false))) {
-        g_sChar.m_cLocation.X++;
-        g_sChar.m_cLocation.Y++;
-        map.movecamera(6,map.getcamera_x(),map.getcamera_y());
-    }
-       
-    if (g_skKeyEvent[K_SPACE].keyReleased){ 
-        g_sChar.m_bActive = !g_sChar.m_bActive;
-    }
-    map.setcamera(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y);
+    
+        //1
+        if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y - 1) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X, g_sChar.m_cLocation1.Y - 1) == false))
+        {
+            g_sChar.m_cLocation.Y--;
+            g_sChar.m_cLocation1.Y--;
+            map.movecamera(1, map.getcamera_x(), map.getcamera_y());
+            //Beep(1440, 30);
+        }
+        //2
+        if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X - 1, g_sChar.m_cLocation1.Y) == false))
+        {
+            g_sChar.m_cLocation.X--;
+            g_sChar.m_cLocation1.X--;
+            map.movecamera(3, map.getcamera_x(), map.getcamera_y());
+            //Beep(1440, 30);
+        }
+        //3
+        if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y + 1) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X, g_sChar.m_cLocation1.Y + 1) == false))
+        {
+            g_sChar.m_cLocation.Y++;
+            g_sChar.m_cLocation1.Y++;
+            map.movecamera(2, map.getcamera_x(), map.getcamera_y());
+            //Beep(1440, 30);
+        }
+        //4
+        if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X + 1, g_sChar.m_cLocation1.Y) == false))
+        {
+            g_sChar.m_cLocation.X++;
+            g_sChar.m_cLocation1.X++;
+            map.movecamera(4, map.getcamera_x(), map.getcamera_y());
+            //Beep(1440, 30);
+        }
+
+        //5
+        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y - 1) == false)) {
+            g_sChar.m_cLocation.X--;
+            g_sChar.m_cLocation.Y--;
+            map.movecamera(7, map.getcamera_x(), map.getcamera_y());
+        }
+        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y - 1) == false)) {
+            g_sChar.m_cLocation.X++;
+            g_sChar.m_cLocation.Y--;
+            map.movecamera(5, map.getcamera_x(), map.getcamera_y());
+        }
+        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y + 1) == false)) {
+            g_sChar.m_cLocation.X--;
+            g_sChar.m_cLocation.Y++;
+            map.movecamera(8, map.getcamera_x(), map.getcamera_y());
+        }
+        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y + 1) == false))) {
+            g_sChar.m_cLocation.X++;
+            g_sChar.m_cLocation.Y++;
+            map.movecamera(6, map.getcamera_x(), map.getcamera_y());
+        }
+
+        if (g_skKeyEvent[K_SPACE].keyReleased) {
+            g_sChar.m_bActive = !g_sChar.m_bActive;
+        }
+        map.setcamera(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y);
+
+        //
+
+        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X - 1, g_sChar.m_cLocation1.Y - 1) == false)) {
+            g_sChar.m_cLocation1.X--;
+            g_sChar.m_cLocation1.Y--;
+            map.movecamera(7, map.getcamera_x(), map.getcamera_y());
+        }
+        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X + 1, g_sChar.m_cLocation1.Y - 1) == false)) {
+            g_sChar.m_cLocation1.X++;
+            g_sChar.m_cLocation1.Y--;
+            map.movecamera(5, map.getcamera_x(), map.getcamera_y());
+        }
+        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X - 1, g_sChar.m_cLocation1.Y + 1) == false)) {
+            g_sChar.m_cLocation1.X--;
+            g_sChar.m_cLocation1.Y++;
+            map.movecamera(8, map.getcamera_x(), map.getcamera_y());
+        }
+        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X + 1, g_sChar.m_cLocation1.Y + 1) == false))) {
+            g_sChar.m_cLocation1.X++;
+            g_sChar.m_cLocation1.Y++;
+            map.movecamera(6, map.getcamera_x(), map.getcamera_y());
+        }
+
+        if (g_skKeyEvent[K_SPACE].keyReleased) {
+            g_sChar.m_bActive = !g_sChar.m_bActive;
+        }
+        map.setcamera(g_sChar.m_cLocation1.X, g_sChar.m_cLocation1.Y);
+
 }
 
 void processUserInput()
@@ -377,9 +420,13 @@ void renderCharacter()
         charColor = 0x0A;
     }
     COORD character;
+    COORD character1;
     character.X = g_sChar.m_cLocation.X;
     character.Y = g_sChar.m_cLocation.Y;
+    character1.X = g_sChar.m_cLocation1.X;
+    character1.Y = g_sChar.m_cLocation1.Y;
     g_Console.writeToBuffer(character, (char)1, charColor);
+    g_Console.writeToBuffer(character1, (char)1, charColor);
 }
 
 void renderFramerate()
@@ -532,27 +579,7 @@ void renderEnemies(Console& g_Console, double g_dElapsedTime)
     {
         M.move("string");
     }
-    map.editmap(g_Console, 12, 13 , 'm');
-    
-
-
-    
-
+    map.editmap(g_Console, 12, 13, 'm');
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

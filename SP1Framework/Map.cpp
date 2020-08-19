@@ -96,24 +96,32 @@ bool Map::slotmap(std::string filename, Console &g_Console){
 
 
 void Map::drawmap(Console &g_Console, int camera_x, int camera_y) {
-	int showx = camera_x;
-	int showy = camera_y;
-	if (showx -160  > 0)
-		showx -= 160;
-	else
-		showx = 0;
-	if (showy - 40 > 0)
-		showy -= 40;
-	else
-		showy = 0;
-	for (int row = 0; row < camera_y; row++) {
-		for (int col = 0; col < camera_x; col++) {
-			if (maparray[row][col] == '#') {
-				g_Console.writeToBuffer(col, row, "°±", 0x0f);	
-			}
-			else {
-				g_Console.writeToBuffer(col, row, maparray[row][col], 0x0f);
-			}
+	//int showx = camera_x;
+	//int showy = camera_y;
+	//if (showx -160  > 0)
+	//	showx -= 160;
+	//else
+	//	showx = 0;
+	//if (showy - 40 > 0)
+	//	showy -= 40;
+	//else
+	//	showy = 0;
+	//for (int row = 0; row < camera_y; row++) {
+	//	for (int col = 0; col < camera_x; col++) {
+	//		if (maparray[row][col] == '#') {
+	//			g_Console.writeToBuffer(col, row, "°±", 0x0f);	
+	//		}
+	//		else {
+	//			g_Console.writeToBuffer(col, row, maparray[row][col], 0x0f);
+	//		}
+	//	}
+	//}
+	for (int row = 0; row < 40; row++)
+	{
+		for (int col = 0; col < 160; col++)
+
+		{
+			g_Console.writeToBuffer(col, row, maparray[row][col], 0x0f);
 		}
 	}
 }

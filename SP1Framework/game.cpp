@@ -28,7 +28,7 @@ Console g_Console(160, 40, "SP1 Framework");
 Map map;
 
 // player object
-Player player(20, 80);
+Player player(2, 151);
 
 
 

@@ -4,6 +4,7 @@
 #include "Framework\timer.h"
 #include <string>
 #include "Map.h"
+#include "player.h"
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -49,10 +50,13 @@ struct SGameChar
 {
     COORD m_cLocation;
     COORD m_cLocation1;
+    COORD offset;
+    
 
     bool  m_bActive;
     bool abletomove;
 };
+
 
 void init        ( void );      // initialize your variables, allocate memory, etc
 void getInput    ( void );      // get input from player

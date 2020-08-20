@@ -1,7 +1,13 @@
 #pragma once
 #include "Entity.h"
-
-class Player : public Entity
+#include "framework/console.h"
+class Player 
 {
-
+public:
+	COORD pos;
+	// player constructor
+	Player();
+	Player(int x, int y);
 };
+
+

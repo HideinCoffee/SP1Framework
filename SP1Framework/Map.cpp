@@ -13,62 +13,29 @@ Map::~Map(){
 	//this is left blank intentionally
 }
 
-int Map::getcamera_x(){
-	return camera_x;
-}
 
-int Map::getcamera_y(){
-	return camera_y;
-}
 
-void Map::setcamera(int newx, int newy) {
-	camera_x = newx;
-	camera_y = newy;
-}
-
-void Map::movecamera(int direction,int x, int y){
-	switch (direction){
+void Map::movecamera(int direction,Player &player ){
+	switch (direction) {
 	case 0:
 		break;
 	case 1: // move up 
-		camera_y -= 1;
+		player.pos.Y -= 1;
 		break;
 	case 2: // move down
-		camera_y += 1;
+		player.pos.Y += 1;
 		break;
 	case 3: // move left
-		camera_x -= 1;
+		player.pos.X -= 1;
 		break;
 	case 4: // move right
-		camera_x += 1;
-		break;
-	case 5: // move right up
-		camera_x += 1;
-		camera_y -= 1;
-		break;
-	case 6: // move right down
-		camera_x += 1;
-		camera_y += 1;
-		break;
-	case 7: // move left up
-		camera_x -= 1;
-		camera_y -= 1;
-		break;
-	case 8: // move left down
-		camera_x -= 1;
-		camera_y += 1;
-		break;
-	case 9: // up down <-- cancel out
-		break;
-	case 10: // left right <-- cancel out
+		player.pos.X += 1;
 		break;
 	}
-	setcamera(camera_x, camera_y);
 }
 
-
-bool Map::slotmap(std::string filename, Console &g_Console){
-	bool exception = true;
+bool Map::slotmap(std::string filename, Console &g_Console)
+{
 	std::string pathway = "maps//" + filename;
 	std::ifstream map;
 	std::string line;
@@ -79,7 +46,7 @@ bool Map::slotmap(std::string filename, Console &g_Console){
 			for (int col = 0; col < 200; col++) {
 				if (line[col] > 200)
 					continue;
-				else if (row < 60)
+				else if (row < 200)
 					maparray[row][col] = line[col];
 				else
 					break;
@@ -95,34 +62,26 @@ bool Map::slotmap(std::string filename, Console &g_Console){
 }
 
 
-void Map::drawmap(Console &g_Console, int camera_x, int camera_y) {
-	//int showx = camera_x;
-	//int showy = camera_y;
-	//if (showx -160  > 0)
-	//	showx -= 160;
-	//else
-	//	showx = 0;
-	//if (showy - 40 > 0)
-	//	showy -= 40;
-	//else
-	//	showy = 0;
-	//for (int row = 0; row < camera_y; row++) {
-	//	for (int col = 0; col < camera_x; col++) {
-	//		if (maparray[row][col] == '#') {
-	//			g_Console.writeToBuffer(col, row, "°±", 0x0f);	
-	//		}
-	//		else {
-	//			g_Console.writeToBuffer(col, row, maparray[row][col], 0x0f);
-	//		}
-	//	}
-	//}
-	for (int row = 0; row < 40; row++)
-	{
-		for (int col = 0; col < 160; col++)
-
-		{
-			g_Console.writeToBuffer(col, row, maparray[row][col], 0x0f);
+void Map::drawmap(Console &g_Console,Player &player) {
+	COORD c;
+	c.X = 0;
+	c.Y = 0;
+	for (int row = player.pos.Y - 20; row < player.pos.Y + 20; row++) {
+		for (int col = player.pos.X - 80; col < player.pos.X + 80; col++) {
+			if (maparray[row][col] == '@') {
+				c.Y--;
+				g_Console.writeToBuffer(c,maparray[row][col], 0x00);
+			}
+			else if (maparray[row][col] == '#') {
+				g_Console.writeToBuffer(c, maparray[row][col], 0xff);
+				c.Y--;
+			}
+			else
+				g_Console.writeToBuffer(c, maparray[row][col], 0x0f);
+			c.X++;
 		}
+		c.X = 0;
+		c.Y++;
 	}
 }
 
@@ -138,10 +97,15 @@ void Map::changeread(bool status) {
 	read = status;
 }
 
-bool Map::isoccupied(Console& g_Console, int x, int y) {
-	if (maparray[y][x] != ' ')
+bool Map::isoccupied( int x, int y) {
+	if (maparray[y][x] != '@')
 	{
-		if (maparray[y][x] == 'r')
+		return true;
+	}
+	else
+		return false;
+}
+		/*if (maparray[y][x] == 'r')
 		{
 			((maparray[y][x] = 'r') = ' ');
 			(maparray[1][150] = 't');
@@ -181,40 +145,10 @@ bool Map::isoccupied(Console& g_Console, int x, int y) {
 			(maparray[4][150] = ' ');
 			(maparray[4][151] = ' ');
 			(maparray[4][152] = ' ');
-		}
-		return true;
-	}
-	else 
-	{
-		return false;
-	}
-
-}
+		}*/
 
 
 
 
 
-//TO DO LIST
-//
-//Entities* Player
-//Entities* Enemies
-//
-//checkpoint thingy
-//proper render functions
-//put player into the maparray.
-//
-//
-//maparray size gon be huge then the
-//
-//drawmap for loops will be controlled by the camera
-//
-//
-//
-//drawmap(Console & g_Console, int camera_x, int camera_y);
-//
-//for (int row = 0; row < camera_x; row++) {  // find a way to fix the row and col
-//	for (int col = 0; col < camera_y{
-//
-//		}
-//}
+

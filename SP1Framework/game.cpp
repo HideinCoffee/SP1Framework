@@ -27,6 +27,10 @@ Console g_Console(160, 40, "SP1 Framework");
 // map object
 Map map;
 
+// player object
+Player player(20, 80);
+
+
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -56,6 +60,9 @@ void init(void)
     // remember to set your keyboard handler, so that your functions can be notified of input events
     g_Console.setKeyboardHandler(keyboardHandler);
     g_Console.setMouseHandler(mouseHandler);
+    
+    g_sChar.offset.X = 0;
+    g_sChar.offset.Y = 0;
 }
 
 //--------------------------------------------------------------
@@ -240,99 +247,35 @@ void updateGame()       // gameplay logic
                         // sound can be played here too.
 }
 
-void moveCharacter(){    
+void moveCharacter() {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
+
+    if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(player.pos.X, player.pos.Y - 1) == false))
+    {
+        map.movecamera(1,player);
+        //Beep(1440, 30);
+    }
     
-        //1
-        if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y - 1) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X, g_sChar.m_cLocation1.Y - 1) == false))
-        {
-            g_sChar.m_cLocation.Y--;
-            g_sChar.m_cLocation1.Y--;
-            map.movecamera(1, map.getcamera_x(), map.getcamera_y());
-            //Beep(1440, 30);
-        }
-        //2
-        if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X - 1, g_sChar.m_cLocation1.Y) == false))
-        {
-            g_sChar.m_cLocation.X--;
-            g_sChar.m_cLocation1.X--;
-            map.movecamera(3, map.getcamera_x(), map.getcamera_y());
-            //Beep(1440, 30);
-        }
-        //3
-        if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y + 1) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X, g_sChar.m_cLocation1.Y + 1) == false))
-        {
-            g_sChar.m_cLocation.Y++;
-            g_sChar.m_cLocation1.Y++;
-            map.movecamera(2, map.getcamera_x(), map.getcamera_y());
-            //Beep(1440, 30);
-        }
-        //4
-        if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y) == false) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X + 1, g_sChar.m_cLocation1.Y) == false))
-        {
-            g_sChar.m_cLocation.X++;
-            g_sChar.m_cLocation1.X++;
-            map.movecamera(4, map.getcamera_x(), map.getcamera_y());
-            //Beep(1440, 30);
-        }
-
-        //5
-        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y - 1) == false)) {
-            g_sChar.m_cLocation.X--;
-            g_sChar.m_cLocation.Y--;
-            map.movecamera(7, map.getcamera_x(), map.getcamera_y());
-        }
-        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y - 1) == false)) {
-            g_sChar.m_cLocation.X++;
-            g_sChar.m_cLocation.Y--;
-            map.movecamera(5, map.getcamera_x(), map.getcamera_y());
-        }
-        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation.X - 1, g_sChar.m_cLocation.Y + 1) == false)) {
-            g_sChar.m_cLocation.X--;
-            g_sChar.m_cLocation.Y++;
-            map.movecamera(8, map.getcamera_x(), map.getcamera_y());
-        }
-        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown && (map.isoccupied(g_Console, g_sChar.m_cLocation.X + 1, g_sChar.m_cLocation.Y + 1) == false))) {
-            g_sChar.m_cLocation.X++;
-            g_sChar.m_cLocation.Y++;
-            map.movecamera(6, map.getcamera_x(), map.getcamera_y());
-        }
-
-        if (g_skKeyEvent[K_SPACE].keyReleased) {
-            g_sChar.m_bActive = !g_sChar.m_bActive;
-        }
-        map.setcamera(g_sChar.m_cLocation.X, g_sChar.m_cLocation.Y);
-
-        //
-
-        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X - 1, g_sChar.m_cLocation1.Y - 1) == false)) {
-            g_sChar.m_cLocation1.X--;
-            g_sChar.m_cLocation1.Y--;
-            map.movecamera(7, map.getcamera_x(), map.getcamera_y());
-        }
-        if ((g_skKeyEvent[K_UP].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X + 1, g_sChar.m_cLocation1.Y - 1) == false)) {
-            g_sChar.m_cLocation1.X++;
-            g_sChar.m_cLocation1.Y--;
-            map.movecamera(5, map.getcamera_x(), map.getcamera_y());
-        }
-        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X - 1, g_sChar.m_cLocation1.Y + 1) == false)) {
-            g_sChar.m_cLocation1.X--;
-            g_sChar.m_cLocation1.Y++;
-            map.movecamera(8, map.getcamera_x(), map.getcamera_y());
-        }
-        if ((g_skKeyEvent[K_DOWN].keyDown) && (g_skKeyEvent[K_RIGHT].keyDown && (map.isoccupied(g_Console, g_sChar.m_cLocation1.X + 1, g_sChar.m_cLocation1.Y + 1) == false))) {
-            g_sChar.m_cLocation1.X++;
-            g_sChar.m_cLocation1.Y++;
-            map.movecamera(6, map.getcamera_x(), map.getcamera_y());
-        }
-
-        if (g_skKeyEvent[K_SPACE].keyReleased) {
-            g_sChar.m_bActive = !g_sChar.m_bActive;
-        }
-        map.setcamera(g_sChar.m_cLocation1.X, g_sChar.m_cLocation1.Y);
-
+    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(player.pos.X - 1, player.pos.Y) == false))
+    {
+        map.movecamera(3, player);
+        //Beep(1440, 30);
+    }
+    
+    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(player.pos.X, player.pos.Y + 1) == false))
+    {
+        map.movecamera(2,player);
+        //Beep(1440, 30);
+    }
+    
+    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(player.pos.X + 1, player.pos.Y) == false))
+    {
+        map.movecamera(4,player);
+        //Beep(1440, 30);
+    }
 }
+        
 
 void processUserInput()
 {
@@ -407,10 +350,23 @@ void renderMap(){
             map.changeread(true);
         }
     }
-    else if (map.checkread() == true) {
-        map.drawmap(g_Console,map.getcamera_x(),map.getcamera_y());
+    if ((player.pos.X > 80) && (player.pos.X < 200 - 80))
+        g_sChar.offset.X = player.pos.X - 80;
+    if ((player.pos.Y > 20) && (player.pos.Y < 200 - 20))
+        g_sChar.offset.Y = player.pos.Y - 20;
+
+    for (int row = 0; row < 40; row++) {
+        for (int col = 0; col < 160; col++){
+            if (map.maparray[row+g_sChar.offset.Y][col+g_sChar.offset.X] == '#') {
+                g_Console.writeToBuffer(col,row,map.maparray[row][col], 0x00);
+            }
+            else{
+                g_Console.writeToBuffer(col,row,map.maparray[row][col], 0xff); 
+            }
+        }
     }
 }
+
 
 
 void renderCharacter()
@@ -421,17 +377,7 @@ void renderCharacter()
     {
         charColor = 0x0A;
     }
-    COORD character;
-    COORD character1;
-
-    character.X = g_sChar.m_cLocation.X;
-    character.Y = g_sChar.m_cLocation.Y;
-    character1.X = g_sChar.m_cLocation1.X;
-    character1.Y = g_sChar.m_cLocation1.Y;
-
-    g_Console.writeToBuffer(character, (char)1, charColor);
-    g_Console.writeToBuffer(character1, (char)1, charColor);
-    
+    g_Console.writeToBuffer(player.pos.X-g_sChar.offset.X,player.pos.Y-g_sChar.offset.Y,(char)1, charColor);    
 }
 
 void renderFramerate()
@@ -451,6 +397,9 @@ void renderFramerate()
     c.X = 0;
     c.Y = 0;
     g_Console.writeToBuffer(c, ss.str(), 0x59);
+    ss.str("");
+    ss << player.pos.X << ' ' << player.pos.Y;
+    g_Console.writeToBuffer(60, 20, ss.str(), 0x59);
 }
 
 // this is an example of how you would use the input events

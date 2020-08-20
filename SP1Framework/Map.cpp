@@ -76,10 +76,6 @@ void Map::drawmap(Console &g_Console,Player &player) {
 				g_Console.writeToBuffer(c, maparray[row][col], 0xff);
 				c.Y--;
 			}
-			else if (maparray[row][col] == '$') {
-				g_Console.writeToBuffer(c, maparray[row][col], 0xEE);
-				c.Y--;
-			}
 			else
 				g_Console.writeToBuffer(c, maparray[row][col], 0x0f);
 			c.X++;

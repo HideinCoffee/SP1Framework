@@ -360,6 +360,9 @@ void renderMap(){
             if (map.maparray[row+g_sChar.offset.Y][col+g_sChar.offset.X] == '#') {
                 g_Console.writeToBuffer(col,row,map.maparray[row][col], 0x00);
             }
+            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '$') {
+                g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x66);
+            }
             else{
                 g_Console.writeToBuffer(col,row,map.maparray[row][col], 0xff); 
             }

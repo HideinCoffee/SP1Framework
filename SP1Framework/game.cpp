@@ -28,7 +28,7 @@ Console g_Console(160, 40, "SP1 Framework");
 Map map;
 
 // player object
-Player player(2, 151);
+Player player(2, 151); //Original spawn is 2, 151
 
 
 
@@ -363,12 +363,12 @@ void renderMap(){
             else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '$') {
                 g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x66); //Colour of "coin" pixels
             }
-            //else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '!') {
-            //    g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
-            //}
-            //else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == 'x') {
-            //    g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x44); //Red colour for enemies? I don't really know how to uh, use this one I guess?
-            //}
+            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '!') {
+                g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
+            }
+            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == 'x') {
+                g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x44); //Red colour for enemies? I don't really know how to uh, use this one I guess?
+            }
             else{
                 g_Console.writeToBuffer(col,row,map.maparray[row][col], 0xff); 
             }

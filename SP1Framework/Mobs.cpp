@@ -22,7 +22,7 @@ void Mobs::move(std::string direction)
 		switch (movementRandomiser)
 		{
 		case 1:
-			if (position.getY() - 1 != 0)  //Check for boundaries, so ghost can't move off screen past Array row 0, in the up direction
+			if (position.getY() - 1 != 0)  //Check for boundaries, so mobs can't move off screen past Array row 0, in the up direction
 			{
 				position.setPos(position.getX(), position.getY() - 1);
 				mobMove = true;
@@ -56,7 +56,7 @@ void Mobs::move(std::string direction)
 				continue;
 			}
 		case 4:
-			if (position.getX() - 1 != 0) //Moving left, check for boundaries so ghosts can't move left past Array row 0
+			if (position.getX() - 1 != 0) //Moving left, check for boundaries so mobs can't move left past Array row 0
 			{
 				position.setPos(position.getX() - 1, position.getY());
 				mobMove = true;

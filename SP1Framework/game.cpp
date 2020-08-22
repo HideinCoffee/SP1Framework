@@ -20,7 +20,8 @@ SMouseEvent g_mouseEvent;
 SGameChar   g_sChar;
 SGameChar   trigger;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
-
+MOVEMENTDIRECTION movementdir;
+BULLETDIRECTION bulletdir;
 // Console object
 Console g_Console(160, 40, "SP1 Framework");
 
@@ -28,7 +29,7 @@ Console g_Console(160, 40, "SP1 Framework");
 Map map;
 
 // player object
-Player player(2, 151); //Original spawn is 2, 151
+//Player player(2, 151); //Original spawn is 2, 151
 
 
 
@@ -63,6 +64,8 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
+    entityarray[0] = new Player(2, 151);
+    entityarray[1] = new Mobs(50, 151);
 }
 
 //--------------------------------------------------------------
@@ -96,7 +99,7 @@ void shutdown( void )
 void getInput( void )
 {
     // resets all the keyboard events
-    memset(g_skKeyEvent, 0, K_COUNT * sizeof(*g_skKeyEvent));
+   // memset(g_skKeyEvent, 0, K_COUNT * sizeof(*g_skKeyEvent));
     // then call the console to detect input from user
     g_Console.readConsoleInput();    
 }
@@ -244,44 +247,47 @@ void updateGame()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter();    // moves the character, collision detection, physics, etc
-                        // sound can be played here too.
+    moveEnemy();        // sound can be played here too.
 }
-
+void moveEnemy() {
+    ((Mobs*)(entityarray[1]))->checkmove(entityarray[0]->returnPos());
+    entityarray[1]->move(movementdir,entityarray[0]->returnPos());
+}
 void moveCharacter() {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(player.pos.X, player.pos.Y - 1) == false))
+    if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(entityarray[0]->getX(), entityarray[0]->getY() - 1) == false))
     {
-        map.movecamera(1,player);
+        entityarray[0]->setpos(map.movecamera(1,entityarray[0]->returnPos()));
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(player.pos.X - 1, player.pos.Y) == false))
+    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(entityarray[0]->getX() - 1, entityarray[0]->getY()) == false))
     {
-        map.movecamera(3, player);
+       entityarray[0]->setpos(map.movecamera(3,entityarray[0]->returnPos()));
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(player.pos.X, player.pos.Y + 1) == false))
+    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(entityarray[0]->getX(), entityarray[0]->getY() + 1) == false))
     {
-        map.movecamera(2,player);
+        entityarray[0]->setpos(map.movecamera(2,entityarray[0]->returnPos()));
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(player.pos.X + 1, player.pos.Y) == false))
+    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(entityarray[0]->getX() + 1, entityarray[0]->getY()) == false))
     {
-        map.movecamera(4,player);
+        entityarray[0]->setpos(map.movecamera(4,entityarray[0]->returnPos()));
         //Beep(1440, 30);
     }
 }
-        
+
 
 void processUserInput()
 {
     // quits the game if player hits the escape key
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
-        g_bQuitGame = true;    
+        g_bQuitGame = true;
 }
 
 //--------------------------------------------------------------
@@ -305,7 +311,7 @@ void render()
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
-    
+
 }
 
 void clearScreen()
@@ -337,45 +343,51 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame()
 {
     renderMap();        // renders the map to the buffer first
-    /*renderEnemies(g_Console, g_dElapsedTime);*/
+    renderEnemies(g_Console, g_dElapsedTime);
     renderCharacter();  // renders the character into the buffer
 
 //rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you",false);
-   
+
 }
 
-void renderMap(){
+void renderMap() {
     if (map.checkread() == false) {
         if (map.slotmap("map.txt", g_Console) == true) {
             map.changeread(true);
         }
     }
-    if ((player.pos.X > 80) && (player.pos.X < 200 - 80))
-        g_sChar.offset.X = player.pos.X - 80;
-    if ((player.pos.Y > 20) && (player.pos.Y < 200 - 20))
-        g_sChar.offset.Y = player.pos.Y - 20;
+
+    if ((entityarray[0]->getX() > 80) && (entityarray[0]->getX() < 200 - 80)) { // offset x
+        g_sChar.offset.X = entityarray[0]->getX() - 80;
+    }
+
+    if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 200 - 20)) { // offset y
+        g_sChar.offset.Y = entityarray[0]->getY() - 20;
+    }
 
     for (int row = 0; row < 40; row++) {
-        for (int col = 0; col < 160; col++){
-            if (map.maparray[row+g_sChar.offset.Y][col+g_sChar.offset.X] == '#') {
-                g_Console.writeToBuffer(col,row,map.maparray[row][col], 0x00);
+        for (int col = 0; col < 160; col++) {
+            if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '#') {
+                g_Console.writeToBuffer(col, row, " ", 0x00);
             }
             else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '$') {
-                g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x66); //Colour of "coin" pixels
+                g_Console.writeToBuffer(col, row, " ", 0x66); //Colour of "coin" pixels
             }
             else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '!') {
-                g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
+                g_Console.writeToBuffer(col, row, " ", 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
             }
             else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == 'x') {
-                g_Console.writeToBuffer(col, row, map.maparray[row][col], 0x44); //Red colour for enemies? I don't really know how to uh, use this one I guess?
+                g_Console.writeToBuffer(col, row, " ", 0x44); //enemy
+            }
+            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == 'm') {
+                g_Console.writeToBuffer(col, row, " ", 0x44);
             }
             else{
-                g_Console.writeToBuffer(col,row,map.maparray[row][col], 0xff); 
+                g_Console.writeToBuffer(col,row," ", 0xff); 
             }
         }
     }
 }
-
 
 
 void renderCharacter()
@@ -386,7 +398,7 @@ void renderCharacter()
     {
         charColor = 0x0A;
     }
-    g_Console.writeToBuffer(player.pos.X-g_sChar.offset.X,player.pos.Y-g_sChar.offset.Y,(char)1, charColor);    
+    g_Console.writeToBuffer(entityarray[0]->getX()-g_sChar.offset.X,entityarray[0]->getY()-g_sChar.offset.Y,char(1), charColor);    
 }
 
 void renderFramerate()
@@ -407,15 +419,15 @@ void renderFramerate()
     c.Y = 0;
     g_Console.writeToBuffer(c, ss.str(), 0x59);
     ss.str("");
-    ss << player.pos.X << ' ' << player.pos.Y;
-    g_Console.writeToBuffer(60, 20, ss.str(), 0x59);
+    ss <<"player position" << ' ' << entityarray[0]->getX()<< ' ' << entityarray[0]->getY();
+    g_Console.writeToBuffer(120, 0, ss.str(), 0x59);
 }
 
 // this is an example of how you would use the input events
 void renderInputEvents()
 {
     // keyboard events
-    COORD startPos = {50, 2};
+    COORD startPos = {130, 30};
     std::ostringstream ss;
     std::string key;
     for (int i = 0; i < K_COUNT; ++i)
@@ -443,7 +455,7 @@ void renderInputEvents()
         ss << key << " not pressed";
 
         COORD c = { startPos.X, startPos.Y + i };
-       // g_Console.writeToBuffer(c, ss.str(), 0x17);
+        g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
 
     // mouse events    
@@ -534,13 +546,8 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
 
 }
 
-//void renderEnemies(Console& g_Console, double g_dElapsedTime)
-//{
-//    int Time = g_dElapsedTime;
-//    Mobs M; //Delete next time
-//    if (Time % 2 == 0)
-//    {
-//        M.move("string");
-//    }
-//    map.editmap(g_Console, 12, 13, 'm');
-//}
+void renderEnemies(Console& g_Console, double g_dElapsedTime)
+{
+    //int Time = g_dElapsedTime;
+    map.editmap(g_Console, entityarray[1]->getX(),entityarray[1]->getY(),'m');
+}

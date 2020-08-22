@@ -1,17 +1,15 @@
 #pragma once
+#include "Framework/console.h"
 class Position
 {
-private:
-	int x;
-	int y;
-
 public:
+	COORD pos;
 	Position();
 	~Position();
 	int getX();
 	int getY();
 	void setX(int x);
 	void setY(int y);
-	void setPos(int x, int y);
-	Position returnPos();
+	void setPos(COORD position);
+	COORD returnPos();
 };

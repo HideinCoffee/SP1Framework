@@ -15,31 +15,31 @@ Position::~Position()
 
 int Position::getX()
 {
-	return x; //getter
+	return pos.X; //getter
 }
 
 int Position::getY()
 {
-	return y; //getter
+	return pos.Y; //getter
 }
 
 void Position::setX(int x)
 {
-	this->x = x; //setter
+	pos.X = x; //setter
 }
 
 void Position::setY(int y)
 {
-	this->y = y; //setter
+	pos.Y = y; //setter
 }
-void Position::setPos(int x, int y)
+void Position::setPos(COORD position)
 {
-	this->x = x;
-	this->y = y;
+	pos.X = position.X;
+	pos.Y = position.Y;
 }
 
-Position Position::returnPos()
+COORD Position::returnPos()
 {
-	return Position();
+	return pos;
 }
 

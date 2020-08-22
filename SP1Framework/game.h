@@ -5,6 +5,7 @@
 #include <string>
 #include "Map.h"
 #include "player.h"
+#include "Global.h"
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -44,6 +45,8 @@ enum EGAMESTATES
     S_GAME,
     S_COUNT
 };
+
+
 
 // struct for the game character
 struct SGameChar
@@ -85,6 +88,6 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent);   // handles keyb
 void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mouse events for gameplay 
 
 void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
-
+void moveEnemy();
 void renderEnemies(Console& g_Console, double g_dElapsedTime);
 #endif // _GAME_H

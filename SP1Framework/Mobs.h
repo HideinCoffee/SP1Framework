@@ -4,13 +4,10 @@
 
 class Mobs :public Entity
 {
-private:
-
-	int tm_sec;
-
 public:
-
-	Mobs();
+	bool needtomove;
+	Mobs(int x, int y);
 	~Mobs();
-	void move(std::string direction); ///more parameters, but suff here must be added to the entity class
+	void checkmove(COORD pos);
+	void move(MOVEMENTDIRECTION movementdir,COORD pos); ///more parameters, but suff here must be added to the entity class
 };

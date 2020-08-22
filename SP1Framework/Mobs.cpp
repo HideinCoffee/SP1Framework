@@ -1,7 +1,11 @@
 #include "mobs.h"
 
-Mobs::Mobs()
+Mobs::Mobs(int x, int y)
 {
+	COORD mob;
+	mob.X = x;
+	mob.Y = y;
+	setpos(mob);
 	//Constructor for mobs
 }
 
@@ -10,63 +14,35 @@ Mobs::~Mobs()
 	//destructor for mobs
 }
 
-void Mobs::move(std::string direction)
-{
-	//randomised mob movement section
-	bool mobMove = false;
-	time_t now = time(0);
-	
-	while (now > 0)
-	{
-		int movementRandomiser = (rand() % 4 + 1); //Makes sure that movementRandomiser != 0
-		switch (movementRandomiser)
-		{
-		case 1:
-			if (position.getY() - 1 != 0)  //Check for boundaries, so mobs can't move off screen past Array row 0, in the up direction
-			{
-				position.setPos(position.getX(), position.getY() - 1);
-				mobMove = true;
-				continue;
-			}
-			else
-			{
-				continue;
-			}
-
-		case 2:
-			if (position.getX() + 1 != 20)
-			{
-				position.setPos(getX() + 1, getY());
-				mobMove = true;
-				continue;
-			}
-			else
-			{
-				continue;
-			}
-		case 3:
-			if (position.getY() + 1 != 20)
-			{
-				position.setPos(position.getX(), position.getY() + 1);
-				mobMove = true;
-				continue;
-			}
-			else
-			{
-				continue;
-			}
-		case 4:
-			if (position.getX() - 1 != 0) //Moving left, check for boundaries so mobs can't move left past Array row 0
-			{
-				position.setPos(position.getX() - 1, position.getY());
-				mobMove = true;
-				continue;
-			}
-			else
-			{
-				continue;
-			}
-		}
+void Mobs::checkmove(COORD pos) {
+	if ((pos.X != getX()) || (pos.Y != getY())){
+		needtomove = true;
 	}
-	
+	else {
+		needtomove = false;
+	}
+}
+
+void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos)
+{
+	if (needtomove == true) {
+		int playerx = pos.X;
+		int playery = pos.Y;
+		COORD mob;
+		mob.X = getX();
+		mob.Y = getY();
+		if (playerx > mob.X)
+			mob.X += 1;
+		else if (playerx != mob.X)
+			mob.X -= 1;
+		if (playery > mob.Y)
+			mob.Y += 1;
+		else if (playery != mob.Y)
+			mob.Y -= 1;
+		needtomove = false;
+		setpos(mob);
+	}
+	//randomised mob movement section
+//	bool mobMove = false;
+//	time_t now = time(0);
 }

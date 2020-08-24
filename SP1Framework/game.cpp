@@ -381,13 +381,13 @@ void renderMap() {
                 g_Console.writeToBuffer(col, row, "  ", 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
             }
             else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'x') {
-                g_Console.writeToBuffer(col, row, "  ", 0x44); //enemy
+                g_Console.writeToBuffer(col, row, "  ", 0x55); //traps
             }
             else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'm') {
-                g_Console.writeToBuffer(col, row, "  ", 0x44);
+                g_Console.writeToBuffer(col, row, "  ", 0x44); //monster
             }
             else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'B') {
-                g_Console.writeToBuffer(col, row, "  ", 0x66);
+                g_Console.writeToBuffer(col, row, "  ", 0x66); //bullets
             }
             else{
                 g_Console.writeToBuffer(col,row,"  ", 0xff); 

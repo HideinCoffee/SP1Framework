@@ -24,7 +24,6 @@ misc::misc(MISCTYPE objectypetoset,Map &map,int x, int y) {
 
 misc::~misc() {
 	//deconstructor 
-
 }
 
 void misc::setobjectype(MISCTYPE objectypetoset) {
@@ -51,6 +50,13 @@ void misc::collide(Map &map) { // player collide with misc
 	
 }
 
+bool misc::getdestroystatus() {
+	return destroyed;
+}
+
+void misc::setdestroy(bool destruct) {
+	destroyed = destruct;
+}
 
 
 

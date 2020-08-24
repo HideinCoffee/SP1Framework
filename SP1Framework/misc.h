@@ -10,6 +10,7 @@ enum class MISCTYPE {
 class misc
 {
 private:
+	bool destroyed;
 	bool moveable;
 	MISCTYPE objectype;
 	Position position;
@@ -18,11 +19,17 @@ private:
 public:
 	misc(MISCTYPE objectypetoset,Map &map,int x,int y);
 	~misc();
+	//setters
 	void setx(int x);
 	void sety(int y);
+	void setdestroy(bool destruct);
+	//getters
+	bool getdestroystatus();
 	int getx();
 	int gety();
 	void setobjectype(MISCTYPE objectypetoset);
 	void collide(Map &map);
+	
+
 };
 

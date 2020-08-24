@@ -51,7 +51,24 @@ enum EGAMESTATES
     S_COUNT
 };
 
-
+enum class COLOR {
+    BLACK = 0x00,
+    LIGHTWHITE = 0xff,
+    BLUE = 0x11,
+    GREEN = 0x22,
+    AQUA = 0x33,
+    RED = 0x44,
+    PURPLE = 0x55,
+    YELLOW = 0x66,
+    WHITE = 0x77,
+    GRAY = 0x88,
+    LIGHTBLUE = 0x99,
+    LIGHTGREEN = 0xAA,
+    LIGHTAQUA = 0xBB,
+    LIGHTRED = 0xCC,
+    LIGHTPURPLE = 0xDD,
+    LIGHTYELLOW = 0XEE
+};
 
 // struct for the game character
 //struct SGameChar

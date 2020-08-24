@@ -78,7 +78,7 @@ void Map::changeread(bool status) {
 }
 
 bool Map::isoccupied( int x, int y) {
-	if ((maparray[y][x] != '@') && (maparray[y][x] != 'm'))
+	if (maparray[y][x] != '@') //&& (maparray[y][x] != 'm'))
 	{
 		return true;
 	}

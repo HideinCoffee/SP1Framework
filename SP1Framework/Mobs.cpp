@@ -31,15 +31,19 @@ void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map){
 		mob.X = getX();
 		mob.Y = getY();
 		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
+			//map.editmap(pos.X, pos.Y, '@');
 			mob.X += 1;
 		}
 		else if ((playerx != mob.X) && (map.isoccupied(mob.X - 1, mob.Y) == false)) {
+		//	map.editmap(pos.X, pos.Y, '@');
 			mob.X -= 1;
 		}
 		if ((playery > mob.Y) && (map.isoccupied(mob.X, mob.Y + 1) == false)) {
+			//map.editmap(pos.X, pos.Y, '@');
 			mob.Y += 1;
 		}
 		else if ((playery != mob.Y) && (map.isoccupied(mob.X, mob.Y - 1) == false)) {
+		//	map.editmap(pos.X, pos.Y, '@');
 			mob.Y -= 1;
 		}
 		needtomove = false;
@@ -55,7 +59,7 @@ void Mobs::shoot(BULLETDIRECTION bulletdir) {
 }
 
 void Mobs::collide(Map &map) {
-
+	
 }
 
 void Mobs::damage(int x) {

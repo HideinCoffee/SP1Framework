@@ -2,14 +2,14 @@
 #include "map.h" 
 #include "Entity.h"
 enum class MAPTILES {
-	WALL,
-	COIN,
-	PATH,
-	TRAP,
-	DEFAULT,
-	MOB,
-	NPC,
-	BULLET,
+	WALL = '#',
+	COIN = '$',
+	PATH = '@',
+	TRAP = 'X',
+	MOB = 'm',
+	NPC = '!',
+	BULLET = 'B',
+	DEFAULT
 };
 
 struct SGameChar

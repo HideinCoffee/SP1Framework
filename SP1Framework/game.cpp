@@ -64,7 +64,7 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    entityarray[0] = new Player(map,5, 115);
+    entityarray[0] = new Player(map,BULLETYPE::B_C,5, 115);
     entityarray[1] = new Mobs(4,115);
 }
 
@@ -399,12 +399,12 @@ void renderGame()
 void renderCharacter()
 {
     // Draw the location of the character
-    WORD charColor = 0x0C;
+    WORD charColor = 0x23;
     if (g_sChar.m_bActive)
     {
         charColor = 0x0A;
     }
-    g_Console.writeToBuffer((entityarray[0]->getX()-g_sChar.offset.X)*2,entityarray[0]->getY()-g_sChar.offset.Y,"  ", charColor);
+    g_Console.writeToBuffer((entityarray[0]->getX()-g_sChar.offset.X)*2,entityarray[0]->getY()-g_sChar.offset.Y,"  ", 0x0f);
 }
 
 void renderFramerate()
@@ -430,7 +430,11 @@ void renderFramerate()
 
     // display offset
     ss.str("");
-    ss << "offsetx:" << ' ' << g_sChar.offset.X << ' ' << "offsety:" << ' ' << g_sChar.offset.Y;
+    ss << "offsetX:" << ' ' << g_sChar.offset.X << ' ' << "offsetY:" << ' ' << g_sChar.offset.Y;
+    g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
+    // display monster location // experiment
+    ss.str("");
+    ss << "monsterX:" << ' ' << entityarray[1]->getX() << ' ' << " monsterY:" << ' ' << entityarray[1]->getY();
     g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
 }
 

@@ -18,10 +18,11 @@ enum class BULLETDIRECTION {
 		B_RIGHT,
 	};
 enum class BULLETYPE {
-	B_P,
-	B_C,
-	B_B
+	B_P, // player
+	B_C, // corona
+	B_B // player 
 };
+
 class Entity
 {
 private:

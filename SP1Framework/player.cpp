@@ -4,11 +4,12 @@ Player::Player(){
 //	pos.Y = 20;
 	//default constructor
 }
-Player::Player(Map& map,int x, int y) {
+Player::Player(Map& map,BULLETYPE bulletype,int x, int y) {
 	COORD P;
 	P.X = x;
 	P.Y = y;
 	setpos(P);
+	setbulletype(bulletype);
 	//map.editmap(x, y, 'P');
 }
 
@@ -26,23 +27,31 @@ void Player::shoot(BULLETDIRECTION bulletdir) {
 }
 
 void Player::collide(Map &map) {
-
 	switch (map.getchar(getX(),getY())) {
 	case '!':
+		setrescued(getrescued() + 1);// npc rescue count +=1;
 		break;
 	case '$':
+		setmoney(getmoney() + 1);// money +=1;
 		break;
 	case 'B':
+		switch (getbulletype()) { // check whos bullet if its enemy take damage
+		case BULLETYPE::B_P:
+			break;
+		case BULLETYPE::B_B:
+			break;
+		case BULLETYPE::B_C:
+			break;
+		}
 		break;
 	case 'm':
+		damage(1);
+		// take DOT
 		break;
-	case 'T':
-		break;
-	case 'X':
+	case 'X': // traps 
+		damage(1);
 		break;
 	}
-
-
 }
 void Player::damage(int x) {
 	if (gethealth() - x > 0)
@@ -50,6 +59,34 @@ void Player::damage(int x) {
 	else
 		setalive(false);
 }
-//void setpos(COORD pos) {
-//	position.setpos(pos);
-//}
+
+void Player::setbulletype(BULLETYPE bulletype) {
+	currentbulletype = bulletype;
+}
+
+void Player::setammo(int ammo) {
+	remainingammo = ammo;
+}
+
+void Player::setrescued(int rescued) {
+	npcrescued = rescued;
+}
+
+void Player::setmoney(int money) {
+	totalmoney = money;
+}
+
+BULLETYPE Player::getbulletype() {
+	return currentbulletype;
+}
+
+int Player::getrescued() {
+	return npcrescued;
+}
+
+int Player::getammo() {
+	return remainingammo;
+}
+int Player::getmoney() {
+	return totalmoney;
+}

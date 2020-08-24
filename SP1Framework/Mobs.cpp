@@ -2,6 +2,7 @@
 
 Mobs::Mobs(int x, int y)
 {
+	needtomove = true;
 	COORD mob;
 	mob.X = x;
 	mob.Y = y;
@@ -23,7 +24,7 @@ void Mobs::checkmove(COORD pos) {
 	}
 }
 
-void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos)
+void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map)
 {
 	if (needtomove == true) {
 		int playerx = pos.X;
@@ -31,18 +32,26 @@ void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos)
 		COORD mob;
 		mob.X = getX();
 		mob.Y = getY();
-		if (playerx > mob.X)
+		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
 			mob.X += 1;
-		else if (playerx != mob.X)
+		}
+		else if ((playerx != mob.X) && (map.isoccupied(mob.X - 1, mob.Y) == false)) {
 			mob.X -= 1;
-		if (playery > mob.Y)
+		}
+		if ((playery > mob.Y) && (map.isoccupied(mob.X, mob.Y + 1) == false)) {
 			mob.Y += 1;
-		else if (playery != mob.Y)
+		}
+		else if ((playery != mob.Y) && (map.isoccupied(mob.X, mob.Y - 1) == false)) {
 			mob.Y -= 1;
+		}
 		needtomove = false;
 		setpos(mob);
 	}
 	//randomised mob movement section
 //	bool mobMove = false;
 //	time_t now = time(0);
+}
+
+void Mobs::shoot(BULLETDIRECTION bulletdir) {
+
 }

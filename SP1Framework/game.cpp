@@ -64,8 +64,8 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    entityarray[0] = new Player(2, 151);
-    entityarray[1] = new Mobs(50, 151);
+    entityarray[0] = new Player(2,151);
+    entityarray[1] = new Mobs(4,151);
 }
 
 //--------------------------------------------------------------
@@ -99,7 +99,7 @@ void shutdown( void )
 void getInput( void )
 {
     // resets all the keyboard events
-   // memset(g_skKeyEvent, 0, K_COUNT * sizeof(*g_skKeyEvent));
+    //memset(g_skKeyEvent, 0, K_COUNT * sizeof(*g_skKeyEvent));
     // then call the console to detect input from user
     g_Console.readConsoleInput();    
 }
@@ -170,10 +170,14 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent)
     EKEYS key = K_COUNT;
     switch (keyboardEvent.wVirtualKeyCode)
     {
-    case VK_UP: key = K_UP; break;
-    case VK_DOWN: key = K_DOWN; break;
-    case VK_LEFT: key = K_LEFT; break; 
-    case VK_RIGHT: key = K_RIGHT; break; 
+    case 0x57: key = K_UP; break;
+    case 0x53: key = K_DOWN; break;
+    case 0x41: key = K_LEFT; break;
+    case 0x44: key = K_RIGHT; break;
+    case VK_UP: key = A_UP; break;
+    case VK_DOWN: key = A_DOWN; break;
+    case VK_LEFT: key = A_LEFT; break; 
+    case VK_RIGHT: key = A_RIGHT; break; 
     case VK_SPACE: key = K_SPACE; break;
     case VK_ESCAPE: key = K_ESCAPE; break; 
     }
@@ -247,11 +251,14 @@ void updateGame()       // gameplay logic
 {
     processUserInput(); // checks if you should change states or do something else with the game, e.g. pause, exit
     moveCharacter();    // moves the character, collision detection, physics, etc
+    shootcharacter();
+    renderbullet();
     moveEnemy();        // sound can be played here too.
+    
 }
 void moveEnemy() {
     ((Mobs*)(entityarray[1]))->checkmove(entityarray[0]->returnPos());
-    entityarray[1]->move(movementdir,entityarray[0]->returnPos());
+    entityarray[1]->move(movementdir,entityarray[0]->returnPos(),map);
 }
 void moveCharacter() {
     // Updating the location of the character based on the key release
@@ -343,11 +350,8 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame()
 {
     renderMap();        // renders the map to the buffer first
-    renderEnemies(g_Console, g_dElapsedTime);
+    renderEnemies();
     renderCharacter();  // renders the character into the buffer
-
-//rectangle(20, 30, 10, 5, 32, 0x00, 0xff, "i hate you",false);
-
 }
 
 void renderMap() {
@@ -367,23 +371,26 @@ void renderMap() {
 
     for (int row = 0; row < 40; row++) {
         for (int col = 0; col < 160; col++) {
-            if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '#') {
-                g_Console.writeToBuffer(col, row, " ", 0x00);
+            if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '#') {
+                g_Console.writeToBuffer(col, row, "  ", 0x00);
             }
             else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '$') {
-                g_Console.writeToBuffer(col, row, " ", 0x66); //Colour of "coin" pixels
+                g_Console.writeToBuffer(col, row, "  ", 0x66); //Colour of "coin" pixels
             }
-            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '!') {
-                g_Console.writeToBuffer(col, row, " ", 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
+            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '!') {
+                g_Console.writeToBuffer(col, row, "  ", 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
             }
-            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == 'x') {
-                g_Console.writeToBuffer(col, row, " ", 0x44); //enemy
+            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'x') {
+                g_Console.writeToBuffer(col, row, "  ", 0x44); //enemy
             }
-            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == 'm') {
-                g_Console.writeToBuffer(col, row, " ", 0x44);
+            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'm') {
+                g_Console.writeToBuffer(col, row, "  ", 0x44);
+            }
+            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'B') {
+                g_Console.writeToBuffer(col, row, "  ", 0x66);
             }
             else{
-                g_Console.writeToBuffer(col,row," ", 0xff); 
+                g_Console.writeToBuffer(col,row,"  ", 0xff); 
             }
         }
     }
@@ -444,6 +451,14 @@ void renderInputEvents()
         case K_RIGHT: key = "RIGHT";
             break;
         case K_SPACE: key = "SPACE";
+            break;
+        case A_DOWN: key = "ALEFT";
+            break;
+        case A_UP: key = "AUP";
+            break;
+        case A_LEFT: key = "ALEFT";
+            break;
+        case A_RIGHT: key = "ARIGHT";
             break;
         default: continue;
         }
@@ -543,11 +558,40 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
     g_Console.setConsoleFont(30, 30, L"Arial");
     g_Console.writeToBuffer(C, ss.str(), 0x0f);
 
-
 }
-
-void renderEnemies(Console& g_Console, double g_dElapsedTime)
+void renderEnemies()
 {
     //int Time = g_dElapsedTime;
-    map.editmap(g_Console, entityarray[1]->getX(),entityarray[1]->getY(),'m');
+    map.editmap(entityarray[1]->getX(),entityarray[1]->getY(),'m');
 }
+
+
+void shootcharacter(){
+    if (g_skKeyEvent[A_UP].keyDown)
+        entityarray[0]->shoot(BULLETDIRECTION::B_UP);
+    if (g_skKeyEvent[A_DOWN].keyDown)
+        entityarray[0]->shoot(BULLETDIRECTION::B_DOWN);
+    if (g_skKeyEvent[A_LEFT].keyDown)
+        entityarray[0]->shoot(BULLETDIRECTION::B_LEFT);
+    if (g_skKeyEvent[A_RIGHT].keyDown)
+        entityarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
+}
+
+void renderbullet() {
+    for (int i = 0; i < 20; i++) {
+        if (bulletarray[i] != nullptr) {
+            if (bulletarray[i]->getstatus() == true){
+                map.editmap(bulletarray[i]->getx(), bulletarray[i]->gety(), '@');
+                delete bulletarray[i];
+                bulletarray[i] = nullptr;
+            }
+            else {
+                bulletarray[i]->movebullet(map);
+                map.editmap(bulletarray[i]->getx(), bulletarray[i]->gety(), 'B');
+            }
+        }
+        else
+            continue;
+    }
+}
+// make a var that stores the previouschar so can restore later;

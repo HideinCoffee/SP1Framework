@@ -7,7 +7,7 @@ Entity::Entity() {//this is a base class
 Entity::~Entity(){
 	//deconstructor
 }
-void Entity::move(MOVEMENTDIRECTION movementdir,COORD pos) {
+void Entity::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map) {
 	// left blank as this WILL be overidden.
 
 }
@@ -25,4 +25,11 @@ COORD Entity::returnPos(){
 	COORD entitypos = position.returnPos();
 	return entitypos;
 }
+
+void Entity::shoot(BULLETDIRECTION bulletdir)
+{
+	// overidden
+}
+
+
 

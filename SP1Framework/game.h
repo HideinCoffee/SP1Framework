@@ -35,7 +35,11 @@ enum EKEYS
     K_RIGHT,
     K_ESCAPE,
     K_SPACE,
-    K_COUNT
+    A_RIGHT,
+    A_LEFT,
+    A_UP,
+    A_DOWN,
+    K_COUNT = 12
 };
 
 // Enumeration for the different screen states
@@ -69,13 +73,13 @@ void shutdown    ( void );      // do clean up, free memory
 
 void splashScreenWait();    // waits for time to pass in splash screen
 void updateGame();          // gameplay logic
-void moveCharacter();       // moves the character, collision detection, physics, etc
+
 void processUserInput();    // checks if you should change states or do something else with the game, e.g. pause, exit
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
 void renderMap();           // renders the map to the buffer first
-void renderCharacter();     // renders the character into the buffer
+
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game
 void renderInputEvents();   // renders the status of input events
@@ -89,5 +93,19 @@ void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mous
 
 void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
 void moveEnemy();
-void renderEnemies(Console& g_Console, double g_dElapsedTime);
+
+
+// player related
+void moveCharacter();       // moves the character, collision detection, physics, etc
+void renderCharacter();     // renders the character into the buffer
+void shootcharacter();
+
+// enemies related x
+
+void renderEnemies();
+//map related
+
+// bullet related
+void renderbullet();
+
 #endif // _GAME_H

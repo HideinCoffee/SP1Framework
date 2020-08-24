@@ -15,7 +15,7 @@ Map::~Map(){
 
 
 
-COORD Map::movecamera(int direction,COORD playerpos){
+COORD Map::movecamera(int direction, COORD playerpos) {
 	COORD pos = playerpos;
 
 	switch (direction) {
@@ -65,30 +65,7 @@ bool Map::slotmap(std::string filename, Console &g_Console)
 }
 
 
-//void Map::drawmap(Console &g_Console,Player &player) {
-//	COORD c;
-//	c.X = 0;
-//	c.Y = 0;
-//	for (int row = player.pos.Y - 20; row < player.pos.Y + 20; row++) {
-//		for (int col = player.pos.X - 80; col < player.pos.X + 80; col++) {
-//			if (maparray[row][col] == '@') {
-//				c.Y--;
-//				g_Console.writeToBuffer(c,maparray[row][col], 0x00);
-//			}
-//			else if (maparray[row][col] == '#') {
-//				g_Console.writeToBuffer(c, maparray[row][col], 0xff);
-//				c.Y--;
-//			}
-//			else
-//				g_Console.writeToBuffer(c, maparray[row][col], 0x0f);
-//			c.X++;
-//		}
-//		c.X = 0;
-//		c.Y++;
-//	}
-//}
-
-void Map::editmap(Console& g_Console, int x, int y, char toreplace) {
+void Map::editmap(int x, int y, char toreplace) {
 	maparray[y][x] = toreplace;
 }
 
@@ -101,7 +78,7 @@ void Map::changeread(bool status) {
 }
 
 bool Map::isoccupied( int x, int y) {
-	if (maparray[y][x] != '@')
+	if ((maparray[y][x] != '@') && (maparray[y][x] != 'm'))
 	{
 		return true;
 	}
@@ -109,6 +86,10 @@ bool Map::isoccupied( int x, int y) {
 		return false;
 }
 
+char Map::getchar(int x, int y) {
+	char chartoreturn = maparray[y][x];
+	return chartoreturn;
+}
 
 
 

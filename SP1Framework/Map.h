@@ -3,8 +3,6 @@
 #include <fstream>
 #include <sstream>
 #include <string>
-#include "player.h"
-
 class Map
 {
 
@@ -22,13 +20,15 @@ public:
 // draws out the map from the text file
 //	void drawmap(Console &g_Console,Player &player);
 // insert the position of the char to replace and what char to replace 
-	void editmap(Console &g_Console,int x, int y,char toreplace);
+	void editmap(int x, int y,char toreplace);
 // checks if the text file has been read // true = file read false = file not read
 	bool checkread(); 
 // checks if the position is occupied true = occupied false = not occupied
 	bool isoccupied(int x, int y); 
 // changes the read value to status
 	void changeread(bool status);
+// get char
+	char getchar(int x, int y);
 };
 
 

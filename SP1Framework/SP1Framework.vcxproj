@@ -86,6 +86,7 @@
     <ClCompile Include="Global.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="misc.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="Mobs.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Framework\timer.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="Global.h" />
+    <ClInclude Include="misc.h" />
     <ClInclude Include="Mobs.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />

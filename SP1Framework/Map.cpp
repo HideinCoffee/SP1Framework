@@ -3,7 +3,7 @@
 Map::Map():maparray{0} {
 
 	for (int row = 0; row < 60; row++) {
-		for (int col = 0; col < 200; col++) {
+		for (int col = 0; col < 150; col++) {
 			maparray[row][col] = ' ';
 		}
 	}
@@ -46,10 +46,10 @@ bool Map::slotmap(std::string filename, Console &g_Console)
 	if (map.is_open() == true){
 		int row = 0;
 		while (std::getline(map, line)){
-			for (int col = 0; col < 200; col++) {
-				if (line[col] > 200)
+			for (int col = 0; col < 150; col++) {
+				if (line[col] > 150)
 					continue;
-				else if (row < 200)
+				else if (row < 150)
 					maparray[row][col] = line[col];
 				else
 					break;

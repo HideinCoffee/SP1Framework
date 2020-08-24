@@ -64,7 +64,7 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    entityarray[0] = new Player(2,151);
+    entityarray[0] = new Player(2, 115);
     entityarray[1] = new Mobs(4,151);
 }
 
@@ -361,11 +361,11 @@ void renderMap() {
         }
     }
 
-    if ((entityarray[0]->getX() > 80) && (entityarray[0]->getX() < 200 - 80)) { // offset x
+    if ((entityarray[0]->getX() > 80) && (entityarray[0]->getX() < 150 - 80)) { // offset x
         g_sChar.offset.X = entityarray[0]->getX() - 80;
     }
 
-    if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 200 - 20)) { // offset y
+    if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 150 - 20)) { // offset y
         g_sChar.offset.Y = entityarray[0]->getY() - 20;
     }
 

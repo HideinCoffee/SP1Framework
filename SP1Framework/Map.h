@@ -11,7 +11,7 @@ public:
 	~Map();
 	// get camera_x value
 	// change the camera x and y value
-	char maparray[200][200];
+	char maparray[150][150];
 	bool read = false;
 	COORD movecamera(int direction,COORD playerpos);
 

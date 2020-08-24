@@ -64,8 +64,8 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    entityarray[0] = new Player(2, 115);
-    entityarray[1] = new Mobs(4,151);
+    entityarray[0] = new Player(map,5, 115);
+    entityarray[1] = new Mobs(4,115);
 }
 
 //--------------------------------------------------------------
@@ -349,52 +349,51 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    renderMap();        // renders the map to the buffer first
+    rendermap(g_Console,map,g_sChar,entityarray);        // renders the map to the buffer first
     renderEnemies();
     renderCharacter();  // renders the character into the buffer
 }
 
-void renderMap() {
-    if (map.checkread() == false) {
-        if (map.slotmap("map.txt", g_Console) == true) {
-            map.changeread(true);
-        }
-    }
-
-    if ((entityarray[0]->getX() > 80) && (entityarray[0]->getX() < 150 - 80)) { // offset x
-        g_sChar.offset.X = entityarray[0]->getX() - 80;
-    }
-
-    if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 150 - 20)) { // offset y
-        g_sChar.offset.Y = entityarray[0]->getY() - 20;
-    }
-
-    for (int row = 0; row < 40; row++) {
-        for (int col = 0; col < 160; col++) {
-            if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '#') {
-                g_Console.writeToBuffer(col, row, "  ", 0x00);
-            }
-            else if (map.maparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '$') {
-                g_Console.writeToBuffer(col, row, "  ", 0x66); //Colour of "coin" pixels
-            }
-            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '!') {
-                g_Console.writeToBuffer(col, row, "  ", 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
-            }
-            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'x') {
-                g_Console.writeToBuffer(col, row, "  ", 0x55); //traps
-            }
-            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'm') {
-                g_Console.writeToBuffer(col, row, "  ", 0x44); //monster
-            }
-            else if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'B') {
-                g_Console.writeToBuffer(col, row, "  ", 0x66); //bullets
-            }
-            else{
-                g_Console.writeToBuffer(col,row,"  ", 0xff); 
-            }
-        }
-    }
-}
+//void renderMap() {
+//    if (map.checkread() == false) {
+//        if (map.slotmap("map.txt", g_Console) == true) {
+//            map.changeread(true);
+//        }
+//    }
+//    if ((entityarray[0]->getX() > 60) && (entityarray[0]->getX() < 150 - 60)) { // offset x
+//        g_sChar.offset.X = entityarray[0]->getX() - 60;
+//    }
+//
+//    if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 150 - 20)) { // offset y
+//        g_sChar.offset.Y = entityarray[0]->getY() - 20;
+//    }
+//
+//    for (int row = 0; row < 40; row++) {
+//        for (int col = 0; col < 120; col++) {
+//            if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '#') {
+//                g_Console.writeToBuffer(col, row, " ", 0x00);
+//            }
+//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '$') {
+//                g_Console.writeToBuffer(col, row, " ", 0x66); //Colour of "coin" pixels
+//            }
+//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '!') {
+//                g_Console.writeToBuffer(col, row, " ", 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
+//            }
+//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'X') {
+//                g_Console.writeToBuffer(col, row, " ", 0x55); //traps
+//            }
+//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'm') {
+//                g_Console.writeToBuffer(col, row, " ", 0x44); //monster
+//            }
+//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'B') {
+//                g_Console.writeToBuffer(col, row, " ", 0x66); //bullets
+//            }
+//            else{
+//                g_Console.writeToBuffer(col,row," ", 0xff); 
+//            }
+//        }
+//    }
+//}
 
 
 void renderCharacter()
@@ -405,7 +404,7 @@ void renderCharacter()
     {
         charColor = 0x0A;
     }
-    g_Console.writeToBuffer(entityarray[0]->getX()-g_sChar.offset.X,entityarray[0]->getY()-g_sChar.offset.Y,char(1), charColor);    
+    g_Console.writeToBuffer((entityarray[0]->getX()-g_sChar.offset.X)*2,entityarray[0]->getY()-g_sChar.offset.Y,"  ", charColor);
 }
 
 void renderFramerate()
@@ -427,14 +426,19 @@ void renderFramerate()
     g_Console.writeToBuffer(c, ss.str(), 0x59);
     ss.str("");
     ss <<"player position" << ' ' << entityarray[0]->getX()<< ' ' << entityarray[0]->getY();
-    g_Console.writeToBuffer(120, 0, ss.str(), 0x59);
+    g_Console.writeToBuffer(130, 0, ss.str(), 0x59);
+
+    // display offset
+    ss.str("");
+    ss << "offsetx:" << ' ' << g_sChar.offset.X << ' ' << "offsety:" << ' ' << g_sChar.offset.Y;
+    g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
 }
 
 // this is an example of how you would use the input events
 void renderInputEvents()
 {
     // keyboard events
-    COORD startPos = {130, 30};
+    COORD startPos = {130,10};
     std::ostringstream ss;
     std::string key;
     for (int i = 0; i < K_COUNT; ++i)

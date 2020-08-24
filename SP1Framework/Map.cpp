@@ -2,9 +2,9 @@
 
 Map::Map():maparray{0} {
 
-	for (int row = 0; row < 60; row++) {
+	for (int row = 0; row < 150; row++) {
 		for (int col = 0; col < 150; col++) {
-			maparray[row][col] = ' ';
+			maparray[row][col] = '  ';
 		}
 	}
 }
@@ -89,6 +89,11 @@ bool Map::isoccupied( int x, int y) {
 char Map::getchar(int x, int y) {
 	char chartoreturn = maparray[y][x];
 	return chartoreturn;
+}
+
+char* Map::getmaparray() {
+	char* ptrtomap = *maparray;
+	return ptrtomap;
 }
 
 

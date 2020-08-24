@@ -10,8 +10,7 @@ Mobs::Mobs(int x, int y)
 	//Constructor for mobs
 }
 
-Mobs::~Mobs()
-{
+Mobs::~Mobs(){
 	//destructor for mobs
 }
 
@@ -24,8 +23,7 @@ void Mobs::checkmove(COORD pos) {
 	}
 }
 
-void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map)
-{
+void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map){
 	if (needtomove == true) {
 		int playerx = pos.X;
 		int playery = pos.Y;
@@ -53,5 +51,13 @@ void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map)
 }
 
 void Mobs::shoot(BULLETDIRECTION bulletdir) {
+
+}
+
+void Mobs::collide(Map &map) {
+
+}
+
+void Mobs::damage(int x) {
 
 }

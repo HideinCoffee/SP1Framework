@@ -4,12 +4,14 @@ Player::Player(){
 //	pos.Y = 20;
 	//default constructor
 }
-Player::Player(int x, int y) {
+Player::Player(Map& map,int x, int y) {
 	COORD P;
 	P.X = x;
 	P.Y = y;
 	setpos(P);
+	//map.editmap(x, y, 'P');
 }
+
 void Player::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map) {
 	
 }
@@ -21,6 +23,32 @@ void Player::shoot(BULLETDIRECTION bulletdir) {
 			break;
 		}
 	}
+}
+
+void Player::collide(Map &map) {
+
+	switch (map.getchar(getX(),getY())) {
+	case '!':
+		break;
+	case '$':
+		break;
+	case 'B':
+		break;
+	case 'm':
+		break;
+	case 'T':
+		break;
+	case 'X':
+		break;
+	}
+
+
+}
+void Player::damage(int x) {
+	if (gethealth() - x > 0)
+		sethealth(gethealth() - x);
+	else
+		setalive(false);
 }
 //void setpos(COORD pos) {
 //	position.setpos(pos);

@@ -107,7 +107,7 @@ void Bullet::sety(int y){
 	position.setY(y);
 }
 void Bullet::replace(Map &map,int x,int y) {
-	map.maparray[y][x] = '@';
+	map.editmap(x, y, '@');
 }
 
 bool Bullet::getstatus() {

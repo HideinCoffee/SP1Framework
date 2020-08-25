@@ -21,7 +21,7 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	case '$':
 		returnvalue = MAPTILES::COIN;
 		break;
-	case 'X':
+	case 'x':
 		returnvalue = MAPTILES::TRAP;
 	}
 	return returnvalue;
@@ -50,7 +50,7 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* entityarra
 					g_Console.writeToBuffer(col*2, row, "  ", 0x66);
 					break;
 				case MAPTILES::COIN:
-					g_Console.writeToBuffer(col*2, row, "  ", 0x44);
+					g_Console.writeToBuffer(col*2, row, "  ", 0xEE);
 					break;
 				case MAPTILES::MOB:
 					g_Console.writeToBuffer(col*2, row, "  ", 0xDD);

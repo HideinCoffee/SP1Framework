@@ -5,13 +5,13 @@
 #include <string>
 class Map
 {
-
+private:
+	char maparray[150][150];
 public:
 	Map();
 	~Map();
 	// get camera_x value
 	// change the camera x and y value
-	char maparray[150][150];
 	bool read = false;
 	COORD movecamera(int direction,COORD playerpos);
 
@@ -29,6 +29,8 @@ public:
 	void changeread(bool status);
 // get char
 	char getchar(int x, int y);
+	char* getmaparray();
+
 };
 
 

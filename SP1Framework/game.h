@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "player.h"
 #include "Global.h"
+#include "Rendermap.h"
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -50,19 +51,36 @@ enum EGAMESTATES
     S_COUNT
 };
 
-
+enum class COLOR {
+    BLACK = 0x00,
+    LIGHTWHITE = 0xff,
+    BLUE = 0x11,
+    GREEN = 0x22,
+    AQUA = 0x33,
+    RED = 0x44,
+    PURPLE = 0x55,
+    YELLOW = 0x66,
+    WHITE = 0x77,
+    GRAY = 0x88,
+    LIGHTBLUE = 0x99,
+    LIGHTGREEN = 0xAA,
+    LIGHTAQUA = 0xBB,
+    LIGHTRED = 0xCC,
+    LIGHTPURPLE = 0xDD,
+    LIGHTYELLOW = 0XEE
+};
 
 // struct for the game character
-struct SGameChar
-{
-    COORD m_cLocation;
-    COORD m_cLocation1;
-    COORD offset;
-    
-
-    bool  m_bActive;
-    bool abletomove;
-};
+//struct SGameChar
+//{
+//    COORD m_cLocation;
+//    COORD m_cLocation1;
+//    COORD offset;
+//    
+//
+//    bool  m_bActive;
+//    bool abletomove;
+//};
 
 
 void init        ( void );      // initialize your variables, allocate memory, etc
@@ -78,7 +96,7 @@ void processUserInput();    // checks if you should change states or do somethin
 void clearScreen();         // clears the current screen and draw from scratch 
 void renderSplashScreen();  // renders the splash screen
 void renderGame();          // renders the game stuff
-void renderMap();           // renders the map to the buffer first
+//void renderMap();           // renders the map to the buffer first
 
 void renderFramerate();     // renders debug information, frame rate, elapsed time, etc
 void renderToScreen();      // dump the contents of the buffer to the screen, one frame worth of game

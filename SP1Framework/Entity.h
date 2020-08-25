@@ -18,16 +18,18 @@ enum class BULLETDIRECTION {
 		B_RIGHT,
 	};
 enum class BULLETYPE {
-	B_P,
-	B_C,
-	B_B
+	B_P, // player
+	B_C, // corona
+	B_B // player 
 };
+
 class Entity
 {
 private:
 	Position position;
 	int health;
 	char prevchar;
+	bool alive;
 public:
 	Entity();
 	~Entity();
@@ -36,6 +38,10 @@ public:
 	int getX();
 	int getY(); //Getters, to pove things from private to public
 	COORD returnPos();
-	virtual void shoot(BULLETDIRECTION bulletdir);
-	
+	int gethealth();
+	void sethealth(int x);
+	void setalive(bool live);
+	virtual void shoot(BULLETDIRECTION bulletdir) =0;
+	virtual void collide(Map &map) = 0;
+	virtual void damage(int x)=0;
 };

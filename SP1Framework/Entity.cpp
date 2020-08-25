@@ -26,10 +26,15 @@ COORD Entity::returnPos(){
 	return entitypos;
 }
 
-void Entity::shoot(BULLETDIRECTION bulletdir)
-{
-	// overidden
+int Entity::gethealth() {
+	return health;
 }
 
+void Entity::sethealth(int x) {
+	health = x;
+}
 
+void Entity::setalive(bool live) {
+	alive = live;
+}
 

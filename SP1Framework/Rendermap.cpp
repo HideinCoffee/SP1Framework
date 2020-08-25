@@ -21,6 +21,8 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	case '$':
 		returnvalue = MAPTILES::COIN;
 		break;
+	case 'X':
+		returnvalue = MAPTILES::TRAP;
 	}
 	return returnvalue;
 }

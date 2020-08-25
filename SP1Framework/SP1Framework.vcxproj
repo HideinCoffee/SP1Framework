@@ -90,6 +90,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="Mobs.cpp" />
+    <ClCompile Include="Rendercharacter.cpp" />
     <ClCompile Include="Rendermap.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -104,6 +105,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="position.h" />
+    <ClInclude Include="Rendercharacter.h" />
     <ClInclude Include="Rendermap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -351,7 +351,7 @@ void renderGame()
 {
     rendermap(g_Console,map,g_sChar,entityarray);        // renders the map to the buffer first
     renderEnemies();
-    renderCharacter();  // renders the character into the buffer
+    rendercharacter(g_Console,g_sChar,entityarray);  // renders the character into the buffer
 }
 
 //void renderMap() {

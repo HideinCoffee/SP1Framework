@@ -7,6 +7,7 @@
 #include "player.h"
 #include "Global.h"
 #include "Rendermap.h"
+#include "Rendercharacter.h"
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -115,7 +116,7 @@ void moveEnemy();
 
 // player related
 void moveCharacter();       // moves the character, collision detection, physics, etc
-void renderCharacter();     // renders the character into the buffer
+//void renderCharacter();     // renders the character into the buffer
 void shootcharacter();
 
 // enemies related x

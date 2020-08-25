@@ -25,6 +25,7 @@ void Mobs::checkmove(COORD pos) {
 }
 
 void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map){
+	bool moved = false;
 	if (needtomove == true) {
 		int playerx = pos.X;
 		int playery = pos.Y;
@@ -33,18 +34,25 @@ void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map){
 		mob.Y = getY();
 		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
 			mob.X += 1;
+			moved = true;
 		}
 		else if ((playerx != mob.X) && (map.isoccupied(mob.X - 1, mob.Y) == false)) {
 			mob.X -= 1;
+			moved = true;
 		}
 		if ((playery > mob.Y) && (map.isoccupied(mob.X, mob.Y + 1) == false)) {
 			mob.Y += 1;
+			moved = true;
 		}
 		else if ((playery != mob.Y) && (map.isoccupied(mob.X, mob.Y - 1) == false)) {
 			mob.Y -= 1;
+			moved = true;
 		}
 		needtomove = false;
-		setpos(mob);
+		if (moved == true) {
+			map.editmap(pos.X, pos.Y, '@');
+			setpos(mob);
+		}
 	}
 
 	//randomised mob movement section

@@ -15,7 +15,7 @@ misc::misc(MISCTYPE objectypetoset,Map &map,int x, int y) {
 	case MISCTYPE::TRAP:
 		setobjectype(objectypetoset);
 		moveable = true;
-		map.editmap(x, y,'X');
+		map.editmap(x, y,'x');
 		break;
 	}
 	setx(x);

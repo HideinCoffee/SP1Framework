@@ -48,7 +48,7 @@ void Player::collide(Map &map) {
 		damage(1);
 		// take DOT
 		break;
-	case 'X': // traps 
+	case 'x': // traps 
 		damage(1);
 		break;
 	}

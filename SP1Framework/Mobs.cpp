@@ -1,12 +1,13 @@
 #include "mobs.h"
 
-Mobs::Mobs(int x, int y)
+Mobs::Mobs(int x, int y,char symbol)
 {
 	needtomove = true;
 	COORD mob;
 	mob.X = x;
 	mob.Y = y;
 	setpos(mob);
+	setsymbol(symbol);
 	//Constructor for mobs
 }
 
@@ -31,24 +32,21 @@ void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map){
 		mob.X = getX();
 		mob.Y = getY();
 		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
-			//map.editmap(pos.X, pos.Y, '@');
 			mob.X += 1;
 		}
 		else if ((playerx != mob.X) && (map.isoccupied(mob.X - 1, mob.Y) == false)) {
-		//	map.editmap(pos.X, pos.Y, '@');
 			mob.X -= 1;
 		}
 		if ((playery > mob.Y) && (map.isoccupied(mob.X, mob.Y + 1) == false)) {
-			//map.editmap(pos.X, pos.Y, '@');
 			mob.Y += 1;
 		}
 		else if ((playery != mob.Y) && (map.isoccupied(mob.X, mob.Y - 1) == false)) {
-		//	map.editmap(pos.X, pos.Y, '@');
 			mob.Y -= 1;
 		}
 		needtomove = false;
 		setpos(mob);
 	}
+
 	//randomised mob movement section
 //	bool mobMove = false;
 //	time_t now = time(0);

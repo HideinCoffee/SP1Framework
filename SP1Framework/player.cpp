@@ -43,7 +43,7 @@ void Player::collide(Map &map) {
 		case BULLETYPE::B_C:
 			break;
 		}
-		break;
+		break;	
 	case 'm':
 		damage(1);
 		// take DOT

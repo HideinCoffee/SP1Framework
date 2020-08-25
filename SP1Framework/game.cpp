@@ -65,7 +65,7 @@ void init(void)
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
     entityarray[0] = new Player(map,BULLETYPE::B_C,5, 115);
-    entityarray[1] = new Mobs(4,115);
+    entityarray[1] = new Mobs(4,115,'m');
 }
 
 //--------------------------------------------------------------
@@ -350,7 +350,7 @@ void renderSplashScreen()  // renders the splash screen
 void renderGame()
 {
     rendermap(g_Console,map,g_sChar,entityarray);        // renders the map to the buffer first
-    renderEnemies();
+    renderenemy(map,entityarray);
     rendercharacter(g_Console,g_sChar,entityarray);  // renders the character into the buffer
 }
 
@@ -567,11 +567,7 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
     g_Console.writeToBuffer(C, ss.str(), 0x0f);
 
 }
-void renderEnemies()
-{
-    //int Time = g_dElapsedTime;
-    map.editmap(entityarray[1]->getX(),entityarray[1]->getY(),'m');
-}
+
 
 
 void shootcharacter(){

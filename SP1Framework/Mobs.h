@@ -8,7 +8,7 @@ class Mobs :public Entity
 {
 public:
 	bool needtomove;
-	Mobs(int x, int y);
+	Mobs(int x, int y,char symbol);
 	~Mobs();
 	void checkmove(COORD pos);
 	void move(MOVEMENTDIRECTION movementdir,COORD pos, Map &map); ///more parameters, but suff here must be added to the entity class

@@ -30,18 +30,25 @@ private:
 	int health;
 	char prevchar;
 	bool alive;
+	char entitysymbol;
 public:
 	Entity();
 	~Entity();
 	virtual void move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map) = 0; //Function prototype
-	void setpos(COORD pos);
+	
+	//Getters, to get private datamembers
 	int getX();
-	int getY(); //Getters, to pove things from private to public
+	int getY(); 
 	COORD returnPos();
 	int gethealth();
+	char getsymbol();
+	//setters to set private datamembers
+	void setpos(COORD pos);
 	void sethealth(int x);
 	void setalive(bool live);
+	void setsymbol(char symbol);
 	virtual void shoot(BULLETDIRECTION bulletdir) =0;
 	virtual void collide(Map &map) = 0;
 	virtual void damage(int x)=0;
+	
 };

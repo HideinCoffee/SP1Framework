@@ -38,3 +38,10 @@ void Entity::setalive(bool live) {
 	alive = live;
 }
 
+char Entity::getsymbol() {
+	return entitysymbol;
+}
+
+void Entity::setsymbol(char symbol) {
+	entitysymbol = symbol;
+}

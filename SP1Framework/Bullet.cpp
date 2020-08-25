@@ -1,4 +1,5 @@
 #include "Bullet.h"
+
 Bullet::Bullet(int x, int y, BULLETDIRECTION bulletdir,BULLETYPE bullettp) {
 	COORD bulletpos;
 	bulletpos.X = x;
@@ -15,6 +16,9 @@ Bullet::Bullet(int x, int y, BULLETDIRECTION bulletdir,BULLETYPE bullettp) {
 	case BULLETYPE::B_P: // player bullet
 		rdistance = 30;
 		break;
+	//case BULLETYPE::B_T: // trap bullet
+	//	rdistance = 30;
+	//	break;
 	}
 }
 	

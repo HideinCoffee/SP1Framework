@@ -92,6 +92,7 @@
     <ClCompile Include="Mobs.cpp" />
     <ClCompile Include="Rendercharacter.cpp" />
     <ClCompile Include="Rendermap.cpp" />
+    <ClCompile Include="trap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -107,6 +108,7 @@
     <ClInclude Include="position.h" />
     <ClInclude Include="Rendercharacter.h" />
     <ClInclude Include="Rendermap.h" />
+    <ClInclude Include="trap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

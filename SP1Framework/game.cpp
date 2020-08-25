@@ -585,6 +585,13 @@ void shootcharacter(){
         entityarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
 }
 
+void shoottrap() {
+    if (g_skKeyEvent[A_UP].keyDown)
+        entityarray[0]->shoot(BULLETDIRECTION::B_UP);
+    if (g_skKeyEvent[A_DOWN].keyDown)
+        entityarray[0]->shoot(BULLETDIRECTION::B_DOWN);
+}
+
 void renderbullet() {
     for (int i = 0; i < 20; i++) {
         if (bulletarray[i] != nullptr) {

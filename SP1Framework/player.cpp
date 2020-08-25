@@ -1,4 +1,5 @@
 #include "player.h"
+
 Player::Player(){
 	//pos.X = 80;
 //	pos.Y = 20;
@@ -48,7 +49,7 @@ void Player::collide(Map &map) {
 		damage(1);
 		// take DOT
 		break;
-	case 'X': // traps 
+	case 'x': // traps 
 		damage(1);
 		break;
 	}

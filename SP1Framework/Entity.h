@@ -41,7 +41,7 @@ public:
 	int gethealth();
 	void sethealth(int x);
 	void setalive(bool live);
-	virtual void shoot(BULLETDIRECTION bulletdir) =0;
+	virtual void shoot(BULLETDIRECTION bulletdir) = 0;
 	virtual void collide(Map &map) = 0;
 	virtual void damage(int x)=0;
 };

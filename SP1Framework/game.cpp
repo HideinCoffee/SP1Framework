@@ -361,8 +361,8 @@ void renderMap() {
         }
     }
 
-    if ((entityarray[0]->getX() > 80) && (entityarray[0]->getX() < 150 - 80)) { // offset x
-        g_sChar.offset.X = entityarray[0]->getX() - 80;
+    if ((entityarray[0]->getX() > 60) && (entityarray[0]->getX() < 150 - 60)) { // offset x
+        g_sChar.offset.X = entityarray[0]->getX() - 60;
     }
 
     if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 150 - 20)) { // offset y
@@ -370,7 +370,7 @@ void renderMap() {
     }
 
     for (int row = 0; row < 40; row++) {
-        for (int col = 0; col < 160; col++) {
+        for (int col = 0; col < 120; col++) {
             if (map.maparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '#') {
                 g_Console.writeToBuffer(col, row, "  ", 0x00);
             }

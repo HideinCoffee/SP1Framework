@@ -64,8 +64,8 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    entityarray[0] = new Player(map,BULLETYPE::B_C,5,115);
-    entityarray[1] = new Mobs(30,115,'m');
+    playerarray[0] = new Player(map,BULLETYPE::B_C,5,115);
+    enemyarray[0] = new Mobs(30,115,'m');
 }
 
 //--------------------------------------------------------------
@@ -257,36 +257,36 @@ void updateGame()       // gameplay logic
     
 }
 void moveEnemy() {
-    ((Mobs*)(entityarray[1]))->checkmove(entityarray[0]->returnPos());
-    entityarray[1]->move(movementdir,entityarray[0]->returnPos(),map);
+    ((Mobs*)(enemyarray[1]))->checkmove(playerarray[0]->returnPos());
+    enemyarray[0]->move(movementdir,playerarray[0]->returnPos(),map);
 }
 
 void moveCharacter() {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(entityarray[0]->getX(), entityarray[0]->getY() - 1) == false))
+    if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(playerarray[0]->getX(), playerarray[0]->getY() - 1) == false))
     {
         
-        entityarray[0]->setpos(map.movecamera(1,entityarray[0]->returnPos()));
+        playerarray[0]->setpos(map.movecamera(1,playerarray[0]->returnPos()));
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(entityarray[0]->getX() - 1, entityarray[0]->getY()) == false))
+    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(playerarray[0]->getX() - 1, playerarray[0]->getY()) == false))
     {
-       entityarray[0]->setpos(map.movecamera(3,entityarray[0]->returnPos()));
+        playerarray[0]->setpos(map.movecamera(3, playerarray[0]->returnPos()));
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(entityarray[0]->getX(), entityarray[0]->getY() + 1) == false))
+    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(playerarray[0]->getX(), playerarray[0]->getY() + 1) == false))
     {
-        entityarray[0]->setpos(map.movecamera(2,entityarray[0]->returnPos()));
+        playerarray[0]->setpos(map.movecamera(2, playerarray[0]->returnPos()));
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(entityarray[0]->getX() + 1, entityarray[0]->getY()) == false))
+    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(playerarray[0]->getX() + 1, playerarray[0]->getY()) == false))
     {
-        entityarray[0]->setpos(map.movecamera(4,entityarray[0]->returnPos()));
+        playerarray[0]->setpos(map.movecamera(4,playerarray[0]->returnPos()));
         //Beep(1440, 30);
     }
 }
@@ -351,9 +351,9 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    renderenemy(map, entityarray);
-    rendermap(g_Console,map,g_sChar,entityarray);        // renders the map to the buffer first
-    rendercharacter(g_Console,g_sChar,entityarray);  // renders the character into the buffer
+    renderenemy(map, enemyarray);
+    rendermap(g_Console,map,g_sChar,playerarray);        // renders the map to the buffer first
+    rendercharacter(g_Console,g_sChar,playerarray);  // renders the character into the buffer
 }
 
 //void renderMap() {
@@ -406,7 +406,7 @@ void renderCharacter()
     {
         charColor = 0x0A;
     }
-    g_Console.writeToBuffer((entityarray[0]->getX()-g_sChar.offset.X)*2,entityarray[0]->getY()-g_sChar.offset.Y,"  ", 0x0f);
+    g_Console.writeToBuffer((playerarray[0]->getX()-g_sChar.offset.X)*2,playerarray[0]->getY()-g_sChar.offset.Y,"  ", 0x0f);
 }
 
 void renderFramerate()
@@ -427,7 +427,7 @@ void renderFramerate()
     c.Y = 0;
     g_Console.writeToBuffer(c, ss.str(), 0x59);
     ss.str("");
-    ss <<"player position" << ' ' << entityarray[0]->getX()<< ' ' << entityarray[0]->getY();
+    ss <<"player position" << ' ' << playerarray[0]->getX()<< ' ' << playerarray[0]->getY();
     g_Console.writeToBuffer(130, 0, ss.str(), 0x59);
 
     // display offset
@@ -436,7 +436,7 @@ void renderFramerate()
     g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
     // display monster location // experiment
     ss.str("");
-    ss << "monsterX:" << ' ' << entityarray[1]->getX() << ' ' << " monsterY:" << ' ' << entityarray[1]->getY();
+    ss << "monsterX:" << ' ' <<  enemyarray[0]->getX() << ' ' << " monsterY:" << ' ' << enemyarray[0]->getY();
     g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
 }
 
@@ -571,13 +571,13 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
 
 void shootcharacter(){
     if (g_skKeyEvent[A_UP].keyDown)
-        entityarray[0]->shoot(BULLETDIRECTION::B_UP);
+        playerarray[0]->shoot(BULLETDIRECTION::B_UP);
     if (g_skKeyEvent[A_DOWN].keyDown)
-        entityarray[0]->shoot(BULLETDIRECTION::B_DOWN);
+        playerarray[0]->shoot(BULLETDIRECTION::B_DOWN);
     if (g_skKeyEvent[A_LEFT].keyDown)
-        entityarray[0]->shoot(BULLETDIRECTION::B_LEFT);
+        playerarray[0]->shoot(BULLETDIRECTION::B_LEFT);
     if (g_skKeyEvent[A_RIGHT].keyDown)
-        entityarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
+        playerarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
 }
 
 void renderbullet() { // make it so that instead of it dropping after a certain let it drop offscreen.

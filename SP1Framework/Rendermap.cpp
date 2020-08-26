@@ -29,18 +29,18 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 
 
 
-void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* entityarray[]) {
+void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarray[]) {
     if (map.checkread() == false) {
         if (map.slotmap("map.txt", g_Console) == true) {
             map.changeread(true);
         }
     }
-    if ((entityarray[0]->getX() > 33) && (entityarray[0]->getX() < 150-33)) { // offset x
-        g_sChar.offset.X = entityarray[0]->getX() - 33;
+    if ((playerarray[0]->getX() > 33) && (playerarray[0]->getX() < 150-33)) { // offset x
+        g_sChar.offset.X = playerarray[0]->getX() - 33;
     }
 
-    if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 150 -20)) { // offset y
-        g_sChar.offset.Y = entityarray[0]->getY() - 20;
+    if ((playerarray[0]->getY() > 20) && (playerarray[0]->getY() < 150 -20)) { // offset y
+        g_sChar.offset.Y = playerarray[0]->getY() - 20;
     }
 
     for (int row = 0; row < 40; row++) {

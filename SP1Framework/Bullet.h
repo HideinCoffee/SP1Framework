@@ -4,7 +4,7 @@
 class Bullet
 {
 private:
-	int rdistance;
+//	int rdistance;
 	Position position;
 	BULLETDIRECTION bulletdirection;
 	BULLETYPE bulletype;
@@ -29,8 +29,8 @@ public:
 	COORD returnpos();
 
 	// set bullet drop 
-	void setrdistance(int distance);
-	int getrdistance();
+	//void setrdistance(int distance);
+//	int getrdistance();
 	void movebullet(Map &map);
 
 	//check 
@@ -40,6 +40,6 @@ public:
 	//setstatus
 	void setstatus(bool status);
 
-	bool collide(Map& map, int x, int y);
+	bool bulletcollide(Map& map, int x, int y);
 };
 

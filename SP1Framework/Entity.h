@@ -31,12 +31,13 @@ class Entity
 private:
 	Position position;
 	int health;
-	char prevchar;
 	bool alive;
-	char entitysymbol;
+	char symbol;
+
 public:
-	Entity();
 	~Entity();
+	Entity(int health,bool alive, char entitysymbol);
+
 	// move function
 	void move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map); //Function prototype
 	
@@ -48,10 +49,10 @@ public:
 	char getsymbol();
 	//setters to set private datamembers
 	void setpos(COORD pos);
-	void sethealth(int x);
-	void setalive(bool live);
+	void sethealth(int health);
+	void setalive(bool alive);
 	void setsymbol(char symbol);
 	virtual void shoot(BULLETDIRECTION bulletdir) =0;
-	virtual void collide(Map &map,int x, int y) = 0;
+	virtual void movementcollide(Map &map,int x, int y) = 0;
 	virtual void damage(int x)=0;
 };

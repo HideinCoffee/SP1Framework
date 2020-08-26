@@ -7,17 +7,16 @@ class Player : public Entity
 {
 private:
 	int remainingammo;
-	int npcrescued;
-	BULLETYPE currentbulletype;
-	int totalmoney;
+	int rescued;
+	BULLETYPE bulletype;
+	int money;
 public:
 	// player constructor
-	Player();
 	Player(Map &map,BULLETYPE bulletype,int x, int y);
 	//void setpos(COORD pos);
 	void move(MOVEMENTDIRECTION,COORD pos,Map &map);
 	void shoot(BULLETDIRECTION bulletdirection);
-	void collide(Map &map,int x, int y);
+	void movementcollide(Map &map,int x, int y);
 	void damage(int x);
 	// setters
 	void setbulletype(BULLETYPE bulletype);

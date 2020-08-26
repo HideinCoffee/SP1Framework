@@ -42,7 +42,7 @@ enum EKEYS
     A_LEFT,
     A_UP,
     A_DOWN,
-    K_COUNT = 12
+    K_COUNT
 };
 
 // Enumeration for the different screen states

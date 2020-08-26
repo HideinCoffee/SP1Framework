@@ -8,13 +8,16 @@ Bullet::Bullet(int x, int y, BULLETDIRECTION bulletdir,BULLETYPE bullettp) {
 	bulletdirection = bulletdir;
 	switch (bullettp) {
 	case BULLETYPE::B_B: // boss bullet 
-		rdistance = 30;
+		damage = 5;
+		//rdistance = 30;
 		break;
 	case BULLETYPE::B_C: // corona bullet
-		rdistance = 30;
+		damage = 1;
+		//rdistance = 30;
 		break;
 	case BULLETYPE::B_P: // player bullet
-		rdistance = 30;
+		damage = 1;
+		//rdistance = 30;
 		break;
 	//case BULLETYPE::B_T: // trap bullet
 	//	rdistance = 30;
@@ -39,56 +42,51 @@ int  Bullet::gety() {
 COORD Bullet::returnpos() {
 	return position.returnPos();
 }
-void Bullet::setrdistance(int distance) {
-	rdistance = distance;
-}
+//void Bullet::setrdistance(int distance) {
+//	rdistance = distance;
+//}
 void Bullet::movebullet(Map& map) {
 	COORD pos;
 	pos.X = getx();
 	pos.Y = gety();
 		switch (getdirection()) {
 		case BULLETDIRECTION::B_UP:
-			if (bulletcheck() == true) {
-				pos.Y -= 1;
-				if (collide(map, pos.X, pos.Y) == false) {
-					map.editmap(getx(), gety(), '@');
-					rdistance -= 1;
-					setpos(pos);
-				}
+			pos.Y -= 1;
+			if (bulletcollide(map, pos.X, pos.Y) == false) {
+				map.editmap(getx(), gety(), '@');
+				//rdistance -= 1;
+				setpos(pos);
 			}
+			
 			break;
 		case BULLETDIRECTION::B_DOWN:
-			if (bulletcheck() == true){
 				pos.Y += 1;
-				if (collide(map, pos.X, pos.Y) == false) {
+				if (bulletcollide(map, pos.X, pos.Y) == false) {
 					map.editmap(getx(), gety(), '@');
-					rdistance -= 1;
+					//rdistance -= 1;
 					setpos(pos);
 				}
-			}
 			else
 				setstatus(true);
 			break;
 		case BULLETDIRECTION::B_LEFT:
-			if (bulletcheck() == true) {
-				pos.X -= 1;
-				if (collide(map, pos.X, pos.Y) == false) {
-					map.editmap(getx(), gety(), '@');
-					rdistance -= 1;
-					setpos(pos);
-				}
+			pos.X -= 1;
+			if (bulletcollide(map, pos.X, pos.Y) == false) {
+				map.editmap(getx(), gety(), '@');
+				//rdistance -= 1;
+				setpos(pos);
 			}
+			
 			else
 				setstatus(true);
 			break;
 		case BULLETDIRECTION::B_RIGHT:
-			if (bulletcheck() == true) {
-				pos.X += 1;
-				if (collide(map, pos.X, pos.Y) == false) {
-					map.editmap(getx(), gety(), '@');
-					rdistance -= 1;
-					setpos(pos);
-				}
+			//if (bulletcheck() == true) {
+			pos.X += 1;
+			if (bulletcollide(map, pos.X, pos.Y) == false) {
+				map.editmap(getx(), gety(), '@');
+				//rdistance -= 1;
+				setpos(pos);
 				
 			}
 			else
@@ -101,15 +99,15 @@ BULLETDIRECTION Bullet::getdirection() {
 	return bulletdirection;
 }
 
-int Bullet::getrdistance() {
-	return rdistance;
-}
-bool Bullet::bulletcheck() {
-	if (rdistance > 0)
-		return true;
-	else
-		return false;
-}
+//int Bullet::getrdistance() {
+//	return rdistance;
+//}
+//bool Bullet::bulletcheck() {
+//	if (rdistance > 0)
+//		return true;
+//	else
+//		return false;
+//}
 
 void Bullet::setx(int x){
 	position.setX(x);
@@ -128,7 +126,7 @@ void Bullet::setstatus(bool status) {
 }
 
 
-bool Bullet::collide(Map& map, int x, int y) {
+bool Bullet::bulletcollide(Map& map, int x, int y) {
 	bool returnvalue = false;
 	switch (map.getchar(x,y)){
 		case '@': // path
@@ -137,10 +135,6 @@ bool Bullet::collide(Map& map, int x, int y) {
 		case '#': // wall
 			setstatus(true);
 			returnvalue = true;
-			break;
-		case 'B': // other bullets //check whose bullet
-			//setstatus(true);
-			returnvalue = false;
 			break;
 		case '!': // npc // kill npc
 			setstatus(true);

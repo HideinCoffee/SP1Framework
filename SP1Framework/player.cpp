@@ -1,17 +1,15 @@
 #include "player.h"
 
-Player::Player(){
-	//pos.X = 80;
-//	pos.Y = 20;
-	//default constructor
-}
-Player::Player(Map& map,BULLETYPE bulletype,int x, int y) {
+Player::Player(Map& map, BULLETYPE bulletype, int x, int y):Entity (0,true, 'P') {
 	COORD P;
 	P.X = x;
 	P.Y = y;
 	setpos(P);
 	setbulletype(bulletype);
 	map.editmap(x, y, 'P');
+	rescued = 0;
+	money = 0;
+	remainingammo = 20;
 	//map.editmap(x, y, 'P');
 }
 
@@ -28,7 +26,7 @@ void Player::shoot(BULLETDIRECTION bulletdir) {
 	}
 }
 
-void Player::collide(Map &map,int x, int y){
+void Player::movementcollide(Map &map,int x, int y){
 
 	switch (map.getchar(getX(),getY())) {
 	case '!':
@@ -66,32 +64,32 @@ void Player::damage(int x) {
 }
 
 void Player::setbulletype(BULLETYPE bulletype) {
-	currentbulletype = bulletype;
+	this->bulletype = bulletype;
 }
 
 void Player::setammo(int ammo) {
 	remainingammo = ammo;
 }
 
-void Player::setrescued(int rescued) {
-	npcrescued = rescued;
+void Player::setrescued(int npcrescued) {
+	this->rescued = rescued;
 }
 
 void Player::setmoney(int money) {
-	totalmoney = money;
+	this->money = money;
 }
 
 BULLETYPE Player::getbulletype() {
-	return currentbulletype;
+	return bulletype;
 }
 
 int Player::getrescued() {
-	return npcrescued;
+	return rescued;
 }
 
 int Player::getammo() {
 	return remainingammo;
 }
 int Player::getmoney() {
-	return totalmoney;
+	return money;
 }

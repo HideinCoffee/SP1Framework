@@ -4,7 +4,7 @@ Map::Map():maparray{0} {
 
 	for (int row = 0; row < 150; row++) {
 		for (int col = 0; col < 150; col++) {
-			maparray[row][col] = '  ';
+			maparray[row][col] = ' ';
 		}
 	}
 }
@@ -42,7 +42,7 @@ bool Map::slotmap(std::string filename, Console &g_Console)
 	std::string pathway = "maps//" + filename;
 	std::ifstream map;
 	std::string line;
-	char colvalue;
+	//char colvalue;
 	map.open(pathway);
 	if (map.is_open() == true){
 		int row = 0;

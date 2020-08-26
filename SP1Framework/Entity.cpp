@@ -1,12 +1,15 @@
 #include "Entity.h"
 
-Entity::Entity() {//this is a base class
-	//Stuff that's needed for this is already done in other files. So this remains empty
-}
-
 Entity::~Entity(){
 	//deconstructor
 }
+Entity::Entity(int health,bool alive, char symbol)
+{
+	this->health = health;
+	this->alive = alive;
+	this->symbol = symbol;
+}
+
 void Entity::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map) {
 	// left blank as this WILL be overidden.
 
@@ -30,18 +33,18 @@ int Entity::gethealth() {
 	return health;
 }
 
-void Entity::sethealth(int x) {
-	health = x;
+void Entity::sethealth(int health) {
+	this->health = health;
 }
 
-void Entity::setalive(bool live) {
-	alive = live;
+void Entity::setalive(bool alive) {
+	this->alive = alive;
 }
 
 char Entity::getsymbol() {
-	return entitysymbol;
+	return symbol;
 }
 
 void Entity::setsymbol(char symbol) {
-	entitysymbol = symbol;
+	this->symbol = symbol;
 }

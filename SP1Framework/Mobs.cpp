@@ -1,6 +1,6 @@
 #include "mobs.h"
 
-Mobs::Mobs(int x, int y,char symbol)
+Mobs::Mobs(int x, int y, char symbol) :Entity(0,true, 'm')
 {
 	needtomove = true;
 	COORD mob;
@@ -97,7 +97,7 @@ void Mobs::shoot(BULLETDIRECTION bulletdir) {
 
 }
 
-void Mobs::collide(Map &map,int x, int y) {
+void Mobs::movementcollide(Map &map,int x, int y) {
 	
 // insert collide code here.
 }

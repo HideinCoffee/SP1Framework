@@ -34,7 +34,7 @@ public:
 	void movebullet(Map &map);
 
 	//check 
-	bool bulletcheck();
+	//bool bulletcheck();
 	// getstatus
 	bool getstatus();
 	//setstatus

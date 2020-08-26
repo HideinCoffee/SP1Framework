@@ -98,7 +98,7 @@ bool Player::movementcollide(Map &map,int x, int y){
 		break;
 	case '$':
 		setmoney(getmoney() + 1);// money +=1;
-		map.editmap(x,y, '@');
+		map.editmap(x,y, ' ');
 		returnvalue = false;
 		break;
 	case 'B':
@@ -123,7 +123,7 @@ bool Player::movementcollide(Map &map,int x, int y){
 		returnvalue = true;
 		break;
 		// samething check player hp.
-	case '@':
+	case ' ':
 		returnvalue = false;
 	}
 	return returnvalue;

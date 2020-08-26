@@ -6,7 +6,7 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	case '#':
 		returnvalue = MAPTILES::WALL;
 		break;
-	case '@':
+	case ' ':
 		returnvalue = MAPTILES::PATH;
 		break;
 	case 'B':
@@ -31,7 +31,7 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 
 void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarray[]) {
     if (map.checkread() == false) {
-        if (map.slotmap("map.txt", g_Console) == true) {
+        if (map.slotmap("map.csv", g_Console) == true) {
             map.changeread(true);
         }
     }

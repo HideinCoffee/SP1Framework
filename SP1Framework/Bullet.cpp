@@ -53,7 +53,7 @@ void Bullet::movebullet(Map& map) {
 		case BULLETDIRECTION::B_UP:
 			pos.Y -= 1;
 			if (bulletcollide(map, pos.X, pos.Y) == false) { // if it is true it means the bullet is getting destroyed.
-				map.editmap(getx(), gety(), '@');
+				map.editmap(getx(), gety(), ' ');
 				//rdistance -= 1;
 				setpos(pos);
 			}
@@ -63,7 +63,7 @@ void Bullet::movebullet(Map& map) {
 		case BULLETDIRECTION::B_DOWN:
 				pos.Y += 1;
 				if (bulletcollide(map, pos.X, pos.Y) == false) {
-					map.editmap(getx(), gety(), '@');
+					map.editmap(getx(), gety(), ' ');
 					//rdistance -= 1;
 					setpos(pos);
 				}
@@ -73,7 +73,7 @@ void Bullet::movebullet(Map& map) {
 		case BULLETDIRECTION::B_LEFT:
 			pos.X -= 1;
 			if (bulletcollide(map, pos.X, pos.Y) == false) {
-				map.editmap(getx(), gety(), '@');
+				map.editmap(getx(), gety(), ' ');
 				//rdistance -= 1;
 				setpos(pos);
 			}
@@ -85,7 +85,7 @@ void Bullet::movebullet(Map& map) {
 			//if (bulletcheck() == true) {
 			pos.X += 1;
 			if (bulletcollide(map, pos.X, pos.Y) == false) {
-				map.editmap(getx(), gety(), '@');
+				map.editmap(getx(), gety(), ' ');
 				//rdistance -= 1;
 				setpos(pos);
 				
@@ -130,7 +130,7 @@ void Bullet::setstatus(bool status) {
 bool Bullet::bulletcollide(Map& map, int x, int y) {
 	bool returnvalue = false;
 	switch (map.getchar(x,y)){
-		case '@': // path
+		case ' ': // path
 			returnvalue = false;
 			break;
 		case '#': // wall

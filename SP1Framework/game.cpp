@@ -29,9 +29,6 @@ Console g_Console(160, 40, "SP1 Framework");
 Map map;
 
 
-
-
-
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
 //            Initialize variables, allocate memory, load data from file, etc. 
@@ -360,47 +357,6 @@ void renderGame()
     rendercharacter(g_Console,g_sChar,playerarray);  // renders the character into the buffer
 }
 
-//void renderMap() {
-//    if (map.checkread() == false) {
-//        if (map.slotmap("map.txt", g_Console) == true) {
-//            map.changeread(true);
-//        }
-//    }
-//    if ((entityarray[0]->getX() > 60) && (entityarray[0]->getX() < 150 - 60)) { // offset x
-//        g_sChar.offset.X = entityarray[0]->getX() - 60;
-//    }
-//
-//    if ((entityarray[0]->getY() > 20) && (entityarray[0]->getY() < 150 - 20)) { // offset y
-//        g_sChar.offset.Y = entityarray[0]->getY() - 20;
-//    }
-//
-//    for (int row = 0; row < 40; row++) {
-//        for (int col = 0; col < 120; col++) {
-//            if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '#') {
-//                g_Console.writeToBuffer(col, row, " ", 0x00);
-//            }
-//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + g_sChar.offset.X] == '$') {
-//                g_Console.writeToBuffer(col, row, " ", 0x66); //Colour of "coin" pixels
-//            }
-//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == '!') {
-//                g_Console.writeToBuffer(col, row, " ", 0x22); //NPC colours? There's only 2 of the green pixels, they're next to the exit of the maze
-//            }
-//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'X') {
-//                g_Console.writeToBuffer(col, row, " ", 0x55); //traps
-//            }
-//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'm') {
-//                g_Console.writeToBuffer(col, row, " ", 0x44); //monster
-//            }
-//            else if (&map.getmaparray[row + g_sChar.offset.Y][col + (g_sChar.offset.X)] == 'B') {
-//                g_Console.writeToBuffer(col, row, " ", 0x66); //bullets
-//            }
-//            else{
-//                g_Console.writeToBuffer(col,row," ", 0xff); 
-//            }
-//        }
-//    }
-//}
-
 
 void renderCharacter()
 {
@@ -565,7 +521,9 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
         X = x;
         Y += 1;
     }
+
     // blitting of the string onto the rectangle
+
     C.X = (x + (width / 2));
     C.Y = (y + (height / 2));
     C.X -= length;
@@ -588,7 +546,7 @@ void renderbullet() { // make it so that instead of it dropping after a certain 
     for (int i = 0; i < 20; i++) {
         if (bulletarray[i] != nullptr) {
             if (bulletarray[i]->getstatus() == true){
-                map.editmap(bulletarray[i]->getx(), bulletarray[i]->gety(), '@');
+                map.editmap(bulletarray[i]->getx(), bulletarray[i]->gety(), ' ');
                 delete bulletarray[i];
                 bulletarray[i] = nullptr;
             }

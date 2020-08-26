@@ -2,8 +2,9 @@
 #include "Framework/console.h"
 class Position
 {
-public:
+private:
 	COORD pos;
+public:
 	Position();
 	~Position();
 	int getX();

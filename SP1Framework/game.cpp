@@ -355,6 +355,7 @@ void renderGame()
     renderenemy(map, enemyarray);
     rendermap(g_Console,map,g_sChar,playerarray);        // renders the map to the buffer first
     rendercharacter(g_Console,g_sChar,playerarray);  // renders the character into the buffer
+    renderinterface(g_Console);
 }
 
 

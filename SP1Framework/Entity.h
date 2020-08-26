@@ -1,5 +1,4 @@
 #pragma once
-#include "Position.h"
 #include "Framework/console.h"
 #include <string>
 #include "Map.h"
@@ -29,7 +28,7 @@ class Entity
 {
 
 private:
-	Position position;
+	COORD position;
 	int health;
 	bool alive;
 	char symbol;

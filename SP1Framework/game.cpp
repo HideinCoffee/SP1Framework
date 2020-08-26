@@ -28,8 +28,7 @@ Console g_Console(160, 40, "SP1 Framework");
 // map object
 Map map;
 
-// player object
-//Player player(2, 151); //Original spawn is 2, 151
+
 
 
 
@@ -265,28 +264,33 @@ void moveCharacter() {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(playerarray[0]->getX(), playerarray[0]->getY() - 1) == false))
+    if (g_skKeyEvent[K_UP].keyDown)
     {
-        
-        playerarray[0]->setpos(map.movecamera(1,playerarray[0]->returnPos()));
+   
+        movementdir.UP = true;
+        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_LEFT].keyDown) && (map.isoccupied(playerarray[0]->getX() - 1, playerarray[0]->getY()) == false))
+    if (g_skKeyEvent[K_LEFT].keyDown)
     {
-        playerarray[0]->setpos(map.movecamera(3, playerarray[0]->returnPos()));
+        movementdir.LEFT = true;
+        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_DOWN].keyDown) && (map.isoccupied(playerarray[0]->getX(), playerarray[0]->getY() + 1) == false))
+    if (g_skKeyEvent[K_DOWN].keyDown) 
     {
-        playerarray[0]->setpos(map.movecamera(2, playerarray[0]->returnPos()));
+        movementdir.DOWN = true;
+        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
         //Beep(1440, 30);
     }
     
-    if ((g_skKeyEvent[K_RIGHT].keyDown) && (map.isoccupied(playerarray[0]->getX() + 1, playerarray[0]->getY()) == false))
+    if (g_skKeyEvent[K_RIGHT].keyDown)
     {
-        playerarray[0]->setpos(map.movecamera(4,playerarray[0]->returnPos()));
+        movementdir.RIGHT = true;
+        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
         //Beep(1440, 30);
     }
 }
@@ -572,11 +576,11 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
 void shootcharacter(){
     if (g_skKeyEvent[A_UP].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_UP);
-    if (g_skKeyEvent[A_DOWN].keyDown)
+    else if (g_skKeyEvent[A_DOWN].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_DOWN);
-    if (g_skKeyEvent[A_LEFT].keyDown)
+    else if (g_skKeyEvent[A_LEFT].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_LEFT);
-    if (g_skKeyEvent[A_RIGHT].keyDown)
+    else if (g_skKeyEvent[A_RIGHT].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
 }
 

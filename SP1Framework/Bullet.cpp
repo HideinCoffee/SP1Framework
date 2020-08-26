@@ -52,12 +52,13 @@ void Bullet::movebullet(Map& map) {
 		switch (getdirection()) {
 		case BULLETDIRECTION::B_UP:
 			pos.Y -= 1;
-			if (bulletcollide(map, pos.X, pos.Y) == false) {
+			if (bulletcollide(map, pos.X, pos.Y) == false) { // if it is true it means the bullet is getting destroyed.
 				map.editmap(getx(), gety(), '@');
 				//rdistance -= 1;
 				setpos(pos);
 			}
-			
+			else
+				setstatus(true);
 			break;
 		case BULLETDIRECTION::B_DOWN:
 				pos.Y += 1;

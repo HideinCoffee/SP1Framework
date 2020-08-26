@@ -13,8 +13,68 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y):Entity (0,true, 'P')
 	//map.editmap(x, y, 'P');
 }
 
-void Player::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map) {
-	
+void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
+	COORD tempcord = pos;
+	bool moved = false;
+
+	switch (movementdir.UP) {
+	case true:
+		
+		if (movementcollide(map, tempcord.X, tempcord.Y-1) == false) {
+			tempcord.Y -= 1;
+			movementdir.UP = false;
+			moved = true;
+		}
+		break;
+	case false:
+		movementdir.UP = false;
+		break;
+	}
+
+	switch (movementdir.DOWN) {
+	case true:
+		
+		if (movementcollide(map, tempcord.X, tempcord.Y+1) == false) {
+			tempcord.Y += 1;
+			movementdir.DOWN = false;
+			moved = true;
+		}
+		
+		break;
+	case false:
+		movementdir.DOWN = false;
+		break;
+	}
+
+	switch (movementdir.LEFT) {
+	case true:
+		if (movementcollide(map, tempcord.X-1, tempcord.Y) == false) {
+			tempcord.X -= 1;
+			movementdir.LEFT = false;
+				moved = true;
+		}
+		break;
+	case false:
+		movementdir.LEFT = false;
+		break;
+	}
+
+	switch (movementdir.RIGHT) {
+	case true:
+		if (movementcollide(map, tempcord.X+1, tempcord.Y) == false) {
+			tempcord.X += 1;
+			movementdir.RIGHT = false;
+			moved = true;
+		}
+		break;
+
+	case false:
+		movementdir.RIGHT = false;
+		break;
+	}
+
+	if (moved == true)
+		setpos(tempcord);
 }
 
 void Player::shoot(BULLETDIRECTION bulletdir) {
@@ -26,16 +86,20 @@ void Player::shoot(BULLETDIRECTION bulletdir) {
 	}
 }
 
-void Player::movementcollide(Map &map,int x, int y){
-
-	switch (map.getchar(getX(),getY())) {
+bool Player::movementcollide(Map &map,int x, int y){
+	bool returnvalue = true;
+	switch (map.getchar(x,y)) {
+	case '#':
+		returnvalue = true;
+		break;
 	case '!':
 		setrescued(getrescued() + 1);// npc rescue count +=1;
+		returnvalue = true;
 		break;
 	case '$':
 		setmoney(getmoney() + 1);// money +=1;
-		map.editmap(getX(), getY(), '@');
-
+		map.editmap(x,y, '@');
+		returnvalue = false;
 		break;
 	case 'B':
 		switch (getbulletype()) { // check whos bullet if its enemy take damage
@@ -46,16 +110,25 @@ void Player::movementcollide(Map &map,int x, int y){
 		case BULLETYPE::B_C:
 			break;
 		}
+		returnvalue = true;
 		break;	
 	case 'm':
 		damage(1);
 		// take DOT
+		// check hp level if it is below zero 
+		returnvalue = true;
 		break;
 	case 'x': // traps 
 		damage(1);
+		returnvalue = true;
 		break;
+		// samething check player hp.
+	case '@':
+		returnvalue = false;
 	}
+	return returnvalue;
 }
+
 void Player::damage(int x) {
 	if (gethealth() - x > 0)
 		sethealth(gethealth() - x);

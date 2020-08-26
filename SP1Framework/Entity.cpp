@@ -10,10 +10,7 @@ Entity::Entity(int health,bool alive, char symbol)
 	this->symbol = symbol;
 }
 
-void Entity::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map) {
-	// left blank as this WILL be overidden.
 
-}
 int Entity::getX(){
 	return position.getX(); //Gets your X position from Position Header file
 }

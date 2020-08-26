@@ -14,9 +14,9 @@ public:
 	// player constructor
 	Player(Map &map,BULLETYPE bulletype,int x, int y);
 	//void setpos(COORD pos);
-	void move(MOVEMENTDIRECTION,COORD pos,Map &map);
+	void move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map);
 	void shoot(BULLETDIRECTION bulletdirection);
-	void movementcollide(Map &map,int x, int y);
+	bool movementcollide(Map &map,int x, int y);
 	void damage(int x);
 	// setters
 	void setbulletype(BULLETYPE bulletype);

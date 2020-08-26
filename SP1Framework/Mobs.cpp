@@ -24,7 +24,7 @@ void Mobs::checkmove(COORD pos) {
 	}
 }
 
-void Mobs::move(MOVEMENTDIRECTION movementdir, COORD pos, Map& map) { // do the player collide with mob thing 
+void Mobs::move(MOVEMENTDIRECTION &movementdir,COORD pos, Map& map) { // do the player collide with mob thing 
 	if (needtomove == true) {
 		int playerx = pos.X;
 		int playery = pos.Y;
@@ -97,9 +97,10 @@ void Mobs::shoot(BULLETDIRECTION bulletdir) {
 
 }
 
-void Mobs::movementcollide(Map &map,int x, int y) {
+bool Mobs::movementcollide(Map &map,int x, int y) {
 	
 // insert collide code here.
+	return true;
 }
 
 void Mobs::damage(int x) {

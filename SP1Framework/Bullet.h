@@ -35,10 +35,11 @@ public:
 
 	//check 
 	bool bulletcheck();
-	void replace(Map &map,int x, int y);
 	// getstatus
 	bool getstatus();
 	//setstatus
 	void setstatus(bool status);
+
+	bool collide(Map& map, int x, int y);
 };
 

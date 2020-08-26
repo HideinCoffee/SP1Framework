@@ -48,41 +48,48 @@ void Bullet::movebullet(Map& map) {
 	pos.Y = gety();
 		switch (getdirection()) {
 		case BULLETDIRECTION::B_UP:
-			if ((bulletcheck() == true) && (map.isoccupied(pos.X, pos.Y - 1) == false)) {
-				replace(map, pos.X, pos.Y);
+			if (bulletcheck() == true) {
 				pos.Y -= 1;
-				rdistance -= 1;
-				setpos(pos);
+				if (collide(map, pos.X, pos.Y) == false) {
+					map.editmap(getx(), gety(), '@');
+					rdistance -= 1;
+					setpos(pos);
+				}
 			}
-			else
-				setstatus(true);
 			break;
 		case BULLETDIRECTION::B_DOWN:
-			if ((bulletcheck() == true) && (map.isoccupied(pos.X, pos.Y + 1) == false)) {
-				replace(map, pos.X, pos.Y);
+			if (bulletcheck() == true){
 				pos.Y += 1;
-				rdistance -= 1;
-				setpos(pos);
+				if (collide(map, pos.X, pos.Y) == false) {
+					map.editmap(getx(), gety(), '@');
+					rdistance -= 1;
+					setpos(pos);
+				}
 			}
 			else
 				setstatus(true);
 			break;
 		case BULLETDIRECTION::B_LEFT:
-			if ((bulletcheck() == true) && (map.isoccupied(pos.X - 1, pos.Y) == false)) {
-				replace(map, pos.X, pos.Y);
+			if (bulletcheck() == true) {
 				pos.X -= 1;
-				rdistance -= 1;
-				setpos(pos);
+				if (collide(map, pos.X, pos.Y) == false) {
+					map.editmap(getx(), gety(), '@');
+					rdistance -= 1;
+					setpos(pos);
+				}
 			}
 			else
 				setstatus(true);
 			break;
 		case BULLETDIRECTION::B_RIGHT:
-			if ((bulletcheck() == true) && (map.isoccupied(pos.X + 1, pos.Y) == false)) {
-				replace(map, pos.X, pos.Y);
+			if (bulletcheck() == true) {
 				pos.X += 1;
-				rdistance -= 1;
-				setpos(pos);
+				if (collide(map, pos.X, pos.Y) == false) {
+					map.editmap(getx(), gety(), '@');
+					rdistance -= 1;
+					setpos(pos);
+				}
+				
 			}
 			else
 				setstatus(true);
@@ -107,21 +114,49 @@ bool Bullet::bulletcheck() {
 void Bullet::setx(int x){
 	position.setX(x);
 }
+
 void Bullet::sety(int y){
 	position.setY(y);
-}
-void Bullet::replace(Map &map,int x,int y) {
-	map.editmap(x, y, '@');
 }
 
 bool Bullet::getstatus() {
 	return terminate;
 }
+
 void Bullet::setstatus(bool status) {
 	terminate = status;
 }
 
 
+bool Bullet::collide(Map& map, int x, int y) {
+	bool returnvalue = false;
+	switch (map.getchar(x,y)){
+		case '@': // path
+			returnvalue = false;
+			break;
+		case '#': // wall
+			setstatus(true);
+			returnvalue = true;
+			break;
+		case 'B': // other bullets //check whose bullet
+			//setstatus(true);
+			returnvalue = false;
+			break;
+		case '!': // npc // kill npc
+			setstatus(true);
+			returnvalue = true;
+			break;
+		case 'm': // monster //damage monster 
+			setstatus(true);
+			returnvalue = true;
+			break;
+		case 'x': //traps //damage traps
+			setstatus(true);
+			returnvalue = false;
+			break;
+	}
+	return returnvalue;
+}
 
 
 

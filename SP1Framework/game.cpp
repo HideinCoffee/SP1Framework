@@ -64,7 +64,7 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    entityarray[0] = new Player(map,BULLETYPE::B_C,5, 115);
+    entityarray[0] = new Player(map,BULLETYPE::B_C,5,115);
     entityarray[1] = new Mobs(30,115,'m');
 }
 

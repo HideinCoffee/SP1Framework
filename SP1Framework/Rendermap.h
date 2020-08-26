@@ -5,7 +5,7 @@ enum class MAPTILES {
 	WALL = '#',
 	COIN = '$',
 	PATH = '@',
-	TRAP = 'X',
+	TRAP = 'x',
 	MOB = 'm',
 	NPC = '!',
 	BULLET = 'B',

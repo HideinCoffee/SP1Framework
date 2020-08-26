@@ -30,6 +30,7 @@ public:
 // get char
 	char getchar(int x, int y);
 	char* getmaparray();
+	
 
 };
 

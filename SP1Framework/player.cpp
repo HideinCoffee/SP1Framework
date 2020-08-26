@@ -10,6 +10,7 @@ Player::Player(Map& map,BULLETYPE bulletype,int x, int y) {
 	P.Y = y;
 	setpos(P);
 	setbulletype(bulletype);
+	map.editmap(x, y, 'P');
 	//map.editmap(x, y, 'P');
 }
 
@@ -26,13 +27,16 @@ void Player::shoot(BULLETDIRECTION bulletdir) {
 	}
 }
 
-void Player::collide(Map &map) {
+void Player::collide(Map &map,int x, int y){
+
 	switch (map.getchar(getX(),getY())) {
 	case '!':
 		setrescued(getrescued() + 1);// npc rescue count +=1;
 		break;
 	case '$':
 		setmoney(getmoney() + 1);// money +=1;
+		map.editmap(getX(), getY(), '@');
+
 		break;
 	case 'B':
 		switch (getbulletype()) { // check whos bullet if its enemy take damage

@@ -253,19 +253,21 @@ void updateGame()       // gameplay logic
     moveCharacter();    // moves the character, collision detection, physics, etc
     shootcharacter();
     renderbullet();
-    moveEnemy();        // sound can be played here too.
+  //  moveEnemy();        // sound can be played here too.
     
 }
 void moveEnemy() {
     ((Mobs*)(entityarray[1]))->checkmove(entityarray[0]->returnPos());
     entityarray[1]->move(movementdir,entityarray[0]->returnPos(),map);
 }
+
 void moveCharacter() {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
     if ((g_skKeyEvent[K_UP].keyDown) && (map.isoccupied(entityarray[0]->getX(), entityarray[0]->getY() - 1) == false))
     {
+        
         entityarray[0]->setpos(map.movecamera(1,entityarray[0]->returnPos()));
         //Beep(1440, 30);
     }
@@ -565,10 +567,7 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
     C.X -= length;
     g_Console.setConsoleFont(30, 30, L"Arial");
     g_Console.writeToBuffer(C, ss.str(), 0x0f);
-
 }
-
-
 
 void shootcharacter(){
     if (g_skKeyEvent[A_UP].keyDown)
@@ -581,7 +580,7 @@ void shootcharacter(){
         entityarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
 }
 
-void renderbullet() {
+void renderbullet() { // make it so that instead of it dropping after a certain let it drop offscreen.
     for (int i = 0; i < 20; i++) {
         if (bulletarray[i] != nullptr) {
             if (bulletarray[i]->getstatus() == true){

@@ -17,14 +17,17 @@ enum class BULLETDIRECTION {
 		B_LEFT,
 		B_RIGHT,
 	};
+
 enum class BULLETYPE {
 	B_P, // player
-	B_C, // corona
-	B_B // player 
+	B_C, // corona bullet
+	B_B, // 
+	B_F //  water bullet
 };
 
 class Entity
 {
+
 private:
 	Position position;
 	int health;
@@ -34,7 +37,8 @@ private:
 public:
 	Entity();
 	~Entity();
-	virtual void move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map) = 0; //Function prototype
+	// move function
+	void move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map); //Function prototype
 	
 	//Getters, to get private datamembers
 	int getX();
@@ -48,7 +52,6 @@ public:
 	void setalive(bool live);
 	void setsymbol(char symbol);
 	virtual void shoot(BULLETDIRECTION bulletdir) =0;
-	virtual void collide(Map &map) = 0;
+	virtual void collide(Map &map,int x, int y) = 0;
 	virtual void damage(int x)=0;
-	
 };

@@ -42,6 +42,7 @@ bool Map::slotmap(std::string filename, Console &g_Console)
 	std::string pathway = "maps//" + filename;
 	std::ifstream map;
 	std::string line;
+	char colvalue;
 	map.open(pathway);
 	if (map.is_open() == true){
 		int row = 0;
@@ -56,12 +57,22 @@ bool Map::slotmap(std::string filename, Console &g_Console)
 			}
 			row++;
 		}
-
 		return true;
 	}
 	else {
 		return false;
 	}
+	/*if (map.is_open() == true) {
+		int row = 0;
+		for (int  col =0; col < 150;col++)
+		if (map.good()) {
+			std::getline(map, line);
+			std::stringstream ss(line);
+			while (std::getline(ss, colvalue, ',')) {
+				maparray[row][col] = colvalue;
+			}
+		}
+	}*/
 }
 
 
@@ -78,7 +89,7 @@ void Map::changeread(bool status) {
 }
 
 bool Map::isoccupied( int x, int y) {
-	if (maparray[y][x] != '@') //&& (maparray[y][x] != 'm'))
+	if (maparray[y][x] == '#') //&& (maparray[y][x] != 'm'))
 	{
 		return true;
 	}

@@ -17,7 +17,7 @@ public:
 	//void setpos(COORD pos);
 	void move(MOVEMENTDIRECTION,COORD pos,Map &map);
 	void shoot(BULLETDIRECTION bulletdirection);
-	void collide(Map &map);
+	void collide(Map &map,int x, int y);
 	void damage(int x);
 	// setters
 	void setbulletype(BULLETYPE bulletype);

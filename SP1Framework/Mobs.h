@@ -13,7 +13,8 @@ public:
 	void checkmove(COORD pos);
 	void move(MOVEMENTDIRECTION movementdir,COORD pos, Map &map); ///more parameters, but suff here must be added to the entity class
 	void shoot(BULLETDIRECTION bulletdir);
-	void collide(Map &map);
+	void collide(Map &map,int x, int y);
 	void damage(int x);
+	void trackplayer(COORD pos,Map &map);
 
 };

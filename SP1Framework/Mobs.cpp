@@ -24,14 +24,15 @@ void Mobs::checkmove(COORD pos) {
 	}
 }
 
-void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map){
-	bool moved = false;
+void Mobs::move(MOVEMENTDIRECTION movementdir, COORD pos, Map& map) { // do the player collide with mob thing 
 	if (needtomove == true) {
 		int playerx = pos.X;
 		int playery = pos.Y;
+		bool moved = false;
 		COORD mob;
 		mob.X = getX();
 		mob.Y = getY();
+		map.editmap(pos.X, pos.Y, '@');
 		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
 			mob.X += 1;
 			moved = true;
@@ -48,26 +49,59 @@ void Mobs::move(MOVEMENTDIRECTION movementdir,COORD pos,Map &map){
 			mob.Y -= 1;
 			moved = true;
 		}
-		needtomove = false;
 		if (moved == true) {
-			map.editmap(pos.X, pos.Y, '@');
+			needtomove = false;
 			setpos(mob);
 		}
 	}
-
-	//randomised mob movement section
-//	bool mobMove = false;
-//	time_t now = time(0);
 }
+
+void Mobs::trackplayer(COORD pos, Map& map) {
+	/*if (needtomove == true) {
+		int playerx = pos.X;
+		int playery = pos.Y;
+		bool moved = false;
+		COORD mob;
+		mob.X = getX();
+		mob.Y = getY();
+		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
+			mob.X += 1;
+			map.editmap(pos.X, pos.Y, '@');
+			moved = true;
+		}
+		else if ((playerx != mob.X) && (map.isoccupied(mob.X - 1, mob.Y) == false)) {
+			mob.X -= 1;
+			map.editmap(pos.X, pos.Y, '@');
+			moved = true;
+		}
+		if ((playery > mob.Y) && (map.isoccupied(mob.X, mob.Y + 1) == false)) {
+			mob.Y += 1;
+			map.editmap(pos.X, pos.Y, '@');
+			moved = true;
+		}
+		else if ((playery != mob.Y) && (map.isoccupied(mob.X, mob.Y - 1) == false)) {
+			mob.Y -= 1;
+			map.editmap(pos.X, pos.Y, '@');
+			moved = true;
+		}
+		if (moved = true) {
+			needtomove = false;
+			setpos(mob);
+		}
+	}*/
+
+}
+//}
 
 void Mobs::shoot(BULLETDIRECTION bulletdir) {
 
 }
 
-void Mobs::collide(Map &map) {
+void Mobs::collide(Map &map,int x, int y) {
 	
+// insert collide code here.
 }
 
 void Mobs::damage(int x) {
-
+	// mob take damage. 
 }

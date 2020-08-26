@@ -47,13 +47,13 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* entityarra
         for (int col = 0; col < 65; col++) {
 			switch (getmaptile(map, col + g_sChar.offset.X, row + g_sChar.offset.Y, g_sChar)) {
 				case MAPTILES::BULLET:
-					g_Console.writeToBuffer(col*2, row, "  ", 0x66);
+					g_Console.writeToBuffer(col*2, row, "  ", 0x99);
 					break;
 				case MAPTILES::COIN:
-					g_Console.writeToBuffer(col*2, row, "  ", 0x44);
+					g_Console.writeToBuffer(col*2, row, "  ", 0xEE);
 					break;
 				case MAPTILES::MOB:
-					g_Console.writeToBuffer(col*2, row, "  ", 0xDD);
+					g_Console.writeToBuffer(col*2, row, "  ", 0xCC);
 					break;
 				case MAPTILES::WALL:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x00);

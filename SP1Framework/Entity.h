@@ -35,7 +35,7 @@ private:
 
 public:
 	~Entity();
-	Entity(int health,bool alive, char entitysymbol);
+	Entity(int health,bool alive, char entitysymbol,int x, int y);
 
 	// move function
 	virtual void move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) = 0; //Function prototype

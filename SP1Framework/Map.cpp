@@ -65,17 +65,6 @@ bool Map::slotmap(std::string filename, Console &g_Console)
 	else {
 		return false;
 	}
-	/*if (map.is_open() == true) {
-		int row = 0;
-		for (int  col =0; col < 150;col++)
-		if (map.good()) {
-			std::getline(map, line);
-			std::stringstream ss(line);
-			while (std::getline(ss, colvalue, ',')) {
-				maparray[row][col] = colvalue;
-			}
-		}
-	}*/
 }
 
 

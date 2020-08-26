@@ -1,6 +1,6 @@
 #include "mobs.h"
 
-Mobs::Mobs(int x, int y, char symbol) :Entity(0,true, 'm')
+Mobs::Mobs(int x, int y, char symbol) :Entity(0,true, 'm',0,0)
 {
 	needtomove = true;
 	COORD mob;

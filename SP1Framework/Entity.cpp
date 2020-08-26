@@ -3,10 +3,12 @@
 Entity::~Entity(){
 	//deconstructor
 }
-Entity::Entity(int health,bool alive, char symbol) {
+Entity::Entity(int health,bool alive, char symbol,int x, int y) {
 	this->health = health;
 	this->alive = alive;
 	this->symbol = symbol;
+	position.X = x;
+	position.Y = y;
 }
 
 

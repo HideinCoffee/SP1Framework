@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(0, true, 'P') {
+Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(0, true, 'P',0,0) {
 	COORD P;
 	P.X = x;
 	P.Y = y;

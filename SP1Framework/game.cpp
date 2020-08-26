@@ -3,13 +3,11 @@
 //blah blah blooop blahh
 #include "game.h"
 #include "Framework\console.h"
-#include "Mobs.h"
 #include <iostream>
 #include <iomanip>
 #include <sstream>
 #include <fstream>
-#include "Map.h"
-#include "Entity.h"
+
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;

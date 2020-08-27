@@ -1,5 +1,6 @@
 #include "RenderUI.h"
 
+
 void renderinterface(Console& g_Console) {
 	COORD maxint = g_Console.getConsoleSize();
 	maxint.X -= 30;
@@ -11,6 +12,10 @@ void renderhealth(Console& g_Console,COORD maxint) {
 	playerarray[0]->gethealth();
 }
 
+//void rendermoney(Console& g_Console, COORD maxint)
+//{
+//
+//}
 
 void rendertext(Console& g_Console, int startx, int starty,std::string txttorender,WORD txtcolor) { // figure out how to scale it 
 	COORD txtpos;

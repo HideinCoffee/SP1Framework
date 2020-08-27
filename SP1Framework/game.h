@@ -5,7 +5,6 @@
 #include <string>
 #include "Map.h"
 #include "Global.h"
-#include "Map.h"
 #include "Rendermap.h"
 #include "Rendercharacter.h"
 #include "Renderenemy.h"

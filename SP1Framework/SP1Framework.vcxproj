@@ -90,6 +90,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="Mobs.cpp" />
+    <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Rendercharacter.cpp" />
     <ClCompile Include="Renderenemy.cpp" />
     <ClCompile Include="Rendermap.cpp" />
@@ -107,6 +108,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="position.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Rendercharacter.h" />
     <ClInclude Include="Renderenemy.h" />
     <ClInclude Include="Rendermap.h" />

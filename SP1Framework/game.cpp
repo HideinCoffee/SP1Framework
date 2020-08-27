@@ -1,6 +1,6 @@
 // This is the main file for the game logic and function
 //
-//blah blah blooop blahh
+
 #include "game.h"
 #include "Framework\console.h"
 #include <iostream>
@@ -19,7 +19,9 @@ SGameChar   g_sChar;
 SGameChar   trigger;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 MOVEMENTDIRECTION movementdir;
+//MOVEMENTDIRECTION mobmovementdir;
 BULLETDIRECTION bulletdir;
+BULLETDIRECTION mobbulletdir;
 // Console object
 Console g_Console(160, 40, "SP1 Framework");
 
@@ -58,8 +60,9 @@ void init(void)
     
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    playerarray[0] = new Player(map,BULLETYPE::B_C,5,115);
-    enemyarray[0] = new Mobs(30,115,'m');
+    playerarray[0] = new Player(map,BULLETYPE::B_C,31,117);
+    movementdir.LEFT = true;
+    enemyarray[0] = new Mobs(30, 115,6, 'm',false,movementdir);
 }
 
 //--------------------------------------------------------------
@@ -247,11 +250,11 @@ void updateGame()       // gameplay logic
     moveCharacter();    // moves the character, collision detection, physics, etc
     shootcharacter();
     renderbullet();
-  //  moveEnemy();        // sound can be played here too.
+    moveEnemy();        // sound can be played here too.
     
 }
 void moveEnemy() {
-    ((Mobs*)(enemyarray[1]))->checkmove(playerarray[0]->returnPos());
+    ((Mobs*)(enemyarray[0]))->checkmove(playerarray[0]->returnPos());
     enemyarray[0]->move(movementdir,playerarray[0]->returnPos(),map);
 }
 
@@ -350,8 +353,8 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
-    renderenemy(map, enemyarray);
     rendermap(g_Console,map,g_sChar,playerarray);        // renders the map to the buffer first
+    renderenemy(map, enemyarray);
     rendercharacter(g_Console,g_sChar,playerarray);  // renders the character into the buffer
     renderinterface(g_Console);
 }
@@ -370,33 +373,33 @@ void renderCharacter()
 
 void renderFramerate()
 {
-    COORD c;
-    // displays the framerate
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
-    ss << 1.0 / g_dDeltaTime << "fps";
-    c.X = g_Console.getConsoleSize().X - 9;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str());
+    //COORD c;
+    //// displays the framerate
+    //std::ostringstream ss;
+    //ss << std::fixed << std::setprecision(3);
+    //ss << 1.0 / g_dDeltaTime << "fps";
+    //c.X = g_Console.getConsoleSize().X - 9;
+    //c.Y = 0;
+    //g_Console.writeToBuffer(c, ss.str());
 
-    // displays the elapsed time
-    ss.str("");
-    ss << g_dElapsedTime << "secs";
-    c.X = 0;
-    c.Y = 0;
-    g_Console.writeToBuffer(c, ss.str(), 0x59);
-    ss.str("");
-    ss <<"player position" << ' ' << playerarray[0]->getX()<< ' ' << playerarray[0]->getY();
-    g_Console.writeToBuffer(130, 0, ss.str(), 0x59);
+    //// displays the elapsed time
+    //ss.str("");
+    //ss << g_dElapsedTime << "secs";
+    //c.X = 0;
+    //c.Y = 0;
+    //g_Console.writeToBuffer(c, ss.str(), 0x59);
+    //ss.str("");
+    //ss <<"player position" << ' ' << playerarray[0]->getX()<< ' ' << playerarray[0]->getY();
+    //g_Console.writeToBuffer(130, 0, ss.str(), 0x59);
 
-    // display offset
-    ss.str("");
-    ss << "offsetX:" << ' ' << g_sChar.offset.X << ' ' << "offsetY:" << ' ' << g_sChar.offset.Y;
-    g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
-    // display monster location // experiment
-    ss.str("");
-    ss << "monsterX:" << ' ' <<  enemyarray[0]->getX() << ' ' << " monsterY:" << ' ' << enemyarray[0]->getY();
-    g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
+    //// display offset
+    //ss.str("");
+    //ss << "offsetX:" << ' ' << g_sChar.offset.X << ' ' << "offsetY:" << ' ' << g_sChar.offset.Y;
+    //g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
+    //// display monster location // experiment
+    //ss.str("");
+    //ss << "monsterX:" << ' ' <<  enemyarray[0]->getX() << ' ' << " monsterY:" << ' ' << enemyarray[0]->getY();
+    //g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
 }
 
 // this is an example of how you would use the input events
@@ -542,7 +545,7 @@ void shootcharacter(){
 }
 
 void renderbullet() { // make it so that instead of it dropping after a certain let it drop offscreen.
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 100; i++) {
         if (bulletarray[i] != nullptr) {
             if (bulletarray[i]->getstatus() == true){
                 map.editmap(bulletarray[i]->getx(), bulletarray[i]->gety(), ' ');

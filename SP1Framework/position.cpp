@@ -2,7 +2,8 @@
 
 Position::Position()
 {
-	
+	pos.X = 0;
+	pos.Y = 0;
 }
 
 Position::~Position()

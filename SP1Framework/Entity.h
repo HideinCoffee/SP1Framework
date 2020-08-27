@@ -2,6 +2,7 @@
 #include "Framework/console.h"
 #include <string>
 #include "Map.h"
+#include "position.h"
 
 struct MOVEMENTDIRECTION {
 	bool UP;
@@ -9,6 +10,20 @@ struct MOVEMENTDIRECTION {
 	bool LEFT;
 	bool RIGHT;
 };
+
+struct direction {
+	COORD UP = { 0,1 };
+	COORD DOWN = { 0,-1 };
+	COORD LEFT = { -1,0 };
+	COORD RIGHT = { 1,0 };
+};
+
+//direction variable
+//                //
+////Inside your enemy
+//position += variable
+//if position + variable have anything
+//if not then reverse direction
 
 enum class BULLETDIRECTION {
 		B_UP,
@@ -28,11 +43,10 @@ class Entity
 {
 
 private:
-	COORD position;
 	int health;
 	bool alive;
 	char symbol;
-
+	Position position;
 public:
 	~Entity();
 	Entity(int health,bool alive, char entitysymbol,int x, int y);
@@ -52,6 +66,6 @@ public:
 	void setalive(bool alive);
 	void setsymbol(char symbol);
 	virtual void shoot(BULLETDIRECTION bulletdir) =0;
-	virtual bool movementcollide(Map &map,int x, int y) = 0;
+    virtual bool movementcollide(Map &map,int x, int y) = 0;
 	virtual void damage(int x)=0;
 };

@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(0, true, 'P',0,0) {
+Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(30, true, 'P',0,0) {
 	COORD P;
 	P.X = x;
 	P.Y = y;
@@ -10,6 +10,7 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(0, true, 'P'
 	rescued = 0;
 	money = 0;
 	remainingammo = 20;
+
 	//map.editmap(x, y, 'P');
 }
 
@@ -78,7 +79,7 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 }
 
 void Player::shoot(BULLETDIRECTION bulletdir) {
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 100; i++) {
 		if (bulletarray[i] == nullptr) {
 			bulletarray[i] = new Bullet(getX(), getY(), bulletdir, BULLETYPE::B_P);
 			break;
@@ -142,6 +143,7 @@ void Player::setbulletype(BULLETYPE bulletype) {
 
 void Player::setammo(int ammo) {
 	remainingammo = ammo;
+
 }
 
 void Player::setrescued(int npcrescued) {

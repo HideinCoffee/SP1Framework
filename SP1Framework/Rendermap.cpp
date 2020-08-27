@@ -27,7 +27,7 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	//case 'T':
 	//	returnvalue = MAPTILES::CHANGEPAD;
 	//	break;
-	//}
+	}
 	return returnvalue;
 }
 

@@ -87,12 +87,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="misc.cpp" />
+    <ClCompile Include="Mouseevent.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="Mobs.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Rendercharacter.cpp" />
     <ClCompile Include="Renderenemy.cpp" />
+    <ClCompile Include="Rendermainmenu.cpp" />
     <ClCompile Include="Rendermap.cpp" />
     <ClCompile Include="RenderUI.cpp" />
   </ItemGroup>
@@ -106,11 +108,13 @@
     <ClInclude Include="misc.h" />
     <ClInclude Include="Mobs.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Mouseevent.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Rendercharacter.h" />
     <ClInclude Include="Renderenemy.h" />
+    <ClInclude Include="Rendermainmenu.h" />
     <ClInclude Include="Rendermap.h" />
     <ClInclude Include="RenderUI.h" />
   </ItemGroup>

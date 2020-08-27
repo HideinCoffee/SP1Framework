@@ -10,7 +10,6 @@ enum class USERINTERFACE {
 	
 };
 void renderinterface(Console &g_Console);
-
 void renderinfobar(Console &g_Console);
 void renderplayerposition(Console& g_Console);
 void renderlegend(Console &g_Console);

@@ -9,8 +9,10 @@
 #include "Rendercharacter.h"
 #include "Renderenemy.h"
 #include "RenderUI.h"
+#include "Rendermainmenu.h"
 #include "Mobs.h"
 #include "player.h"
+#include "Mouseevent.h"
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -52,6 +54,7 @@ enum EGAMESTATES
 {
     S_SPLASHSCREEN,
     S_GAME,
+    S_MAINMENU,
     S_COUNT
 };
 
@@ -114,18 +117,14 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent);   // handles keyb
 void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mouse events for gameplay 
 
 void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
-void moveEnemy();
+void moveEnemy();   //either create a file for this or just somehow put it in enemy 
 
 
 // player related
-void moveCharacter();       // moves the character, collision detection, physics, etc
-void shootcharacter();
-
-// enemies related x
-
-//map related
+void moveCharacter();       //either create a file for it or like just put it in player.h   moves the character, collision detection, physics, etc
+void shootcharacter(); // <--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 // bullet related
-void renderbullet();
+void renderbullet(); // create a separate file 
 
 #endif // _GAME_H

@@ -72,7 +72,7 @@ void Mobs::trackplayer(COORD playerpos, Map& map) {
 		}
 	}
 }
-void Mobs::controlledmovement(COORD Mobpos, Map& map) {
+void Mobs::controlledmovement(COORD Mobpos, Map& map) { // for some reason it renders after a while. . . fix tmr yes
 	bool moved = false;
 	COORD mp = Mobpos;
 	switch (mobdirection.UP) {
@@ -82,7 +82,6 @@ void Mobs::controlledmovement(COORD Mobpos, Map& map) {
 				mp.Y--;
 				moved = true;
 				movecount++;
-				
 			}
 			else {
 				movecount = 0;

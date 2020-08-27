@@ -19,7 +19,6 @@ SGameChar   g_sChar;
 SGameChar   trigger;
 EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
 MOVEMENTDIRECTION movementdir;
-//MOVEMENTDIRECTION mobmovementdir;
 BULLETDIRECTION bulletdir;
 BULLETDIRECTION mobbulletdir;
 // Console object
@@ -42,7 +41,7 @@ void init(void)
     g_dElapsedTime = 0.0;    
 
     // sets the initial state for the game
-    g_eGameState = S_SPLASHSCREEN;
+    g_eGameState = S_GAME;
 
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
@@ -57,7 +56,7 @@ void init(void)
     // remember to set your keyboard handler, so that your functions can be notified of input events
     g_Console.setKeyboardHandler(keyboardHandler);
     g_Console.setMouseHandler(mouseHandler);
-    
+
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
     playerarray[0] = new Player(map,BULLETYPE::B_C,31,117);
@@ -114,6 +113,7 @@ void getInput( void )
 // Input    : const KEY_EVENT_RECORD& keyboardEvent - reference to a key event struct
 // Output   : void
 //--------------------------------------------------------------
+
 void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {    
     switch (g_eGameState)
@@ -141,6 +141,7 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
 // Input    : const MOUSE_EVENT_RECORD& mouseEvent - reference to a mouse event struct
 // Output   : void
 //--------------------------------------------------------------
+
 void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 {    
     switch (g_eGameState)
@@ -148,6 +149,8 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
     case S_SPLASHSCREEN: // don't handle anything for the splash screen
         break;
     case S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+        break;
+    case S_MAINMENU: gameplayMouseHandler(mouseEvent); // handle main menu mousevent
         break;
     }
 }
@@ -234,9 +237,10 @@ void update(double dt)
             break;
         case S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
+        case S_MAINMENU:rendermainmenu(g_Console);
+            break;
     }
 }
-
 
 void splashScreenWait()    // waits for time to pass in splash screen
 {
@@ -251,8 +255,8 @@ void updateGame()       // gameplay logic
     shootcharacter();
     renderbullet();
     moveEnemy();        // sound can be played here too.
-    
 }
+
 void moveEnemy() {
     ((Mobs*)(enemyarray[0]))->checkmove(playerarray[0]->returnPos());
     enemyarray[0]->move(movementdir,playerarray[0]->returnPos(),map);
@@ -318,11 +322,11 @@ void render()
         break;
     case S_GAME: renderGame();
         break;
+    case S_MAINMENU: rendermainmenu(g_Console);
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
     renderToScreen();       // dump the contents of the buffer to the screen, one frame worth of game
-
 }
 
 void clearScreen()
@@ -368,6 +372,7 @@ void renderCharacter()
     {
         charColor = 0x0A;
     }
+
     g_Console.writeToBuffer((playerarray[0]->getX()-g_sChar.offset.X)*2,playerarray[0]->getY()-g_sChar.offset.Y,"  ", 0x0f);
 }
 
@@ -442,7 +447,7 @@ void renderInputEvents()
         ss << key << " not pressed";
 
         COORD c = { startPos.X, startPos.Y + i };
-        g_Console.writeToBuffer(c, ss.str(), 0x17);
+      //  g_Console.writeToBuffer(c, ss.str(), 0x17);
     }
 
     // mouse events    
@@ -562,3 +567,5 @@ void renderbullet() { // make it so that instead of it dropping after a certain 
     }
 }
 // make a var that stores the previouschar so can restore later;
+
+

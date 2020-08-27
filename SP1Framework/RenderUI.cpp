@@ -42,17 +42,46 @@ void rendertext(Console& g_Console, int startx, int starty,std::string txttorend
 		g_Console.writeToBuffer(txtpos.X + i, txtpos.Y,txtrender,txtcolor);
 	}
 }
-//IMPT REMEMBER TO CHANGE THE CONSOLE AT THE BOTTOM WILL CONTAIN THE PLAYER HEALTH ETC
-// SIZE WILL BE X 160 Y 5;
 
-void renderlegend(Console& g_Console){
+
+void renderlegend(Console& g_Console){ // convert to csv for to cure EYE CANCER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 	COORD pos;
 	pos = g_Console.getConsoleSize();
 	pos.X -= 20;
 	pos.Y -= 38;
 	rendertext(g_Console, pos.X, pos.Y, "Legend:", 0x70); // LEGEND:
-	pos.X -= 13;
+	pos.X -= 6;
 	pos.Y += 3;
-	rendertext(g_Console, pos.X, pos.Y, "#", 0x00); // wall 
+	rendertext(g_Console, pos.X, pos.Y, "Wall:", 0x70);
+	pos.X += 7;
+	rendertext(g_Console, pos.X, pos.Y, " ", 0x00); // wall
+	pos.X -= 7;
+	pos.Y += 3;
+	rendertext(g_Console, pos.X, pos.Y, "Path:", 0x70);
+	pos.X += 7;
+	rendertext(g_Console, pos.X, pos.Y, " ", 0x88);
+	pos.X -= 7;
+	pos.Y += 3;
+	rendertext(g_Console, pos.X, pos.Y, "Coins", 0x70);
+	pos.X += 7;
+	rendertext(g_Console, pos.X, pos.Y, " ", 0x66);
+	pos.X -= 7;
+	pos.Y += 3;
+	rendertext(g_Console, pos.X, pos.Y, "Traps", 0x70);
+	pos.X += 7;
+	rendertext(g_Console, pos.X, pos.Y, " ", 0x55);
+	pos.X -= 7;
+	pos.Y += 3;
+	rendertext(g_Console, pos.X, pos.Y, "Mobs", 0x70);
+	pos.X += 7;
+	rendertext(g_Console, pos.X, pos.Y, " ", 0xCC);
+	pos.X -= 7;
+	pos.Y += 3;
+	rendertext(g_Console, pos.X, pos.Y, "Npc", 0x70);
+	pos.X += 7;
+	rendertext(g_Console, pos.X, pos.Y, " ", 0x22);
+	//pos.X ;
+	//pos.Y += 3;
+	//rendertext(g_Console, pos.X, pos.Y, "#", 0x00); // wall 
 
 }

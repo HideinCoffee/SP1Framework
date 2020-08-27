@@ -155,6 +155,9 @@ bool Bullet::bulletcollide(Map& map, int x, int y) {
 		case '$':
 			setstatus(true);
 			returnvalue = true;
+		//case 'T':
+		//	setstatus(true);
+		//	returnvalue = true;
 	}
 	return returnvalue;
 }

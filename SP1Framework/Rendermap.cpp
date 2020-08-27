@@ -39,18 +39,18 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
         g_sChar.offset.X = playerarray[0]->getX() - 33;
     }
 
-    if ((playerarray[0]->getY() > 20) && (playerarray[0]->getY() < 150 -20)) { // offset y
-        g_sChar.offset.Y = playerarray[0]->getY() - 20;
+    if ((playerarray[0]->getY() > 18) && (playerarray[0]->getY() < 150 -18)) { // offset y
+        g_sChar.offset.Y = playerarray[0]->getY() - 18;
     }
 
-    for (int row = 0; row < 40; row++) {
+    for (int row = 0; row < 35; row++) {
         for (int col = 0; col < 65; col++) {
 			switch (getmaptile(map, col + g_sChar.offset.X, row + g_sChar.offset.Y, g_sChar)) {
 				case MAPTILES::BULLET:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x99);
 					break;
 				case MAPTILES::COIN:
-					g_Console.writeToBuffer(col*2, row, "  ", 0xEE);
+					g_Console.writeToBuffer(col*2, row, "  ", 0x66);
 					break;
 				case MAPTILES::MOB:
 					g_Console.writeToBuffer(col*2, row, "  ", 0xCC);
@@ -62,7 +62,7 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 					g_Console.writeToBuffer(col*2, row, "  ", 0x22);
 					break;
 				case MAPTILES::PATH:
-					g_Console.writeToBuffer(col*2, row, "  ", 0xff);
+					g_Console.writeToBuffer(col*2, row, "  ", 0x88);
 					break;
 				case MAPTILES::TRAP:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x55);

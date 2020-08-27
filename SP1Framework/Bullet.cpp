@@ -49,51 +49,54 @@ void Bullet::movebullet(Map& map) {
 	COORD pos;
 	pos.X = getx();
 	pos.Y = gety();
-		switch (getdirection()) {
-		case BULLETDIRECTION::B_UP:
-			pos.Y -= 1;
-			if (bulletcollide(map, pos.X, pos.Y) == false) { // if it is true it means the bullet is getting destroyed.
-				map.editmap(getx(), gety(), ' ');
-				//rdistance -= 1;
-				setpos(pos);
-			}
-			else
-				setstatus(true);
-			break;
-		case BULLETDIRECTION::B_DOWN:
-				pos.Y += 1;
-				if (bulletcollide(map, pos.X, pos.Y) == false) {
-					map.editmap(getx(), gety(), ' ');
-					//rdistance -= 1;
-					setpos(pos);
-				}
-			else
-				setstatus(true);
-			break;
-		case BULLETDIRECTION::B_LEFT:
-			pos.X -= 1;
-			if (bulletcollide(map, pos.X, pos.Y) == false) {
-				map.editmap(getx(), gety(), ' ');
-				//rdistance -= 1;
-				setpos(pos);
-			}
-			
-			else
-				setstatus(true);
-			break;
-		case BULLETDIRECTION::B_RIGHT:
-			//if (bulletcheck() == true) {
-			pos.X += 1;
-			if (bulletcollide(map, pos.X, pos.Y) == false) {
-				map.editmap(getx(), gety(), ' ');
-				//rdistance -= 1;
-				setpos(pos);
-				
-			}
-			else
-				setstatus(true);
-			break;
+	switch (getdirection()) {
+	case BULLETDIRECTION::B_UP:
+		pos.Y -= 1;
+		if (bulletcollide(map, pos.X, pos.Y) == false) { // if it is true it means the bullet is getting destroyed. (Seems like it only fires if it's 1) next to a wall, and 2) firing up)
+			map.editmap(getx(), gety(), ' ');
+			//rdistance -= 1;
+			setpos(pos);
 		}
+		else
+			setstatus(true);
+		break;
+	case BULLETDIRECTION::B_DOWN:
+		pos.Y += 1;
+		if (bulletcollide(map, pos.X, pos.Y) == false) {
+			map.editmap(getx(), gety(), ' ');
+			//rdistance -= 1;
+			setpos(pos);
+		}
+		else
+			setstatus(true);
+		break;
+	case BULLETDIRECTION::B_LEFT:
+		pos.X -= 1;
+		if (bulletcollide(map, pos.X, pos.Y) == false) {
+			map.editmap(getx(), gety(), ' ');
+			//rdistance -= 1;
+			setpos(pos);
+		}
+
+		else
+			setstatus(true);
+		break;
+	case BULLETDIRECTION::B_RIGHT:
+		//if (bulletcheck() == true) {
+		pos.X += 1;
+		if (bulletcollide(map, pos.X, pos.Y) == false) {
+			map.editmap(getx(), gety(), ' ');
+			//rdistance -= 1;
+			setpos(pos);
+
+		}
+		else if (bulletcollide(map, pos.X, pos.Y) == false){
+
+		}
+		else
+			setstatus(true);
+		break;
+	}
 }
 
 BULLETDIRECTION Bullet::getdirection() {
@@ -139,16 +142,22 @@ bool Bullet::bulletcollide(Map& map, int x, int y) {
 			break;
 		case '!': // npc // kill npc
 			setstatus(true);
-			returnvalue = true;
+			returnvalue = false;
 			break;
 		case 'm': // monster //damage monster 
 			setstatus(true);
-			returnvalue = true;
+			returnvalue = false;
 			break;
 		case 'x': //traps //damage traps
 			setstatus(true);
-			returnvalue = false;
+			returnvalue = true;
 			break;
+		case '$':
+			setstatus(true);
+			returnvalue = true;
+		//case 'T':
+		//	setstatus(true);
+		//	returnvalue = true;
 	}
 	return returnvalue;
 }

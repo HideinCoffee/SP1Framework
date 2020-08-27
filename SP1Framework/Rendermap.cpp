@@ -23,6 +23,10 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 		break;
 	case 'x':
 		returnvalue = MAPTILES::TRAP;
+		break;
+	//case 'T':
+	//	returnvalue = MAPTILES::CHANGEPAD;
+	//	break;
 	}
 	return returnvalue;
 }
@@ -67,6 +71,9 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 				case MAPTILES::TRAP:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x55);
 					break;
+				//case MAPTILES::CHANGEPAD:
+				//	g_Console.writeToBuffer(col* 2, row,"  ", 0xBB);
+				//	break;
 			}
         }
     }

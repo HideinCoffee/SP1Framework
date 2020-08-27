@@ -124,9 +124,16 @@ bool Player::movementcollide(Map &map,int x, int y){
 		returnvalue = true;
 		break;
 		// samething check player hp.
+	//case 'T':
+	//	returnvalue = false;
+	//	break;
+	//	// Movement through Changetiles
 	case ' ':
 		returnvalue = false;
+	
+
 	}
+	
 	return returnvalue;
 }
 

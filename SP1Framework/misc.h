@@ -25,8 +25,7 @@ public:
 	void setdestroy(bool destruct);
 	//getters
 	bool getdestroystatus();
-	int getx();
-	int gety();
+	COORD returnPos();
 	void setobjectype(MISCTYPE objectypetoset);
 	void collide(Map &map);
 	

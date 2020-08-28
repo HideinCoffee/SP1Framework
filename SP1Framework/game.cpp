@@ -7,7 +7,15 @@
 #include <iomanip>
 #include <sstream>
 #include <fstream>
-
+#include "Rendermap.h"
+#include "Rendercharacter.h"
+#include "Renderenemy.h"
+#include "RenderUI.h"
+#include "Rendermainmenu.h"
+#include "Mobs.h"
+#include "player.h"
+#include "Global.h"
+#include "Map.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -553,13 +561,13 @@ void renderbullet() { // make it so that instead of it dropping after a certain 
     for (int i = 0; i < 100; i++) {
         if (bulletarray[i] != nullptr) {
             if (bulletarray[i]->getstatus() == true){
-                map.editmap(bulletarray[i]->getx(), bulletarray[i]->gety(), ' ');
+                map.editmap(bulletarray[i]->returnPos().X, bulletarray[i]->returnPos().Y, ' ');
                 delete bulletarray[i];
                 bulletarray[i] = nullptr;
             }
             else {
                 bulletarray[i]->movebullet(map);
-                map.editmap(bulletarray[i]->getx(), bulletarray[i]->gety(), 'B');
+                map.editmap(bulletarray[i]->returnPos().X, bulletarray[i]->returnPos().Y, 'B');
             }
         }
         else

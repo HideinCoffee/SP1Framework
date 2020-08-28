@@ -30,13 +30,6 @@ void misc::setobjectype(MISCTYPE objectypetoset) {
 	objectype = objectypetoset;
 }
 
-int misc::getx() {
-	return position.getX();
-}
-
-int misc::gety() {
-	return position.getY();
-}
 
 void misc::setx(int x) {
 	position.setX(x);
@@ -56,6 +49,10 @@ bool misc::getdestroystatus() {
 
 void misc::setdestroy(bool destruct) {
 	destroyed = destruct;
+}
+
+COORD misc::returnPos() {
+	return position.returnPos();
 }
 
 

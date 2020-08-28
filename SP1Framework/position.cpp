@@ -11,16 +11,6 @@ Position::~Position()
 	//deconstructor
 }
 
-int Position::getX()
-{
-	return pos.X; //getter
-}
-
-int Position::getY()
-{
-	return pos.Y; //getter
-}
-
 void Position::setX(int x)
 {
 	pos.X = x; //setter

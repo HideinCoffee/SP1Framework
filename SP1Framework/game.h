@@ -3,15 +3,9 @@
 
 #include "Framework\timer.h"
 #include <string>
-#include "Map.h"
-#include "Global.h"
-#include "Rendermap.h"
-#include "Rendercharacter.h"
-#include "Renderenemy.h"
-#include "RenderUI.h"
-#include "Rendermainmenu.h"
-#include "Mobs.h"
-#include "player.h"
+
+
+
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 

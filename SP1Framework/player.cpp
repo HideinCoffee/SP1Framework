@@ -132,7 +132,6 @@ bool Player::movementcollide(Map &map,int x, int y){
 	case ' ':
 		returnvalue = false;
 		break;
-
 	}
 	
 	return returnvalue;

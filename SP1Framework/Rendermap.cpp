@@ -39,12 +39,12 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
             map.changeread(true);
         }
     }
-    if ((playerarray[0]->getX() > 33) && (playerarray[0]->getX() < 150-33)) { // offset x
-        g_sChar.offset.X = playerarray[0]->getX() - 33;
+    if ((playerarray[0]->returnPos().X > 33) && (playerarray[0]->returnPos().X < 150-33)) { // offset x
+        g_sChar.offset.X = playerarray[0]->returnPos().X - 33;
     }
 
-    if ((playerarray[0]->getY() > 18) && (playerarray[0]->getY() < 150 -18)) { // offset y
-        g_sChar.offset.Y = playerarray[0]->getY() - 18;
+    if ((playerarray[0]->returnPos().Y > 18) && (playerarray[0]->returnPos().Y < 150 -18)) { // offset y
+        g_sChar.offset.Y = playerarray[0]->returnPos().Y - 18;
     }
 
     for (int row = 0; row < 35; row++) {

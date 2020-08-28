@@ -12,7 +12,6 @@
 #include "Rendermainmenu.h"
 #include "Mobs.h"
 #include "player.h"
-#include "Mouseevent.h"
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -34,7 +33,7 @@ struct SMouseEvent
 };
 
 // Enumeration to store the control keys that your game will have
-enum EKEYS
+enum class EKEYS
 {
     K_UP,
     K_DOWN,
@@ -46,12 +45,12 @@ enum EKEYS
     A_LEFT,
     A_UP,
     A_DOWN,
-    K_COUNT
+    K_TOTALCOUNT = 10,
+    K_COUNT = 10
 };
 
 // Enumeration for the different screen states
-enum EGAMESTATES
-{
+enum class EGAMESTATES{
     S_SPLASHSCREEN,
     S_GAME,
     S_MAINMENU,

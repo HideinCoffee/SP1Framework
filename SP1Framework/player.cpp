@@ -74,14 +74,16 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 		break;
 	}
 
-	if (moved == true)
+	if (moved == true) {
+		map.editmap(returnPos().X, returnPos().Y, ' ');
 		setpos(tempcord);
+	}
 }
 
 void Player::shoot(BULLETDIRECTION bulletdir) {
 	for (int i = 0; i < 100; i++) {
 		if (bulletarray[i] == nullptr) {
-			bulletarray[i] = new Bullet(getX(), getY(), bulletdir, BULLETYPE::B_P);
+			bulletarray[i] = new Bullet(returnPos().X, returnPos().Y, bulletdir, BULLETYPE::B_P);
 			break;
 		}
 	}

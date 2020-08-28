@@ -55,8 +55,6 @@ public:
 	virtual void move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) = 0; //Function prototype
 	
 	//Getters, to get private datamembers
-	int getX();
-	int getY(); 
 	COORD returnPos();
 	int gethealth();
 	char getsymbol();

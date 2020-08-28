@@ -87,7 +87,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="misc.cpp" />
-    <ClCompile Include="Mouseevent.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="position.cpp" />
     <ClCompile Include="Mobs.cpp" />
@@ -108,7 +107,6 @@
     <ClInclude Include="misc.h" />
     <ClInclude Include="Mobs.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Mouseevent.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="position.h" />
     <ClInclude Include="Rectangle.h" />

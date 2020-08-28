@@ -34,7 +34,7 @@ void renderplayerposition(Console& g_Console) {
 	c.Y -= 1;
 	std::ostringstream ss;
 	ss.str("");
-	ss << "Player position:" << " X:" << playerarray[0]->getX() << " " << "Y:" << playerarray[0]->getY();
+	ss << "Player position:" << " X:" << playerarray[0]->returnPos().X << " " << "Y:" << playerarray[0]->returnPos().Y;
 	g_Console.writeToBuffer(c.X,c.Y,ss.str(), 0x0f);
 }
 

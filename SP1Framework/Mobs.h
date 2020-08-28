@@ -6,8 +6,6 @@
 
 class Mobs :public Entity
 {
-	
-
 private:
 	bool needtomove;
 	MOVEMENTDIRECTION mobdirection;
@@ -25,5 +23,6 @@ public:
 	bool movementcollide(Map &map,int x, int y);
 	void damage(int x);
 	void trackplayer(COORD mobpos,Map &map);
-	void controlledmovement(COORD mobpos, Map& map);
+	void controlledmovement(Map& map);
+
 };

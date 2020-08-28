@@ -11,13 +11,13 @@
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
-SKeyEvent g_skKeyEvent[K_COUNT];
+SKeyEvent g_skKeyEvent[int(EKEYS::K_COUNT)];
 SMouseEvent g_mouseEvent;
 
 // Game specific variables here
 SGameChar   g_sChar;
 SGameChar   trigger;
-EGAMESTATES g_eGameState = S_SPLASHSCREEN; // initial state
+EGAMESTATES g_eGameState = EGAMESTATES::S_SPLASHSCREEN; // initial state
 MOVEMENTDIRECTION movementdir;
 BULLETDIRECTION bulletdir;
 BULLETDIRECTION mobbulletdir;
@@ -41,7 +41,7 @@ void init(void)
     g_dElapsedTime = 0.0;    
 
     // sets the initial state for the game
-    g_eGameState = S_GAME;
+    g_eGameState = EGAMESTATES::S_GAME;
 
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
@@ -59,9 +59,9 @@ void init(void)
 
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    playerarray[0] = new Player(map,BULLETYPE::B_C,31,117,30);
+    playerarray[0] = new Player(map,BULLETYPE::B_C,31,117,1);
     movementdir.LEFT = true;
-    enemyarray[0] = new Mobs(30, 115,6, 'm',false,movementdir);
+    enemyarray[0] = new Mobs(30,115,6,'m',false,movementdir);
 }
 
 //--------------------------------------------------------------
@@ -118,9 +118,9 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {    
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: // don't handle anything for the splash screen
+    case EGAMESTATES::S_SPLASHSCREEN: // don't handle anything for the splash screen
         break;
-    case S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
+    case EGAMESTATES::S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
     }
 }
@@ -146,11 +146,11 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 {    
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: // don't handle anything for the splash screen
+    case EGAMESTATES::S_SPLASHSCREEN: // don't handle anything for the splash screen
         break;
-    case S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
+    case EGAMESTATES::S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
-    case S_MAINMENU: gameplayMouseHandler(mouseEvent); // handle main menu mousevent
+    case EGAMESTATES::S_MAINMENU: gameplayMouseHandler(mouseEvent); // handle main menu mousevent
         break;
     }
 }
@@ -167,28 +167,28 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {
     // here, we map the key to our enums
-    EKEYS key = K_COUNT;
+    EKEYS key = EKEYS::K_COUNT;
     switch (keyboardEvent.wVirtualKeyCode)
     {
-    case 0x57: key = K_UP; break;
-    case 0x53: key = K_DOWN; break;
-    case 0x41: key = K_LEFT; break;
-    case 0x44: key = K_RIGHT; break;
-    case VK_UP: key = A_UP; break;
-    case VK_DOWN: key = A_DOWN; break;
-    case VK_LEFT: key = A_LEFT; break; 
-    case VK_RIGHT: key = A_RIGHT; break; 
-    case VK_SPACE: key = K_SPACE; break;
-    case VK_ESCAPE: key = K_ESCAPE; break; 
+    case 0x57: key = EKEYS::K_UP; break;
+    case 0x53: key = EKEYS::K_DOWN; break;
+    case 0x41: key = EKEYS::K_LEFT; break;
+    case 0x44: key = EKEYS::K_RIGHT; break;
+    case VK_UP: key = EKEYS::A_UP; break;
+    case VK_DOWN: key = EKEYS::A_DOWN; break;
+    case VK_LEFT: key = EKEYS::A_LEFT; break;
+    case VK_RIGHT: key = EKEYS::A_RIGHT; break;
+    case VK_SPACE: key = EKEYS::K_SPACE; break;
+    case VK_ESCAPE: key = EKEYS::K_ESCAPE; break;
     }
     // a key pressed event would be one with bKeyDown == true
     // a key released event would be one with bKeyDown == false
     // if no key is pressed, no event would be fired.
     // so we are tracking if a key is either pressed, or released
-    if (key != K_COUNT)
+    if (key != EKEYS::K_COUNT)
     {
-        g_skKeyEvent[key].keyDown = keyboardEvent.bKeyDown;
-        g_skKeyEvent[key].keyReleased = !keyboardEvent.bKeyDown;
+        g_skKeyEvent[int(key)].keyDown = keyboardEvent.bKeyDown;
+        g_skKeyEvent[int(key)].keyReleased = !keyboardEvent.bKeyDown;
     }    
 }
 
@@ -233,11 +233,11 @@ void update(double dt)
 
     switch (g_eGameState)
     {
-        case S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
+         case EGAMESTATES::S_SPLASHSCREEN : splashScreenWait(); // game logic for the splash screen
             break;
-        case S_GAME: updateGame(); // gameplay logic when we are in the game
+        case EGAMESTATES::S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case S_MAINMENU:rendermainmenu(g_Console);
+        case EGAMESTATES::S_MAINMENU:rendermainmenu(g_Console);
             break;
     }
 }
@@ -245,7 +245,7 @@ void update(double dt)
 void splashScreenWait()    // waits for time to pass in splash screen
 {
     if (g_dElapsedTime > 3.0) // wait for 3 seconds to switch to game mode, else do nothing
-        g_eGameState = S_GAME;
+        g_eGameState = EGAMESTATES::S_GAME;
 }
 
 void updateGame()       // gameplay logic
@@ -266,7 +266,7 @@ void moveCharacter() {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
 
-    if (g_skKeyEvent[K_UP].keyDown)
+    if (g_skKeyEvent[int(EKEYS::K_UP)].keyDown)
     {
    
         movementdir.UP = true;
@@ -274,7 +274,7 @@ void moveCharacter() {
         //Beep(1440, 30);
     }
     
-    if (g_skKeyEvent[K_LEFT].keyDown)
+    if (g_skKeyEvent[int(EKEYS::K_LEFT)].keyDown)
     {
         movementdir.LEFT = true;
         playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
@@ -282,14 +282,14 @@ void moveCharacter() {
         //Beep(1440, 30);
     }
     
-    if (g_skKeyEvent[K_DOWN].keyDown) 
+    if (g_skKeyEvent[int(EKEYS::K_DOWN)].keyDown) 
     {
         movementdir.DOWN = true;
         playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
         //Beep(1440, 30);
     }
     
-    if (g_skKeyEvent[K_RIGHT].keyDown)
+    if (g_skKeyEvent[int(EKEYS::K_RIGHT)].keyDown)
     {
         movementdir.RIGHT = true;
         playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
@@ -301,7 +301,7 @@ void moveCharacter() {
 void processUserInput()
 {
     // quits the game if player hits the escape key
-    if (g_skKeyEvent[K_ESCAPE].keyReleased)
+    if (g_skKeyEvent[int(EKEYS::K_ESCAPE)].keyReleased)
         g_bQuitGame = true;
 }
 
@@ -318,11 +318,11 @@ void render()
     clearScreen();      // clears the current screen and draw from scratch 
     switch (g_eGameState)
     {
-    case S_SPLASHSCREEN: renderSplashScreen();
+    case EGAMESTATES::S_SPLASHSCREEN: renderSplashScreen();
         break;
-    case S_GAME: renderGame();
+    case EGAMESTATES::S_GAME: renderGame();
         break;
-    case S_MAINMENU: rendermainmenu(g_Console);
+    case EGAMESTATES::S_MAINMENU: rendermainmenu(g_Console);
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
@@ -359,7 +359,7 @@ void renderGame()
 {
     rendermap(g_Console,map,g_sChar,playerarray);        // renders the map to the buffer first
     renderenemy(map, enemyarray);
-    rendercharacter(g_Console,g_sChar,playerarray);  // renders the character into the buffer
+    rendercharacter(g_Console,map,g_sChar,playerarray);  // renders the character into the buffer
     renderinterface(g_Console);
 }
 
@@ -373,7 +373,7 @@ void renderCharacter()
         charColor = 0x0A;
     }
 
-    g_Console.writeToBuffer((playerarray[0]->getX()-g_sChar.offset.X)*2,playerarray[0]->getY()-g_sChar.offset.Y,"  ", 0x0f);
+    g_Console.writeToBuffer((playerarray[0]->returnPos().X-g_sChar.offset.X)*2,playerarray[0]->returnPos().Y-g_sChar.offset.Y,"  ", 0x0f);
 }
 
 void renderFramerate()
@@ -414,28 +414,28 @@ void renderInputEvents()
     COORD startPos = {130,10};
     std::ostringstream ss;
     std::string key;
-    for (int i = 0; i < K_COUNT; ++i)
+    for (int i = 0; i < int(EKEYS::K_COUNT); ++i)
     {
         ss.str("");
         switch (i)
         {
-        case K_UP: key = "UP";
+        case int(EKEYS::K_UP): key = "UP";
             break;
-        case K_DOWN: key = "DOWN";
+        case int(EKEYS::K_DOWN): key = "DOWN";
             break;
-        case K_LEFT: key = "LEFT";
+        case int(EKEYS::K_LEFT): key = "LEFT";
             break;
-        case K_RIGHT: key = "RIGHT";
+        case int(EKEYS::K_RIGHT): key = "RIGHT";
             break;
-        case K_SPACE: key = "SPACE";
+        case int(EKEYS::K_SPACE): key = "SPACE";
             break;
-        case A_DOWN: key = "ALEFT";
+        case int(EKEYS::A_DOWN): key = "ALEFT";
             break;
-        case A_UP: key = "AUP";
+        case int(EKEYS::A_UP): key = "AUP";
             break;
-        case A_LEFT: key = "ALEFT";
+        case int(EKEYS::A_LEFT): key = "ALEFT";
             break;
-        case A_RIGHT: key = "ARIGHT";
+        case int(EKEYS::A_RIGHT): key = "ARIGHT";
             break;
         default: continue;
         }
@@ -539,17 +539,17 @@ void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, W
 }
 
 void shootcharacter(){
-    if (g_skKeyEvent[A_UP].keyDown)
+    if (g_skKeyEvent[int(EKEYS::A_UP)].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_UP);
-    else if (g_skKeyEvent[A_DOWN].keyDown)
+    else if (g_skKeyEvent[int(EKEYS::A_DOWN)].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_DOWN);
-    else if (g_skKeyEvent[A_LEFT].keyDown)
+    else if (g_skKeyEvent[int(EKEYS::A_LEFT)].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_LEFT);
-    else if (g_skKeyEvent[A_RIGHT].keyDown)
+    else if (g_skKeyEvent[int(EKEYS::A_RIGHT)].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
 }
 
-void renderbullet() {
+void renderbullet() { // make it so that instead of it dropping after a certain let it drop offscreen.
     for (int i = 0; i < 100; i++) {
         if (bulletarray[i] != nullptr) {
             if (bulletarray[i]->getstatus() == true){

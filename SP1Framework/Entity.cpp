@@ -14,14 +14,6 @@ Entity::Entity(int health,bool alive, char symbol,int x, int y) {
 	
 }
 
-
-int Entity::getX(){
-	return position.getX(); //Gets your X position from Position Header file
-}
-
-int Entity::getY(){
-	return position.getY(); //Gets your Y position from Position Header file
-}
 void Entity::setpos(COORD position) {
 	//this->position = position;
 	this->position.setPos(position);

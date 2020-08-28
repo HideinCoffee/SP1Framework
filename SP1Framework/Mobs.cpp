@@ -21,7 +21,7 @@ Mobs::~Mobs() {
 }
 
 void Mobs::checkmove(COORD pos) {
-	if ((pos.X != getX()) || (pos.Y != getY())) {
+	if ((pos.X != returnPos().X) || (pos.Y != returnPos().Y)) {
 		needtomove = true;
 	}
 	else {
@@ -34,10 +34,7 @@ void Mobs::move(MOVEMENTDIRECTION &movementdir, COORD playerpos, Map& map) {
 		trackplayer(playerpos,map);
 	}
 	else {
-		COORD c;
-		c.X = 30;
-		c.Y = 115;
-		controlledmovement(c, map);
+		controlledmovement(map);
 	}
 }
 
@@ -47,8 +44,8 @@ void Mobs::trackplayer(COORD playerpos, Map& map) {
 		int playery = playerpos.Y;
 		bool moved = false;
 		COORD mob;
-		mob.X = getX();
-		mob.Y = getY();
+		mob.X = returnPos().X;
+		mob.Y = returnPos().Y;
 		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
 			mob.X += 1;
 			moved = true;
@@ -66,15 +63,15 @@ void Mobs::trackplayer(COORD playerpos, Map& map) {
 			moved = true;
 		}
 		if (moved == true) {
-			map.editmap(getX(),getY(), ' ');
+			map.editmap(returnPos().X,returnPos().Y, ' ');
 			needtomove = false;
 			setpos(mob);
 		}
 	}
 }
-void Mobs::controlledmovement(COORD Mobpos, Map& map) { // for some reason it renders after a while. . . fix tmr yes
+void Mobs::controlledmovement(Map& map) { // for some reason it renders after a while. . . fix tmr yes
 	bool moved = false;
-	COORD mp = Mobpos;
+	COORD mp = returnPos();
 	switch (mobdirection.UP) {
 	case true:
 		if (movementcollide(map, mp.X, mp.Y-1) == false) { // move up
@@ -93,7 +90,7 @@ void Mobs::controlledmovement(COORD Mobpos, Map& map) { // for some reason it re
 	}
 	switch (mobdirection.DOWN) {
 	case true:
-		if (movementcollide(map, mp.X, mp.Y) == false) {
+		if (movementcollide(map, mp.X, mp.Y+1) == false) {
 			if (movecount < movenum) {
 				mp.Y++;
 				moved = true;
@@ -110,9 +107,9 @@ void Mobs::controlledmovement(COORD Mobpos, Map& map) { // for some reason it re
 	}
 	switch (mobdirection.LEFT) {
 	case true:
-		if (movementcollide(map, mp.X, mp.Y) == false) {
+		if (movementcollide(map, mp.X-1, mp.Y) == false) {
 			if (movecount < movenum) {
-				mp.X++;
+				mp.X--;
 				moved = true;
 				movecount++;
 			}
@@ -126,7 +123,7 @@ void Mobs::controlledmovement(COORD Mobpos, Map& map) { // for some reason it re
 	}
 	switch (mobdirection.RIGHT) {
 	case true:
-		if (movementcollide(map, mp.X, mp.Y) == false) {
+		if (movementcollide(map, mp.X+1, mp.Y) == false) {
 			if (movecount < movenum) {
 				mp.X++;
 				moved = true;
@@ -142,8 +139,9 @@ void Mobs::controlledmovement(COORD Mobpos, Map& map) { // for some reason it re
 	}
 
 	if (moved == true) {
-		map.editmap(Mobpos.X, Mobpos.Y, ' ');
+		map.editmap(returnPos().X, returnPos().Y, ' ');
 		setpos(mp);
+		map.editmap(mp.X,mp.Y,'m');
 	}
 }
 

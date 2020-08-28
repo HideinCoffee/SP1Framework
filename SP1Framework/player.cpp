@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(30, true, 'P',0,0) {
+Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health) :Entity(0, true, 'P',0,0) {
 	COORD P;
 	P.X = x;
 	P.Y = y;
@@ -10,7 +10,7 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(30, true, 'P
 	rescued = 0;
 	money = 0;
 	remainingammo = 20;
-
+	sethealth(health);
 	//map.editmap(x, y, 'P');
 }
 

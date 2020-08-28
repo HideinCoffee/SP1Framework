@@ -59,7 +59,7 @@ void init(void)
 
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    playerarray[0] = new Player(map,BULLETYPE::B_C,31,117);
+    playerarray[0] = new Player(map,BULLETYPE::B_C,31,117,30);
     movementdir.LEFT = true;
     enemyarray[0] = new Mobs(30, 115,6, 'm',false,movementdir);
 }
@@ -549,7 +549,7 @@ void shootcharacter(){
         playerarray[0]->shoot(BULLETDIRECTION::B_RIGHT);
 }
 
-void renderbullet() { // make it so that instead of it dropping after a certain let it drop offscreen.
+void renderbullet() {
     for (int i = 0; i < 100; i++) {
         if (bulletarray[i] != nullptr) {
             if (bulletarray[i]->getstatus() == true){

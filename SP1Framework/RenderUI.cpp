@@ -12,12 +12,19 @@ void renderinfobar(Console& g_Console) {
 	healthpos = g_Console.getConsoleSize();
 	healthpos.X -= 150;
 	healthpos.Y -= 3;
-
+	int healthcolor = 0xAA;
+	int playerhealth = playerarray[0]->gethealth();
 	rendertext(g_Console, healthpos.X, healthpos.Y, "Health:", 0x0f);
-	//int playerhealth = playerarray[0]->gethealth();
-	for (int i = 0; i < 30; i++) {
-		g_Console.writeToBuffer(healthpos.X+10+i, healthpos.Y,' ',0xAA);
+	if ((playerhealth <= 30) && (playerhealth > 20))
+		healthcolor = 0xAA;
+	else if ((playerhealth <= 20) && (playerhealth > 10))
+		healthcolor = 0x66;
+	else if ((playerhealth <= 10))
+		healthcolor = 0x44;
+	for (int i = 0; i < playerhealth; i++) {
+		g_Console.writeToBuffer(healthpos.X+10+i, healthpos.Y,"  ",healthcolor);
 	}
+
 	healthpos.X + 50;
 	renderplayerposition(g_Console);
 }
@@ -31,7 +38,7 @@ void renderplayerposition(Console& g_Console) {
 	g_Console.writeToBuffer(c.X,c.Y,ss.str(), 0x0f);
 }
 
-void rendertext(Console& g_Console, int startx, int starty,std::string txttorender,WORD txtcolor) { // figure out how to scale it 
+void rendertext(Console& g_Console, int startx, int starty,std::string txttorender,WORD txtcolor) { 
 	COORD txtpos;
 	txtpos.X = startx;
 	txtpos.Y = starty;
@@ -44,7 +51,7 @@ void rendertext(Console& g_Console, int startx, int starty,std::string txttorend
 }
 
 
-void renderlegend(Console& g_Console){ // convert to csv for to cure EYE CANCER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
+void renderlegend(Console& g_Console){ // convert to csv !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
 	COORD pos;
 	pos = g_Console.getConsoleSize();
 	pos.X -= 20;
@@ -54,32 +61,32 @@ void renderlegend(Console& g_Console){ // convert to csv for to cure EYE CANCER!
 	pos.Y += 3;
 	rendertext(g_Console, pos.X, pos.Y, "Wall:", 0x70);
 	pos.X += 7;
-	rendertext(g_Console, pos.X, pos.Y, " ", 0x00); // wall
+	rendertext(g_Console, pos.X, pos.Y, "  ", 0x00); // wall
 	pos.X -= 7;
 	pos.Y += 3;
 	rendertext(g_Console, pos.X, pos.Y, "Path:", 0x70);
 	pos.X += 7;
-	rendertext(g_Console, pos.X, pos.Y, " ", 0x88);
+	rendertext(g_Console, pos.X, pos.Y, "  ", 0x88);
 	pos.X -= 7;
 	pos.Y += 3;
 	rendertext(g_Console, pos.X, pos.Y, "Coins", 0x70);
 	pos.X += 7;
-	rendertext(g_Console, pos.X, pos.Y, " ", 0x66);
+	rendertext(g_Console, pos.X, pos.Y, "  ", 0x66);
 	pos.X -= 7;
 	pos.Y += 3;
 	rendertext(g_Console, pos.X, pos.Y, "Traps", 0x70);
 	pos.X += 7;
-	rendertext(g_Console, pos.X, pos.Y, " ", 0x55);
+	rendertext(g_Console, pos.X, pos.Y, "  ", 0x55);
 	pos.X -= 7;
 	pos.Y += 3;
 	rendertext(g_Console, pos.X, pos.Y, "Mobs", 0x70);
 	pos.X += 7;
-	rendertext(g_Console, pos.X, pos.Y, " ", 0xCC);
+	rendertext(g_Console, pos.X, pos.Y, "  ", 0xCC);
 	pos.X -= 7;
 	pos.Y += 3;
 	rendertext(g_Console, pos.X, pos.Y, "Npc", 0x70);
 	pos.X += 7;
-	rendertext(g_Console, pos.X, pos.Y, " ", 0x22);
+	rendertext(g_Console, pos.X, pos.Y, "  ", 0x22);
 	//pos.X ;
 	//pos.Y += 3;
 	//rendertext(g_Console, pos.X, pos.Y, "#", 0x00); // wall 

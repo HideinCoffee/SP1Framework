@@ -2,12 +2,10 @@
 
 Mobs::Mobs(int xpos, int ypos, int movenum, char symbol, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(0, true, 'm', 0, 0)
 {
-	needtomove = true;
 	COORD mob;
 	mob.X = xpos;
 	mob.Y = ypos;
 	movecount = 0;
-	reverse = false;
 	setpos(mob);
 	setsymbol(symbol);
 	this->movenum = movenum;
@@ -17,16 +15,28 @@ Mobs::Mobs(int xpos, int ypos, int movenum, char symbol, bool trackplayermode,MO
 }
 
 Mobs::~Mobs() {
-	//destructor for mobs
-}
-
-void Mobs::checkmove(COORD pos) {
-	if ((pos.X != returnPos().X) || (pos.Y != returnPos().Y)) {
-		needtomove = true;
+	//destructor for mobs//  * * *
+}//							 * P *
+//							 * * * <-- like this
+bool Mobs::checkmove(COORD playerpos) { // check if the mob is around the position around the player // check if the player
+	bool needtomove = true;
+	int i = 0;
+	while (i < 3) {
+		if ((playerpos.X - 1 == returnPos().X) && ((playerpos.Y-1) + i == returnPos().Y)) {
+			needtomove = false;
+		}
+		else if ((playerpos.X + 1 == returnPos().X) && ((playerpos.Y-1) + i) == returnPos().Y) {
+			needtomove = false;
+		}
+		if ((playerpos.X == returnPos().X) && (playerpos.Y + 1 == returnPos().Y)) {
+			needtomove = false;
+		}
+		else if ((playerpos.X == returnPos().X) && (playerpos.Y - 1 == returnPos().Y)) {
+			needtomove = false;
+		}
+		i++;
 	}
-	else {
-		needtomove = false;
-	}
+	return needtomove;
 }
 
 void Mobs::move(MOVEMENTDIRECTION &movementdir, COORD playerpos, Map& map) {
@@ -39,34 +49,35 @@ void Mobs::move(MOVEMENTDIRECTION &movementdir, COORD playerpos, Map& map) {
 }
 
 void Mobs::trackplayer(COORD playerpos, Map& map) {
-	if (needtomove == true) {
-		int playerx = playerpos.X;
-		int playery = playerpos.Y;
-		bool moved = false;
-		COORD mob;
-		mob.X = returnPos().X;
-		mob.Y = returnPos().Y;
-		if ((playerx > mob.X) && (map.isoccupied(mob.X + 1, mob.Y) == false)) {
+	
+	int playerx = playerpos.X;
+	int playery = playerpos.Y;
+	bool moved = false;
+	COORD mob;
+	mob.X = returnPos().X;
+	mob.Y = returnPos().Y;
+	if (checkmove(playerpos) == true) {
+		if ((playerx > mob.X) && (movementcollide(map, mob.X + 1, mob.Y) == false)) { // right
 			mob.X += 1;
 			moved = true;
 		}
-		else if ((playerx != mob.X) && (map.isoccupied(mob.X - 1, mob.Y) == false)) {
+		else if ((playerx != mob.X) && (movementcollide(map, mob.X - 1, mob.Y) == false)) { // left
 			mob.X -= 1;
 			moved = true;
 		}
-		if ((playery > mob.Y) && (map.isoccupied(mob.X, mob.Y + 1) == false)) {
+		if ((playery > mob.Y) && (movementcollide(map, mob.X, mob.Y + 1) == false)) { // down
 			mob.Y += 1;
 			moved = true;
 		}
-		else if ((playery != mob.Y) && (map.isoccupied(mob.X, mob.Y - 1) == false)) {
+		else if ((playery != mob.Y) && (movementcollide(map, mob.X, mob.Y - 1) == false)) { //up
 			mob.Y -= 1;
 			moved = true;
 		}
 		if (moved == true) {
-			map.editmap(returnPos().X,returnPos().Y, ' ');
-			needtomove = false;
+			map.editmap(returnPos().X, returnPos().Y, ' ');
 			setpos(mob);
-		}
+			map.editmap(returnPos().X, returnPos().Y, 'm');
+		}	
 	}
 }
 void Mobs::controlledmovement(Map& map) { // for some reason it renders after a while. . . fix tmr yes
@@ -173,7 +184,7 @@ bool Mobs::movementcollide(Map& map, int x, int y) {
 	case 'm':
 		// collide with enemy
 		// ntg happens
-		returnvalue = true;
+		returnvalue = false;
 		break;
 		// collide with trap  
 	case 'x':
@@ -181,6 +192,9 @@ bool Mobs::movementcollide(Map& map, int x, int y) {
 		returnvalue = false;
 		break;
 	case 'P':
+		returnvalue = true;
+		break;
+	case 'B':
 		returnvalue = true;
 		break;
 	}

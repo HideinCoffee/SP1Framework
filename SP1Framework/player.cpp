@@ -11,7 +11,6 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health) :Entity(0
 	money = 0;
 	remainingammo = 20;
 	sethealth(health);
-	//map.editmap(x, y, 'P');
 }
 
 void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
@@ -132,7 +131,7 @@ bool Player::movementcollide(Map &map,int x, int y){
 	//	// Movement through Changetiles
 	case ' ':
 		returnvalue = false;
-	
+		break;
 
 	}
 	

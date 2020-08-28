@@ -57,6 +57,8 @@ enum class EGAMESTATES{
     S_COUNT
 };
 
+
+
 enum class COLOR {
     BLACK = 0x00,
     LIGHTWHITE = 0xff,

@@ -15,9 +15,10 @@ SKeyEvent g_skKeyEvent[int(EKEYS::K_COUNT)];
 SMouseEvent g_mouseEvent;
 
 // Game specific variables here
+EGAMESTATES g_eGameState = EGAMESTATES::S_SPLASHSCREEN;
 SGameChar   g_sChar;
 SGameChar   trigger;
-EGAMESTATES g_eGameState = EGAMESTATES::S_SPLASHSCREEN; // initial state
+ // initial state
 MOVEMENTDIRECTION movementdir;
 BULLETDIRECTION bulletdir;
 BULLETDIRECTION mobbulletdir;
@@ -61,7 +62,7 @@ void init(void)
     g_sChar.offset.Y = 0;
     playerarray[0] = new Player(map,BULLETYPE::B_C,31,117,1);
     movementdir.LEFT = true;
-    enemyarray[0] = new Mobs(30,115,6,'m',false,movementdir);
+    enemyarray[0] = new Mobs(30,115,6,'m',true,movementdir);
 }
 
 //--------------------------------------------------------------
@@ -372,7 +373,6 @@ void renderCharacter()
     {
         charColor = 0x0A;
     }
-
     g_Console.writeToBuffer((playerarray[0]->returnPos().X-g_sChar.offset.X)*2,playerarray[0]->returnPos().Y-g_sChar.offset.Y,"  ", 0x0f);
 }
 
@@ -380,7 +380,7 @@ void renderFramerate()
 {
     //COORD c;
     //// displays the framerate
-    //std::ostringstream ss;
+    std::ostringstream ss;
     //ss << std::fixed << std::setprecision(3);
     //ss << 1.0 / g_dDeltaTime << "fps";
     //c.X = g_Console.getConsoleSize().X - 9;
@@ -402,9 +402,9 @@ void renderFramerate()
     //ss << "offsetX:" << ' ' << g_sChar.offset.X << ' ' << "offsetY:" << ' ' << g_sChar.offset.Y;
     //g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
     //// display monster location // experiment
-    //ss.str("");
-    //ss << "monsterX:" << ' ' <<  enemyarray[0]->getX() << ' ' << " monsterY:" << ' ' << enemyarray[0]->getY();
-    //g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
+    ss.str("");
+    ss << "monsterX:" << ' ' <<  enemyarray[0]->returnPos().X << ' ' << " monsterY:" << ' ' << enemyarray[0]->returnPos().Y;
+    g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
 }
 
 // this is an example of how you would use the input events

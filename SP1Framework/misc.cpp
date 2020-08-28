@@ -30,13 +30,6 @@ void misc::setobjectype(MISCTYPE objectypetoset) {
 	objectype = objectypetoset;
 }
 
-int misc::getx() {
-	return position.getX();
-}
-
-int misc::gety() {
-	return position.getY();
-}
 
 void misc::setx(int x) {
 	position.setX(x);

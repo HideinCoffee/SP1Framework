@@ -9,7 +9,7 @@ Trap::Trap(Map& map, BULLETYPE bulletype, int x, int y) : misc(MISCTYPE::TRAP, m
 void Trap::shoot(BULLETDIRECTION bulletdir) {
 	for (int i = 0; i < 20; i++) {
 		if (bulletarray1[i] == nullptr) {
-			bulletarray1[i] = new Bullet(getx(), gety(), bulletdir, BULLETYPE::B_C);
+			bulletarray1[i] = new Bullet(returnPos().X, returnPos().Y, bulletdir, BULLETYPE::B_C);
 			break;
 		}
 	}

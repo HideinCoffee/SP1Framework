@@ -6,6 +6,5 @@
 extern Entity* playerarray[1];
 extern Entity* enemyarray[20];
 extern Bullet* bulletarray[100];
-
 extern Bullet* bulletarray1[20];
 extern misc* traparray[200];

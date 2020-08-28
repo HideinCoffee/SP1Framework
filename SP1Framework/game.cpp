@@ -672,7 +672,7 @@ void renderbullet() { // make it so that instead of it dropping after a certain 
 // make a var that stores the previouschar so can restore later;
 
 void shoottrap() {
-    if (g_skKeyEvent[A_UP].keyDown) {
+    if (g_skKeyEvent[int(EKEYS::A_UP)].keyDown) {
 
         traparray[100]->shoot(BULLETDIRECTION::B_UP); // first part of map
         //traparray[103]->shoot(BULLETDIRECTION::B_UP);
@@ -697,7 +697,7 @@ void shoottrap() {
         //traparray[121]->shoot(BULLETDIRECTION::B_UP);
         //traparray[122]->shoot(BULLETDIRECTION::B_UP);
     }
-    else if (g_skKeyEvent[A_DOWN].keyDown) {
+    else if (g_skKeyEvent[int(EKEYS::A_DOWN)].keyDown) {
 
         traparray[150]->shoot(BULLETDIRECTION::B_DOWN); // first part of map
         //traparray[151]->shoot(BULLETDIRECTION::B_DOWN);
@@ -725,7 +725,7 @@ void shoottrap() {
         //traparray[172]->shoot(BULLETDIRECTION::B_DOWN);
         //traparray[173]->shoot(BULLETDIRECTION::B_DOWN);
     }
-    else if (g_skKeyEvent[A_LEFT].keyDown) {
+    else if (g_skKeyEvent[int(EKEYS::A_LEFT)].keyDown) {
 
         traparray[50]->shoot(BULLETDIRECTION::B_LEFT); // first part of map
         //traparray[51]->shoot(BULLETDIRECTION::B_LEFT);
@@ -744,7 +744,7 @@ void shoottrap() {
         //traparray[63]->shoot(BULLETDIRECTION::B_LEFT);
         //traparray[64]->shoot(BULLETDIRECTION::B_LEFT);
     }
-    else if (g_skKeyEvent[A_RIGHT].keyDown) {
+    else if (g_skKeyEvent[int(EKEYS::A_RIGHT)].keyDown) {
 
         traparray[0]->shoot(BULLETDIRECTION::B_RIGHT); // first part of the map
         //traparray[1]->shoot(BULLETDIRECTION::B_RIGHT);
@@ -771,13 +771,13 @@ void Trenderbullet() { // make it so that instead of it dropping after a certain
     for (int i = 0; i < 20; i++) {
         if (bulletarray1[i] != nullptr) {
             if (bulletarray1[i]->getstatus() == true) {
-                map.editmap(bulletarray1[i]->getx(), bulletarray1[i]->gety(), ' ');
+                map.editmap(bulletarray1[i]->returnPos().X, bulletarray1[i]->returnPos().Y, ' ');
                 delete bulletarray1[i];
                 bulletarray1[i] = nullptr;
             }
             else {
                 bulletarray1[i]->movebullet(map);
-                map.editmap(bulletarray1[i]->getx(), bulletarray1[i]->gety(), 'R');
+                map.editmap(bulletarray1[i]->returnPos().X, bulletarray1[i]->returnPos().Y, 'R');
             }
         }
         else

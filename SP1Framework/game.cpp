@@ -68,7 +68,7 @@ void init(void)
 
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
-    playerarray[0] = new Player(map,BULLETYPE::B_C,31,117,1);
+    playerarray[0] = new Player(map,BULLETYPE::B_P,31,117,1);
     movementdir.LEFT = true;
     enemyarray[0] = new Mobs(30,115,6,'m',true,movementdir);
 }

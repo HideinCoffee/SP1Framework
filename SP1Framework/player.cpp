@@ -82,7 +82,7 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 void Player::shoot(BULLETDIRECTION bulletdir) {
 	for (int i = 0; i < 100; i++) {
 		if (bulletarray[i] == nullptr) {
-			bulletarray[i] = new Bullet(returnPos().X, returnPos().Y, bulletdir, BULLETYPE::B_P);
+			bulletarray[i] = new Bullet(returnPos().X, returnPos().Y, bulletdir, bulletype);
 			break;
 		}
 	}
@@ -106,14 +106,16 @@ bool Player::movementcollide(Map &map,int x, int y){
 	case 'B':
 		switch (getbulletype()) { // check whos bullet if its enemy take damage
 		case BULLETYPE::B_P:
+			returnvalue = false;
 			break;
 		case BULLETYPE::B_B:
+			returnvalue = true;
 			break;
 		case BULLETYPE::B_C:
+			returnvalue = true;
 			break;
 		}
-		returnvalue = true;
-		break;	
+		break;
 	case 'm':
 		damage(1);
 		// take DOT

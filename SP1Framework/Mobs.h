@@ -11,9 +11,11 @@ private:
 	int movecount;
 	int movenum;
 	bool trackplayermode;
+	bool explode;
+	bool canshoot;
 
 public:
-	Mobs(int xpos, int ypos, int movenum , char symbol, bool trackplayermode, MOVEMENTDIRECTION &mobdirection);
+	Mobs(int xpos, int ypos, int movenum , char symbol, bool canshoot, bool trackplayermode, MOVEMENTDIRECTION &mobdirection);
 	~Mobs();
 	bool checkmove(COORD playerpos);
 	void move(MOVEMENTDIRECTION &movementdir,COORD mobpos, Map &map); ///more parameters, but suff here must be added to the entity class
@@ -22,5 +24,6 @@ public:
 	void trackplayer(COORD mobpos,Map &map);
 	void controlledmovement(Map& map);
 	bool movementcollide(Map& map, int x, int y);
+
 
 };

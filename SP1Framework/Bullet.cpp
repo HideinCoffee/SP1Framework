@@ -137,7 +137,7 @@ bool Bullet::bulletcollide(Map& map, int x, int y) {
 			break;
 		case 'm': // monster //damage monster 
 			setstatus(true);
-			returnvalue = false;
+			returnvalue = true;
 			break;
 		case 'x': //traps //damage traps
 			setstatus(true);

@@ -1,6 +1,6 @@
 #include "mobs.h"
 
-Mobs::Mobs(int xpos, int ypos, int movenum, char symbol, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(0, true, 'm', 0, 0)
+Mobs::Mobs(int xpos, int ypos, int movenum, char symbol,bool canshoot, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(0, true, 'm', 0, 0)
 {
 	COORD mob;
 	mob.X = xpos;
@@ -11,6 +11,8 @@ Mobs::Mobs(int xpos, int ypos, int movenum, char symbol, bool trackplayermode,MO
 	this->movenum = movenum;
 	this->trackplayermode = trackplayermode;
 	this->mobdirection = mobdirection;
+	bool explode = false;
+	this->canshoot = canshoot;
 	//Constructor for mobs
 }
 
@@ -48,7 +50,7 @@ void Mobs::move(MOVEMENTDIRECTION &movementdir, COORD playerpos, Map& map) {
 	}
 }
 
-void Mobs::trackplayer(COORD playerpos, Map& map) {
+void Mobs::trackplayer(COORD playerpos, Map& map) { // make it so that if the player contact    // make it so that the mob will explode yes.
 	
 	int playerx = playerpos.X;
 	int playery = playerpos.Y;
@@ -57,7 +59,7 @@ void Mobs::trackplayer(COORD playerpos, Map& map) {
 	mob.X = returnPos().X;
 	mob.Y = returnPos().Y;
 	if (checkmove(playerpos) == true) {
-		if ((playerx > mob.X) && (movementcollide(map, mob.X + 1, mob.Y) == false)) { // right
+		if ((playerx > mob.X) && (movementcollide(map, mob.X + 1, mob.Y) == false)) { // right 
 			mob.X += 1;
 			moved = true;
 		}
@@ -80,7 +82,7 @@ void Mobs::trackplayer(COORD playerpos, Map& map) {
 		}	
 	}
 }
-void Mobs::controlledmovement(Map& map) { // for some reason it renders after a while. . . fix tmr yes
+void Mobs::controlledmovement(Map& map) { 
 	bool moved = false;
 	COORD mp = returnPos();
 	switch (mobdirection.UP) {
@@ -192,6 +194,7 @@ bool Mobs::movementcollide(Map& map, int x, int y) {
 		returnvalue = false;
 		break;
 	case 'P':
+		trackplayermode = true;
 		returnvalue = true;
 		break;
 	case 'B':

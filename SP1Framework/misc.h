@@ -31,8 +31,7 @@ public:
 	void setsymbol(char symbol);
 	//getters
 	bool getdestroystatus();
-	int getx();
-	int gety();
+	COORD returnPos();
 	void setobjectype(MISCTYPE objectypetoset);
 	void collide(Map &map);
 	char getsymbol();

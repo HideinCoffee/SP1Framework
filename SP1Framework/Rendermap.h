@@ -22,7 +22,6 @@ struct SGameChar
 	COORD m_cLocation1;
 	COORD offset;
 
-
 	bool  m_bActive;
 	bool abletomove;
 };

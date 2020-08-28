@@ -1,7 +1,7 @@
 #pragma once
 #include "Framework/console.h"
 #include "Global.h"
-#include "player.h"
+#include "Rectangle.h"
 enum class USERINTERFACE {
 	HEALTH,
 	AMMO,
@@ -9,10 +9,9 @@ enum class USERINTERFACE {
 	LEGEND,
 	
 };
-void renderinterface(Console & g_Console);
+void renderinterface(Console &g_Console);
+void renderinfobar(Console &g_Console);
+void renderplayerposition(Console& g_Console);
+void renderlegend(Console &g_Console);
+void rendertext(Console &g_Console, int startx, int start, std::string txttorender,WORD txtcolor);
 
-void renderhealth(Console &g_Console,COORD maxint);
-
-void rendermoney(Console &g_Console, COORD maxint);
-
-void rendertext(Console& g_Console, int startx, int start, std::string txttorender,WORD txtcolor);

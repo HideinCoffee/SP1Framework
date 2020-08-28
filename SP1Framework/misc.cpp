@@ -61,6 +61,10 @@ void misc::setdestroy(bool destruct) {
 char misc::getsymbol() {
 	return symbol;
 }
+COORD misc::returnPos() {
+	return position.returnPos();
+}
+
 
 void misc::setsymbol(char symbol) {
 	this->symbol = symbol;

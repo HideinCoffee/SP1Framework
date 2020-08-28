@@ -1,27 +1,24 @@
 #include "Bullet.h"
 
-Bullet::Bullet(int x, int y, BULLETDIRECTION bulletdir,BULLETYPE bullettp) {
+Bullet::Bullet(int x, int y,BULLETDIRECTION bulletdirection,BULLETYPE bulletype) {
 	COORD bulletpos;
 	bulletpos.X = x;
 	bulletpos.Y = y;
 	setpos(bulletpos);
-	bulletdirection = bulletdir;
-	switch (bullettp) {
+	this->bulletdirection = bulletdirection;
+	switch (bulletype) {
 	case BULLETYPE::B_B: // boss bullet 
 		damage = 5;
-		//rdistance = 30;
+		this->bulletype = bulletype;
 		break;
 	case BULLETYPE::B_C: // corona bullet
 		damage = 1;
-		//rdistance = 30;
+		this->bulletype = bulletype;
 		break;
 	case BULLETYPE::B_P: // player bullet
 		damage = 1;
-		//rdistance = 30;
+		this->bulletype = bulletype;
 		break;
-	//case BULLETYPE::B_T: // trap bullet
-	//	rdistance = 30;
-	//	break;
 	}
 }
 	
@@ -29,17 +26,11 @@ Bullet::~Bullet() {
 	// destructor left blank for now.
 }
 
-void Bullet::setpos(COORD bulletpos) {
-	position.setPos(bulletpos);
-}
-int Bullet::getx() {
-	return position.getX();
+void Bullet::setpos(COORD bulletposition) {
+	position.setPos(bulletposition);
 }
 
-int  Bullet::gety() {
-	return position.getY();
-}
-COORD Bullet::returnpos() {
+COORD Bullet::returnPos() {
 	return position.returnPos();
 }
 //void Bullet::setrdistance(int distance) {
@@ -47,13 +38,13 @@ COORD Bullet::returnpos() {
 //}
 void Bullet::movebullet(Map& map) {
 	COORD pos;
-	pos.X = getx();
-	pos.Y = gety();
+	pos.X = returnPos().X;
+	pos.Y = returnPos().Y;
 	switch (getdirection()) {
 	case BULLETDIRECTION::B_UP:
 		pos.Y -= 1;
 		if (bulletcollide(map, pos.X, pos.Y) == false) { // if it is true it means the bullet is getting destroyed. (Seems like it only fires if it's 1) next to a wall, and 2) firing up)
-			map.editmap(getx(), gety(), ' ');
+			map.editmap(returnPos().X, returnPos().Y, ' ');
 			//rdistance -= 1;
 			setpos(pos);
 		}
@@ -63,7 +54,7 @@ void Bullet::movebullet(Map& map) {
 	case BULLETDIRECTION::B_DOWN:
 		pos.Y += 1;
 		if (bulletcollide(map, pos.X, pos.Y) == false) {
-			map.editmap(getx(), gety(), ' ');
+			map.editmap(returnPos().X, returnPos().Y, ' ');
 			//rdistance -= 1;
 			setpos(pos);
 		}
@@ -73,7 +64,7 @@ void Bullet::movebullet(Map& map) {
 	case BULLETDIRECTION::B_LEFT:
 		pos.X -= 1;
 		if (bulletcollide(map, pos.X, pos.Y) == false) {
-			map.editmap(getx(), gety(), ' ');
+			map.editmap(returnPos().X, returnPos().Y, ' ');
 			//rdistance -= 1;
 			setpos(pos);
 		}
@@ -85,7 +76,7 @@ void Bullet::movebullet(Map& map) {
 		//if (bulletcheck() == true) {
 		pos.X += 1;
 		if (bulletcollide(map, pos.X, pos.Y) == false) {
-			map.editmap(getx(), gety(), ' ');
+			map.editmap(returnPos().X, returnPos().Y, ' ');
 			//rdistance -= 1;
 			setpos(pos);
 

@@ -12,7 +12,7 @@ private:
 	int money;
 public:
 	// player constructor
-	Player(Map &map,BULLETYPE bulletype,int x, int y);
+	Player(Map &map,BULLETYPE bulletype,int x, int y,int health);
 	//void setpos(COORD pos);
 	void move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map);
 	void shoot(BULLETDIRECTION bulletdirection);

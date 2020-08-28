@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(0, true, 'P',0,0) {
+Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health) :Entity(0, true, 'P',0,0) {
 	COORD P;
 	P.X = x;
 	P.Y = y;
@@ -10,7 +10,7 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y) :Entity(0, true, 'P'
 	rescued = 0;
 	money = 0;
 	remainingammo = 20;
-	//map.editmap(x, y, 'P');
+	sethealth(health);
 }
 
 void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
@@ -73,14 +73,16 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 		break;
 	}
 
-	if (moved == true)
+	if (moved == true) {
+		map.editmap(returnPos().X, returnPos().Y, ' ');
 		setpos(tempcord);
+	}
 }
 
 void Player::shoot(BULLETDIRECTION bulletdir) {
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 100; i++) {
 		if (bulletarray[i] == nullptr) {
-			bulletarray[i] = new Bullet(getX(), getY(), bulletdir, BULLETYPE::B_P);
+			bulletarray[i] = new Bullet(returnPos().X, returnPos().Y, bulletdir, bulletype);
 			break;
 		}
 	}
@@ -104,14 +106,16 @@ bool Player::movementcollide(Map &map,int x, int y){
 	case 'B':
 		switch (getbulletype()) { // check whos bullet if its enemy take damage
 		case BULLETYPE::B_P:
+			returnvalue = false;
 			break;
 		case BULLETYPE::B_B:
+			returnvalue = true;
 			break;
 		case BULLETYPE::B_C:
+			returnvalue = true;
 			break;
 		}
-		returnvalue = true;
-		break;	
+		break;
 	case 'm':
 		damage(1);
 		// take DOT
@@ -129,8 +133,7 @@ bool Player::movementcollide(Map &map,int x, int y){
 	//	// Movement through Changetiles
 	case ' ':
 		returnvalue = false;
-	
-
+		break;
 	}
 	
 	return returnvalue;
@@ -149,6 +152,7 @@ void Player::setbulletype(BULLETYPE bulletype) {
 
 void Player::setammo(int ammo) {
 	remainingammo = ammo;
+
 }
 
 void Player::setrescued(int npcrescued) {

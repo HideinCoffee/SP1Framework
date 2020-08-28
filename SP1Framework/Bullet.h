@@ -11,7 +11,7 @@ private:
 	int damage;
 	bool terminate;
 public:
-	Bullet(int x, int y, BULLETDIRECTION bulletdir,BULLETYPE bullettp);
+	Bullet(int x, int y, BULLETDIRECTION bulletdirection,BULLETYPE bulletype);
 	~Bullet();
 	//set/get direction
 	BULLETDIRECTION getdirection();
@@ -21,12 +21,10 @@ public:
 	//set position
 	void setx(int x);
 	void sety(int y);
-	void setpos(COORD bulletpos);
+	void setpos(COORD bulletposition);
 
 	//getx and y
-	int getx();
-	int gety();
-	COORD returnpos();
+	COORD returnPos();
 
 	// set bullet drop 
 	//void setrdistance(int distance);

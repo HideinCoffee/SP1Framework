@@ -4,26 +4,23 @@ Entity::~Entity(){
 	//deconstructor
 }
 Entity::Entity(int health,bool alive, char symbol,int x, int y) {
+	COORD entitypos;
+	entitypos.X = x;
+	entitypos.Y = y;
 	this->health = health;
 	this->alive = alive;
 	this->symbol = symbol;
-	position.X = x;
-	position.Y = y;
+	setpos(entitypos);
+	
 }
 
-
-int Entity::getX(){
-	return position.X; //Gets your X position from Position Header file
-}
-
-int Entity::getY(){
-	return position.Y; //Gets your Y position from Position Header file
-}
 void Entity::setpos(COORD position) {
-	this->position = position;
+	//this->position = position;
+	this->position.setPos(position);
 }
+
 COORD Entity::returnPos(){
-	return position;
+	return position.returnPos();
 }
 
 int Entity::gethealth() {

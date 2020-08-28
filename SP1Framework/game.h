@@ -37,7 +37,7 @@ struct SMouseEvent
 };
 
 // Enumeration to store the control keys that your game will have
-enum EKEYS
+enum class EKEYS
 {
     K_UP,
     K_DOWN,
@@ -49,16 +49,19 @@ enum EKEYS
     A_LEFT,
     A_UP,
     A_DOWN,
-    K_COUNT
+    K_TOTALCOUNT = 10,
+    K_COUNT = 10
 };
 
 // Enumeration for the different screen states
-enum EGAMESTATES
-{
+enum class EGAMESTATES{
     S_SPLASHSCREEN,
     S_GAME,
+    S_MAINMENU,
     S_COUNT
 };
+
+
 
 enum class COLOR {
     BLACK = 0x00,
@@ -119,7 +122,7 @@ void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent);   // handles keyb
 void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mouse events for gameplay 
 
 void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
-void moveEnemy();
+void moveEnemy();   //either create a file for this or just somehow put it in enemy 
 
 
 // player related

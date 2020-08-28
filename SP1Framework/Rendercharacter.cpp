@@ -1,8 +1,10 @@
 #include "Rendercharacter.h"
 
-void rendercharacter(Console &g_Console,SGameChar &g_sChar,Entity* playerarray[]) {
+void rendercharacter(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarray[]) {
 	WORD charcolor = 0x23;
 	if (g_sChar.m_bActive == true)
 		charcolor = 0x0A;
-	g_Console.writeToBuffer((playerarray[0]->getX() - g_sChar.offset.X) * 2, playerarray[0]->getY() - g_sChar.offset.Y, "  ", 0xff);
+	map.editmap(playerarray[0]->returnPos().X, playerarray[0]->returnPos().Y, playerarray[0]->getsymbol());
+	g_Console.writeToBuffer((playerarray[0]->returnPos().X - g_sChar.offset.X) * 2, playerarray[0]->returnPos().Y - g_sChar.offset.Y, "  ", 0xff);
+	
 }

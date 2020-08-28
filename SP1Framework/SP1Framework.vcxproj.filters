@@ -75,6 +75,12 @@
     <ClCompile Include="Rendermainmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Rendertrap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game.h">
@@ -126,6 +132,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Rendermainmenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendertrap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

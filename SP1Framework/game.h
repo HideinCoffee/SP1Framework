@@ -3,8 +3,18 @@
 
 #include "Framework\timer.h"
 #include <string>
-
-
+#include "Map.h"
+#include "Global.h"
+#include "Map.h"
+#include "Rendermap.h"
+#include "Rendercharacter.h"
+#include "Rendertrap.h"
+#include "Renderenemy.h"
+#include "RenderUI.h"
+#include "Mobs.h"
+#include "player.h"
+#include "misc.h"
+#include "trap.h"
 
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
@@ -116,10 +126,15 @@ void moveEnemy();   //either create a file for this or just somehow put it in en
 
 
 // player related
-void moveCharacter();       //either create a file for it or like just put it in player.h   moves the character, collision detection, physics, etc
-void shootcharacter(); // <--^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+void moveCharacter();       // moves the character, collision detection, physics, etc
+void shootcharacter();
+
+// enemies related x
+
+//map related
+void shoottrap();
 
 // bullet related
-void renderbullet(); // create a separate file 
-
+void renderbullet();
+void Trenderbullet();
 #endif // _GAME_H

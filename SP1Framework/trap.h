@@ -1,16 +1,17 @@
-#pragma once//??
-#include "Entity.h"
-#include "Map.h"
-#include "global.h"
+#pragma once
 #include "misc.h"
+#include "Global.h"
 
-class Traps :public misc
-{
-public:
-	Traps(BULLETYPE bulletype,int x, int y);
-	~Traps();
-	void shoot(BULLETDIRECTION bulletdirect);
-	void collide(Map& map);
-	void damage(int x);
-
+class Trap : public misc {
+private :
+	BULLETYPE bulletype;
+	COORD position1;
+public :
+	void setpos(COORD pos);
+	Trap(Map& map, BULLETYPE bulletype, int x, int y);
+	void shoot(BULLETDIRECTION bulletdirection);
+	//setter
+	void setbulletype(BULLETYPE bulletype);
+	//getter
+	BULLETYPE getbulletype();
 };

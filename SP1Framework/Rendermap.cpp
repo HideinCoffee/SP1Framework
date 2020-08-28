@@ -12,6 +12,9 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	case 'B':
 		returnvalue = MAPTILES::BULLET;
 		break;
+	case 'R':
+		returnvalue = MAPTILES::BULLET1;
+		break;
 	case 'm':
 		returnvalue = MAPTILES::MOB;
 		break;
@@ -27,7 +30,7 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	//case 'T':
 	//	returnvalue = MAPTILES::CHANGEPAD;
 	//	break;
-	//}
+	}
 	return returnvalue;
 }
 
@@ -52,6 +55,9 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 			switch (getmaptile(map, col + g_sChar.offset.X, row + g_sChar.offset.Y, g_sChar)) {
 				case MAPTILES::BULLET:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x99);
+					break;
+				case MAPTILES::BULLET1:
+					g_Console.writeToBuffer(col*2, row, "  ", 0x44);
 					break;
 				case MAPTILES::COIN:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x66);

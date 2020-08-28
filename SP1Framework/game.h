@@ -8,10 +8,14 @@
 #include "Map.h"
 #include "Rendermap.h"
 #include "Rendercharacter.h"
+#include "Rendertrap.h"
 #include "Renderenemy.h"
 #include "RenderUI.h"
 #include "Mobs.h"
 #include "player.h"
+#include "misc.h"
+#include "trap.h"
+
 extern CStopWatch g_swTimer;
 extern bool g_bQuitGame;
 
@@ -125,8 +129,9 @@ void shootcharacter();
 // enemies related x
 
 //map related
+void shoottrap();
 
 // bullet related
 void renderbullet();
-
+void Trenderbullet();
 #endif // _GAME_H

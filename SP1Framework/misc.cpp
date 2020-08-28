@@ -1,6 +1,6 @@
 #include "misc.h"
 
-misc::misc(MISCTYPE objectypetoset,Map &map,int x, int y) {
+misc::misc(MISCTYPE objectypetoset,Map &map,int x, int y,char miscsymbol) {
 	switch (objectypetoset) {
 	case MISCTYPE::COIN:
 		setobjectype(objectypetoset);
@@ -58,7 +58,10 @@ void misc::setdestroy(bool destruct) {
 	destroyed = destruct;
 }
 
+char misc::getsymbol() {
+	return symbol;
+}
 
-
-
-
+void misc::setsymbol(char symbol) {
+	this->symbol = symbol;
+}

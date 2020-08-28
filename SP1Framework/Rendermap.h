@@ -1,14 +1,17 @@
 #pragma once
+#include "misc.h"
 #include "map.h" 
 #include "Entity.h"
+
 enum class MAPTILES {
 	WALL = '#',
 	COIN = '$',
-	PATH = '@',
+	PATH = ' ',
 	TRAP = 'x',
 	MOB = 'm',
 	NPC = '!',
 	BULLET = 'B',
+	BULLET1 = 'R',
 	//CHANGEPAD = 'T',
 	DEFAULT
 };

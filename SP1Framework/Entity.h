@@ -51,7 +51,7 @@ public:
 	void sethealth(int health);
 	void setalive(bool alive);
 	void setsymbol(char symbol);
-	virtual void shoot(BULLETDIRECTION bulletdir) =0;
+	virtual void shoot(BULLETDIRECTION bulletdir) = 0;
 	virtual bool movementcollide(Map &map,int x, int y) = 0;
 	virtual void damage(int x)=0;
 };

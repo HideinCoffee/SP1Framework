@@ -93,7 +93,9 @@
     <ClCompile Include="Rendercharacter.cpp" />
     <ClCompile Include="Renderenemy.cpp" />
     <ClCompile Include="Rendermap.cpp" />
+    <ClCompile Include="Rendertrap.cpp" />
     <ClCompile Include="RenderUI.cpp" />
+    <ClCompile Include="trap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -110,7 +112,9 @@
     <ClInclude Include="Rendercharacter.h" />
     <ClInclude Include="Renderenemy.h" />
     <ClInclude Include="Rendermap.h" />
+    <ClInclude Include="Rendertrap.h" />
     <ClInclude Include="RenderUI.h" />
+    <ClInclude Include="trap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -29,7 +29,7 @@ void renderinfobar(Console& g_Console) {
 	renderplayerposition(g_Console);
 	COORD moneypos;
 	moneypos = g_Console.getConsoleSize();
-	moneypos.X -= 105;
+	moneypos.X -= 100;
 	moneypos.Y -= 3;
 	int moneycolour = 0x66;
 	std::string renderplayermoney = std::to_string(((Player*)(playerarray[0]))->getmoney());

@@ -6,7 +6,6 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health,int damage
 	P.Y = y;
 	setpos(P);
 	setbulletype(bulletype);
-	map.editmap(x, y, 'P');
 	rescued = 0;
 	money = 0;
 	this->damage = damage;
@@ -16,72 +15,74 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health,int damage
 	}
 }
 
-void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
+void Player::move(MOVEMENTDIRECTION& movementdir, COORD pos, Map& map) {
 	COORD tempcord = pos;
 	bool moved = false;
-	switch (movementdir.UP) {
-	case true:
-		if (movementcollide(map, tempcord.X, tempcord.Y-1) == false) {
-			tempcord.Y -= 1;
+	if (getalive() == true) {
+		switch (movementdir.UP) {
+		case true:
+			if (movementcollide(map, tempcord.X, tempcord.Y - 1) == false) {
+				tempcord.Y -= 1;
+				movementdir.UP = false;
+				moved = true;
+			}
+			break;
+		case false:
 			movementdir.UP = false;
-			moved = true;
+			break;
 		}
-		break;
-	case false:
-		movementdir.UP = false;
-		break;
-	}
 
-	switch (movementdir.DOWN) {
-	case true:
-		if (movementcollide(map, tempcord.X, tempcord.Y+1) == false) {
-			tempcord.Y += 1;
+		switch (movementdir.DOWN) {
+		case true:
+			if (movementcollide(map, tempcord.X, tempcord.Y + 1) == false) {
+				tempcord.Y += 1;
+				movementdir.DOWN = false;
+				moved = true;
+			}
+
+			break;
+		case false:
 			movementdir.DOWN = false;
-			moved = true;
+			break;
 		}
 
-		break;
-	case false:
-		movementdir.DOWN = false;
-		break;
-	}
-
-	switch (movementdir.LEFT) {
-	case true:
-		if (movementcollide(map, tempcord.X-1, tempcord.Y) == false) {
-			tempcord.X -= 1;
+		switch (movementdir.LEFT) {
+		case true:
+			if (movementcollide(map, tempcord.X - 1, tempcord.Y) == false) {
+				tempcord.X -= 1;
+				movementdir.LEFT = false;
+				moved = true;
+			}
+			break;
+		case false:
 			movementdir.LEFT = false;
-			moved = true;
+			break;
 		}
-		break;
-	case false:
-		movementdir.LEFT = false;
-		break;
-	}
 
-	switch (movementdir.RIGHT) {
-	case true:
-		if (movementcollide(map, tempcord.X+1, tempcord.Y) == false) {
-			tempcord.X += 1;
+		switch (movementdir.RIGHT) {
+		case true:
+			if (movementcollide(map, tempcord.X + 1, tempcord.Y) == false) {
+				tempcord.X += 1;
+				movementdir.RIGHT = false;
+				moved = true;
+			}
+			break;
+
+		case false:
 			movementdir.RIGHT = false;
-			moved = true;
+			break;
 		}
-		break;
 
-	case false:
-		movementdir.RIGHT = false;
-		break;
-	}
-
-	if (moved == true) {
-		setpos(tempcord);
+		if (moved == true) {
+			map.editmap(returnPos().X, returnPos().Y, ' ');
+			setpos(tempcord);
+		}
 	}
 }
-
 void Player::shoot(BULLETDIRECTION bulletdir,int index) {
 	for (int i = 0; i < 100; i++) {
 		if (plrbullarray[i] == nullptr) {
-			plrbullarray[i] = new Bullet(returnPos().X, returnPos().Y,BULLETOWNER::PLAYER,i,damage, bulletdir, bulletype);
+			plrbullarray[i] = new Bullet(returnPos().X, returnPos().Y,BULLETOWNER::PLAYER,damage, bulletdir, bulletype);
 			break;
 		}
 	}
@@ -116,26 +117,23 @@ bool Player::movementcollide(Map &map,int x, int y){
 		}
 		break;
 	case 'm':
-		takedamage(1);
-		// somehow get which enemy it is and kill it. // fix the fking movements as well, 
-		returnvalue = true;
+		takedamage(3);
+		returnvalue = false;
 		break;
 	case 'x': // traps 
 		takedamage(1);
 		returnvalue = true;
 		break;
-		// samething check player hp.
-	//case 'T':
-	//	returnvalue = false;
-	//	break;
-	//	// Movement through Changetiles
 	case ' ':
 		returnvalue = false;
 		break;
+	case 'Q':
+		takedamage(3);
+		returnvalue = false;
+		
 	}
 	return returnvalue;
 }
-
 
 void Player::setbulletype(BULLETYPE bulletype){
 	this->bulletype = bulletype;
@@ -176,6 +174,7 @@ void Player::renderplayerbullet(Map &map) {
 		}
 	}
 }
+
 
 
 

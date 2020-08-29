@@ -20,7 +20,7 @@
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
-SKeyEvent g_skKeyEvent[int(EKEYS::K_COUNT)];
+SKeyEvent g_skKeyEvent[K_COUNT];
 SMouseEvent g_mouseEvent;
 
 // Game specific variables here
@@ -71,14 +71,12 @@ void init(void)
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
       
-    playerarray[0] = new Player(map,BULLETYPE::B_P,31,120,35,5);
+    playerarray[0] = new Player(map,BULLETYPE::B_P,5,5,35,5);
      // fix the direction thing cuz now it is always setting it to left 
-    mobdirection.LEFT = true;
-    enemyarray[0] = new Mobs(30, 115, 5, 'm', false, false , mobdirection);
-    mobdirection.LEFT = false;
-    traparray[0] = new Trap(map, 35, 115,0,5,BULLETDIRECTION::B_DOWN, BULLETYPE::B_B, true, true, 1);
-    traparray[1] = new Trap(map, 36, 116,1,5,BULLETDIRECTION::B_DOWN, BULLETYPE::B_B,true,true,1);
-
+    mobdirection.DOWN = true;
+    enemyarray[0] = new Mobs(10, 5,3,20, 'm', false,false,mobdirection);
+    mobdirection.DOWN = false;
+    traparray[0] = new Trap(map,15,5,5,BULLETDIRECTION::B_RIGHT, BULLETYPE::B_B, true, true, 1);
 }
 
 //--------------------------------------------------------------
@@ -184,25 +182,25 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
 void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent)
 {
     // here, we map the key to our enums
-    EKEYS key = EKEYS::K_COUNT;
+    EKEYS key = K_COUNT;
     switch (keyboardEvent.wVirtualKeyCode)
     {
-    case 0x57: key = EKEYS::K_UP; break;
-    case 0x53: key = EKEYS::K_DOWN; break;
-    case 0x41: key = EKEYS::K_LEFT; break;
-    case 0x44: key = EKEYS::K_RIGHT; break;
-    case VK_UP: key = EKEYS::A_UP; break;
-    case VK_DOWN: key = EKEYS::A_DOWN; break;
-    case VK_LEFT: key = EKEYS::A_LEFT; break;
-    case VK_RIGHT: key = EKEYS::A_RIGHT; break;
-    case VK_SPACE: key = EKEYS::K_SPACE; break;
-    case VK_ESCAPE: key = EKEYS::K_ESCAPE; break;
+    case 0x57: key = K_UP; break;
+    case 0x53: key = K_DOWN; break;
+    case 0x41: key = K_LEFT; break;
+    case 0x44: key = K_RIGHT; break;
+    case VK_UP: key = A_UP; break;
+    case VK_DOWN: key = A_DOWN; break;
+    case VK_LEFT: key = A_LEFT; break;
+    case VK_RIGHT: key = A_RIGHT; break;
+    case VK_SPACE: key = K_SPACE; break;
+    case VK_ESCAPE: key = K_ESCAPE; break;
     }
     // a key pressed event would be one with bKeyDown == true
     // a key released event would be one with bKeyDown == false
     // if no key is pressed, no event would be fired.
     // so we are tracking if a key is either pressed, or released
-    if (key != EKEYS::K_COUNT)
+    if (key != K_COUNT)
     {
         g_skKeyEvent[int(key)].keyDown = keyboardEvent.bKeyDown;
         g_skKeyEvent[int(key)].keyReleased = !keyboardEvent.bKeyDown;
@@ -273,59 +271,64 @@ void updateGame()       // gameplay logic
     trapshoot();
     renderbullet();
     moveEnemy();        // sound can be played here too.
+    checkcollision();
     
 }
 
 void moveEnemy() { // get it to check for collision
     for (int i = 0; i < 20; i++) {
         if (enemyarray[i] != nullptr) {
-             enemyarray[i]->move(movementdir, playerarray[0]->returnPos(), map);
+            if (enemyarray[i]->getalive() == true) {
+                enemyarray[i]->move(movementdir, playerarray[0]->returnPos(), map);
+            }
+            else{
+                map.editmap(enemyarray[i]->returnPos().X, enemyarray[i]->returnPos().Y, ' ');
+                delete enemyarray[i];
+                enemyarray[i] = nullptr;
+            }
         }
     }
 }
   
-
 void moveCharacter() {
     // Updating the location of the character based on the key release
     // providing a beep sound whenver we shift the character
-    
-    if (g_skKeyEvent[int(EKEYS::K_UP)].keyDown)
-    {
-        movementdir.UP = true;
-        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
-        //Beep(1440, 30);
-    }
-   
-    
-    if (g_skKeyEvent[int(EKEYS::K_LEFT)].keyDown)
-    {
-        movementdir.LEFT = true;
-        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+    if (playerarray[0] != nullptr) { //reminder to change
+        if (g_skKeyEvent[K_UP].keyDown)
+        {
+            movementdir.UP = true;
+            playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+            //Beep(1440, 30);
+        }
+        if (g_skKeyEvent[K_LEFT].keyDown)
+        {
+            movementdir.LEFT = true;
+            playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
 
-        //Beep(1440, 30);
-    }
-    
-    if (g_skKeyEvent[int(EKEYS::K_DOWN)].keyDown) 
-    {
-        movementdir.DOWN = true;
-        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
-        //Beep(1440, 30);
-    }
-    
-    if (g_skKeyEvent[int(EKEYS::K_RIGHT)].keyDown)
-    {
-        movementdir.RIGHT = true;
-        playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
-        //Beep(1440, 30);
-    }
+            //Beep(1440, 30);
+        }
 
+        if (g_skKeyEvent[K_DOWN].keyDown)
+        {
+            movementdir.DOWN = true;
+            playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+            //Beep(1440, 30);
+        }
+
+        if (g_skKeyEvent[K_RIGHT].keyDown)
+        {
+            movementdir.RIGHT = true;
+            playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+            //Beep(1440, 30);
+        }
+    }
 }
 
 
 void processUserInput()
 {
     // quits the game if player hits the escape key
-    if (g_skKeyEvent[int(EKEYS::K_ESCAPE)].keyReleased)
+    if (g_skKeyEvent[K_ESCAPE].keyReleased)
         g_bQuitGame = true;
 }
 
@@ -389,16 +392,16 @@ void renderGame()
 }
 
 
-void renderCharacter()
-{
-    // Draw the location of the character
-    WORD charColor = 0x23;
-    if (g_sChar.m_bActive)
-    {
-        charColor = 0x0A;
-    }
-    g_Console.writeToBuffer((playerarray[0]->returnPos().X-g_sChar.offset.X)*2,playerarray[0]->returnPos().Y-g_sChar.offset.Y,"  ", 0x0f);
-}
+//void renderCharacter()
+//{
+//    // Draw the location of the character
+//    WORD charColor = 0x23;
+//    if (g_sChar.m_bActive)
+//    {
+//        charColor = 0x0A;
+//    }
+//    g_Console.writeToBuffer((playerarray[0]->returnPos().X-g_sChar.offset.X)*2,playerarray[0]->returnPos().Y-g_sChar.offset.Y,"  ", 0x0f);
+//}
 
 void renderFramerate()
 {
@@ -427,8 +430,9 @@ void renderFramerate()
     //g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
     //// display monster location // experiment
     ss.str("");
-    ss << "monsterX:" << ' ' <<  enemyarray[0]->returnPos().X << ' ' << " monsterY:" << ' ' << enemyarray[0]->returnPos().Y;
-    g_Console.writeToBuffer(130, 5, ss.str(), 0x0f);
+    //ss << "monsterX:" << ' ' << enemyarray[0]->returnPos().X << ' ' << " monsterY:" << ' ' << enemyarray[0]->returnPos().Y << "health"; //<<
+    //enemyarray[0]->gethealth();
+    g_Console.writeToBuffer(0, 5, ss.str(), 0x0f);
 }
 
 // this is an example of how you would use the input events
@@ -438,28 +442,28 @@ void renderInputEvents()
     COORD startPos = { 130,10 };
     std::ostringstream ss;
     std::string key;
-    for (int i = 0; i < int(EKEYS::K_COUNT); ++i)
+    for (int i = 0; i < K_COUNT; i++)
     {
         ss.str("");
         switch (i)
         {
-            case int(EKEYS::K_UP) : key = "UP";
+            case K_UP : key = "UP";
                 break;
-            case int(EKEYS::K_DOWN) : key = "DOWN";
+            case K_DOWN : key = "DOWN";
                 break;
-            case int(EKEYS::K_LEFT) : key = "LEFT";
+            case K_LEFT : key = "LEFT";
                  break;
-            case int(EKEYS::K_RIGHT) : key = "RIGHT";
+            case K_RIGHT : key = "RIGHT";
                  break;
-            case int(EKEYS::K_SPACE) : key = "SPACE";
+            case K_SPACE : key = "SPACE";
                 break;
-            case int(EKEYS::A_DOWN) : key = "ALEFT";
+            case A_DOWN : key = "ALEFT";
                  break;
-            case int(EKEYS::A_UP) : key = "AUP";
+            case A_UP : key = "AUP";
                  break;
-            case int(EKEYS::A_LEFT) : key = "ALEFT";
+            case A_LEFT : key = "ALEFT";
                  break;
-            case int(EKEYS::A_RIGHT) : key = "ARIGHT";
+            case A_RIGHT : key = "ARIGHT";
                  break;
            default: continue;
         }
@@ -512,21 +516,21 @@ void renderInputEvents()
     default:
         break;
     }
-
 }
 
 void shootcharacter(){
-    if (g_skKeyEvent[int(EKEYS::A_UP)].keyDown)
+    if (g_skKeyEvent[A_UP].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_UP,0);
-    else if (g_skKeyEvent[int(EKEYS::A_DOWN)].keyDown)
+    else if (g_skKeyEvent[A_DOWN].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_DOWN,0);
-    else if (g_skKeyEvent[int(EKEYS::A_LEFT)].keyDown)
+    else if (g_skKeyEvent[A_LEFT].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_LEFT,0);
-    else if (g_skKeyEvent[int(EKEYS::A_RIGHT)].keyDown)
+    else if (g_skKeyEvent[A_RIGHT].keyDown)
         playerarray[0]->shoot(BULLETDIRECTION::B_RIGHT,0);
 }
 
 void renderbullet() { // make it so that instead of it dropping after a certain let it drop offscreen.
+       
     ((Player*)(playerarray[0]))->renderplayerbullet(map);
     for (int i = 0; i < 20; i++) {
         if (traparray[i] != nullptr)
@@ -534,11 +538,36 @@ void renderbullet() { // make it so that instead of it dropping after a certain 
     }
 }
 
-// make a var that stores the previouschar so can restore later;
-
 void trapshoot() {
     for (int i = 0; i < 20; i++) {
         if (traparray[i] != nullptr)
             traparray[i]->shoot(map);
+    }
+}
+
+
+void checkcollision() {
+    for (int i = 0; i < 20; i++) {
+        if ((i == 0) && (playerarray[i] != nullptr)) {
+            playerarray[i]->movementcollide(map, playerarray[i]->returnPos().X, playerarray[i]->returnPos().Y);
+        }
+        if (enemyarray[i] != nullptr) {
+            enemyarray[i]->movementcollide(map, playerarray[0]->returnPos().X, playerarray[0]->returnPos().Y);
+        }
+    }
+}
+
+void checkstate() {
+    for (int i = 0; i < 20; i++) {
+        if (i == 0) {
+            if ((playerarray[i] != nullptr) && (playerarray[i]->getalive() == false)) {
+                delete playerarray[i];
+                playerarray[i] = nullptr;
+            }
+        }
+        if ((enemyarray[i] != nullptr) &&(enemyarray[i]->getalive() == false)) {
+            delete enemyarray[i];
+            enemyarray[i] = nullptr;
+        }
     }
 }

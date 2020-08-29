@@ -3,6 +3,24 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+enum class MAPTILES {
+	WALL = '#',
+	COIN = '$',
+	PATH = ' ',
+	TRAP = 'x',
+	MOB = 'm',
+	NPC = '!',
+	BULLET = 'B',
+	TRAPBULLET = 'Q',
+	PLAYER = 'P',
+	TOGGLE = 'T',
+	HEALTH = 'H',
+	AMMO = 'A',
+	DOOR = 'D',
+	LAVA = 'L',
+	DEFAULT
+};
+
 class Map
 {
 private:

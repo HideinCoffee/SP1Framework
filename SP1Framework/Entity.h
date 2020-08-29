@@ -50,7 +50,7 @@ public:
 	
 	//Getters, to get private datamembers
 	COORD returnPos();
-	int gethealth();
+	//int gethealth();
 	char getsymbol();
 	bool getalive();
 	//setters to set private datamembers
@@ -61,4 +61,5 @@ public:
 	virtual void shoot(BULLETDIRECTION bulletdir,int index) = 0;
 	virtual bool movementcollide(Map &map,int x, int y) = 0;
 	void takedamage(int x);
+	int gethealth();
 };

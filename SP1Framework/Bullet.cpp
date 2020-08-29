@@ -1,14 +1,13 @@
 #include "Bullet.h"
 #include "global.h"
 
-Bullet::Bullet(int x, int y,BULLETOWNER bulletowner,int index,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype) {
+Bullet::Bullet(int x, int y,BULLETOWNER bulletowner,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype) {
 	COORD bulletpos;
 	bulletpos.X = x;
 	bulletpos.Y = y;
 	terminate = false;
 	this->damage = damage;
 	this->bulletowner = bulletowner;
-	this->index = index;
 	setpos(bulletpos);
 	this->bulletdirection = bulletdirection;
 	switch (bulletype) {
@@ -109,66 +108,70 @@ void Bullet::setstatus(bool status) {
 }
 
 bool Bullet::bulletcollide(Map& map, int x, int y) {
-	bool returnvalue = false;
-	switch (map.getchar(x,y)){
+	bool finalreturnvalue = false;
+	switch (map.getchar(x, y)) {
 		case ' ': // path
-			returnvalue = false;
+			finalreturnvalue = false;
 			break;
 		case '#': // wall
-			returnvalue = true;
+			finalreturnvalue = true;
 			break;
-		case '!': 
-			returnvalue = false;
+		case '!':
+			finalreturnvalue = false;
 			break;
-		case 'm': // monster //damage monster 
-			switch (getbulletowner()) {
-			case BULLETOWNER::MOB:
-				break;
-			case BULLETOWNER::TRAP:
-				setstatus(true);
-				break;
+		case 'x':
+			finalreturnvalue = true;
+			break;
+		case '$':
+			finalreturnvalue = true;
+			break;
+		case 'B':
+			finalreturnvalue = false;
+			break;
+		case 'Q':
+			finalreturnvalue = false;
+			break;
+		case 'm':
+			switch (bulletowner) {
 			case BULLETOWNER::PLAYER:
-				for (int i = 0; i < 20; i ++) {
+				finalreturnvalue = true;
+				for (int i = 0; i < 20; i++) {
 					if (enemyarray[i] != nullptr) {
-						//if ((enemyarray[i]->returnPos().X == x) && (enemyarray[i]->returnPos().Y == y))
-							//enemyarray[i]->takedamage(damage);
-						break;
+						if ((enemyarray[i]->returnPos().X) && (enemyarray[i]->returnPos().Y == y)) {
+							enemyarray[i]->takedamage(damage);
+							continue;
+							if (enemyarray[i]->getalive() == false) {
+								delete enemyarray[i];
+								enemyarray[i] = nullptr;
+							}
+						}
 					}
 				}
 				break;
-			}
-			returnvalue = true;
-			break;
-		case 'x':
-			returnvalue = true;
-			break;
-		case '$':
-			returnvalue = true;
-		case 'B':
-			returnvalue = true;
-		case 'Q':
-			if (getbulletowner() != BULLETOWNER::TRAP) {
-				
-				returnvalue = false;
-			}
-			else {
-				returnvalue = true;
-			}
-		case 'P':
-			switch (getbulletowner()) {
 			case BULLETOWNER::MOB:
-				//playerarray[0]->takedamage(damage);
-				returnvalue = true;
-				break;
-			case BULLETOWNER::PLAYER:
-				returnvalue = false;
+				finalreturnvalue = false;
 				break;
 			case BULLETOWNER::TRAP:
-				returnvalue = true;
+				finalreturnvalue = false;
 				break;
 			}
+			finalreturnvalue = true;
+			break;
 	}
-	return returnvalue;
+
+	if ((playerarray[0]->returnPos().X == x) && (playerarray[0]->returnPos().Y == y)) {
+		switch (bulletowner) {
+		case BULLETOWNER::PLAYER:
+			finalreturnvalue = false;
+			break;
+		case BULLETOWNER::MOB:
+			finalreturnvalue = true;
+			break;
+		case BULLETOWNER::TRAP:
+			finalreturnvalue = false;
+		}
+	}
+	return finalreturnvalue;
 }
 
 BULLETOWNER Bullet::getbulletowner()

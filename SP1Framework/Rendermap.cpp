@@ -29,9 +29,22 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 		break;
 	case 'P':
 		returnvalue = MAPTILES::PLAYER;
-	//case 'T':
-	//	returnvalue = MAPTILES::CHANGEPAD;
-	//	break;
+		break;
+	case 'T':
+		returnvalue = MAPTILES::TOGGLE;
+		break;
+	case 'H':
+		returnvalue = MAPTILES::HEALTH;
+		break;
+	case 'A':
+		returnvalue = MAPTILES::AMMO;
+		break;
+	case 'D':
+		returnvalue = MAPTILES::DOOR;
+		break;
+	case 'L':
+		returnvalue = MAPTILES::LAVA;
+		break;
 	}
 	return returnvalue;
 }
@@ -40,7 +53,7 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 
 void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarray[]) {
     if (map.checkread() == false) {
-        if (map.slotmap("map.csv", g_Console) == true) {
+        if (map.slotmap("Tutorial.csv", g_Console) == true) {
             map.changeread(true);
         }
     }
@@ -79,12 +92,22 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 				case MAPTILES::TRAP:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x55);
 					break;
-				/*case MAPTILES::PLAYER:
-					g_Console.writeToBuffer(col * 2, row, "  ", 0xff);
-					break;*/
-				//case MAPTILES::CHANGEPAD:
-				//	g_Console.writeToBuffer(col* 2, row,"  ", 0xBB);
-				//	break;
+				case MAPTILES::TOGGLE:
+					g_Console.writeToBuffer(col * 2, row, "  ", 0x99);
+					break;
+				case MAPTILES::HEALTH:
+					g_Console.writeToBuffer(col * 2, row, "H ", 0x2F);
+					break;
+				case MAPTILES::AMMO:
+					g_Console.writeToBuffer(col * 2, row, "A ", 0x2F);
+					break;
+				case MAPTILES::DOOR:
+					g_Console.writeToBuffer(col * 2, row, "D ", 0x0f);
+					break;
+				case MAPTILES::LAVA:
+					g_Console.writeToBuffer(col * 2, row, "  ", 0xcc);
+					break;
+
 			}
         }
     }

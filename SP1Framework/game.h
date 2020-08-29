@@ -37,7 +37,7 @@ struct SMouseEvent
 };
 
 // Enumeration to store the control keys that your game will have
-enum class EKEYS
+enum EKEYS
 {
     K_UP,
     K_DOWN,
@@ -135,4 +135,7 @@ void trapshoot();
 
 // bullet related
 void renderbullet();
+
+void checkcollision();
+void checkstate();
 #endif // _GAME_H

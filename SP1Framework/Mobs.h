@@ -14,7 +14,7 @@ private:
 	bool canshoot;
 
 public:
-	Mobs(int xpos, int ypos, int movenum , char symbol, bool canshoot, bool trackplayermode, MOVEMENTDIRECTION &mobdirection);
+	Mobs(int xpos, int ypos, int movenum , int health,char symbol, bool canshoot, bool trackplayermode, MOVEMENTDIRECTION &mobdirection);
 	~Mobs();
 	bool checkmove(COORD playerrpos);
 	void move(MOVEMENTDIRECTION &movementdir,COORD mobpos, Map &map); ///more parameters, but suff here must be added to the entity class

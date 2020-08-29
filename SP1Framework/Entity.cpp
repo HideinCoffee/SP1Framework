@@ -41,10 +41,10 @@ void Entity::setsymbol(char symbol) {
 	this->symbol = symbol;
 }
 void Entity::takedamage(int x) {
-	if (gethealth() <= 0)
+	if (health <= 0)
 		setalive(false);
 	else
-		sethealth((gethealth() - x));
+		sethealth((health - x));
 }
 
 bool Entity::getalive() {

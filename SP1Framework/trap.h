@@ -4,8 +4,6 @@
 
 class Trap : public misc {
 private :
-	BULLETOWNER bulletowner;
-	int index;
 	int damage;
 	BULLETYPE bulletype;
 	BULLETDIRECTION bulletdirection;
@@ -15,7 +13,7 @@ private :
 	int speed; 
 	double g_dElapsedtime;
 public :
-	Trap(Map& map, int posx, int posy,int index, int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype,bool shoot,bool activated,int speed);
+	Trap(Map& map, int posx, int posy,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype,bool shoot,bool activated,int speed);
 	~Trap();
 	void shoot(Map &map);
 	void renderbullet(Map& map);

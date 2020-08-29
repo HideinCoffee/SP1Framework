@@ -14,6 +14,6 @@ void renderinterface(Console &g_Console);
 void renderinfobar(Console &g_Console);
 void renderplayerposition(Console& g_Console);
 void renderlegend(Console &g_Console);
-void rendertext(Console &g_Console, int startx, int start, std::string txttorender,WORD txtcolor);
+void rendertext(Console &g_Console, int startx, int start, std::string txttorender,WORD txtcolor); 
 
 

@@ -1,7 +1,7 @@
 #include "trap.h"
 #include "position.h"
 
-Trap::Trap(Map& map, int posx, int posy,int index,int damage
+Trap::Trap(Map& map, int posx, int posy,int damage
 	, BULLETDIRECTION bulletdirection = BULLETDIRECTION::B_UP,
 	BULLETYPE bulletype = BULLETYPE::B_B, bool canshoot = false, bool activated = true, int speed = 1)
 	: misc(MISCTYPE::TRAP, map, posx, posy, 'x'){
@@ -10,8 +10,8 @@ Trap::Trap(Map& map, int posx, int posy,int index,int damage
 	this->bulletype = bulletype;
 	this->activated = activated;
 	this->speed = speed;
-	this->bulletowner = bulletowner;
-	this->index = index;
+	this->damage = damage;
+	
 	for (int i = 0; i < 100; i++)
 	{
 		if (trapbulletarray[i] != nullptr)
@@ -25,7 +25,7 @@ Trap::~Trap() {
 void Trap::shoot(Map& map) {
 	for (int i = 0; i < 100; i++) {
 		if (trapbulletarray[i] == nullptr){ // need to check if the object can shoot or not nigg
-			trapbulletarray[i] = new Bullet(returnPos().X,returnPos().Y,BULLETOWNER::TRAP,i,5,bulletdirection,bulletype);
+			trapbulletarray[i] = new Bullet(returnPos().X,returnPos().Y,BULLETOWNER::TRAP,5,bulletdirection,bulletype);
 			break;
 		}
 	}
@@ -48,6 +48,7 @@ void Trap::renderbullet(Map& map) {
 		}
 	}
 }
+
 
 Bullet* Trap::returntrpbullarray() {
 	Bullet* ptrtoarray = *trapbulletarray;

@@ -20,7 +20,7 @@ private:
 	bool terminate;
 	double delay;
 public:
-	Bullet(int x, int y, BULLETOWNER bulletowner,int index,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype);
+	Bullet(int x, int y, BULLETOWNER bulletowner,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype);
 	~Bullet();
 	//set/get direction
 	BULLETDIRECTION getdirection();

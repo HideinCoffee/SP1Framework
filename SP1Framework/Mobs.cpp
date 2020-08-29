@@ -1,6 +1,6 @@
 #include "mobs.h"
 
-Mobs::Mobs(int xpos, int ypos, int movenum, char symbol,bool canshoot, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(5, true, 'm', 0, 0)
+Mobs::Mobs(int xpos, int ypos, int movenum,int health,char symbol,bool canshoot, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(health, true, 'm', 0, 0)
 {
 	COORD mob;
 	mob.X = xpos;
@@ -85,77 +85,96 @@ void Mobs::trackplayer(COORD playerpos, Map& map) { // make it so that if the pl
 
 void Mobs::controlledmovement(Map& map) { 
 	bool moved = false;
-	COORD mp = returnPos();
-	switch (mobdirection.UP) {
-	case true:
-		if (movementcollide(map, mp.X, mp.Y-1) == false) { // move up
-			if (movecount < movenum) {
-				mp.Y--;
-				moved = true;
-				movecount++;
+	COORD mp = { 0,0 };
+	if (getalive() == true) {
+		mp = returnPos();
+
+		switch (mobdirection.UP) {
+		case true:
+			if ((movementcollide(map, mp.X, mp.Y - 1) == false) && (getalive() == true)) { // move up
+				if (movecount < movenum) {
+					mp.Y--;
+					moved = true;
+					movecount++;
+				}
+				else {
+					movecount = 0;
+					mobdirection.UP = false;
+					mobdirection.DOWN = true;
+				}
 			}
 			else {
-				movecount = 0;
 				mobdirection.UP = false;
 				mobdirection.DOWN = true;
 			}
+			break;
 		}
-		break;
-	}
-	switch (mobdirection.DOWN) {
-	case true:
-		if (movementcollide(map, mp.X, mp.Y+1) == false) {
-			if (movecount < movenum) {
-				mp.Y++;
-				moved = true;
-				movecount++;
-				
+		switch (mobdirection.DOWN) {
+		case true:
+			if ((movementcollide(map, mp.X, mp.Y + 1) == false) && (getalive() == true)) {
+				if (movecount < movenum) {
+					mp.Y++;
+					moved = true;
+					movecount++;
+				}
+				else {
+					movecount = 0;
+					mobdirection.DOWN = false;
+					mobdirection.UP = true;
+				}
 			}
 			else {
-				movecount = 0;
-				mobdirection.DOWN = false;
-				mobdirection.UP = true;
+				mobdirection.UP = false;
+				mobdirection.DOWN = true;
 			}
+			break;
 		}
-		break;
-	}
-	switch (mobdirection.LEFT) {
-	case true:
-		if (movementcollide(map, mp.X-1, mp.Y) == false) {
-			if (movecount < movenum) {
-				mp.X--;
-				moved = true;
-				movecount++;
+		switch (mobdirection.LEFT) {
+		case true:
+			if ((movementcollide(map, mp.X - 1, mp.Y) == false) && (getalive() == true)) {
+				if (movecount < movenum) {
+					mp.X--;
+					moved = true;
+					movecount++;
+				}
+				else {
+					movecount = 0;
+					mobdirection.LEFT = false;
+					mobdirection.RIGHT = true;
+				}
 			}
 			else {
-				movecount = 0;
 				mobdirection.LEFT = false;
 				mobdirection.RIGHT = true;
 			}
+			break;
 		}
-		break;
-	}
-	switch (mobdirection.RIGHT) {
-	case true:
-		if (movementcollide(map, mp.X+1, mp.Y) == false) {
-			if (movecount < movenum) {
-				mp.X++;
-				moved = true;
-				movecount++;
+		switch (mobdirection.RIGHT) {
+		case true:
+			if ((movementcollide(map, mp.X + 1, mp.Y) == false) && (getalive() == true)) {
+				if (movecount < movenum) {
+					mp.X++;
+					moved = true;
+					movecount++;
+				}
+				else {
+					movecount = 0;
+					mobdirection.RIGHT = false;
+					mobdirection.LEFT = true;
+				}
 			}
 			else {
-				movecount = 0;
 				mobdirection.RIGHT = false;
 				mobdirection.LEFT = true;
 			}
+			break;
 		}
-		break;
-	}
 
-	if (moved == true) {
-		map.editmap(returnPos().X, returnPos().Y,' ');
-		setpos(mp);
-		map.editmap(mp.X, mp.Y, 'm');
+		if (moved == true) {
+			map.editmap(returnPos().X, returnPos().Y, ' ');
+			setpos(mp);
+			map.editmap(mp.X, mp.Y, 'm');
+		}
 	}
 }
 
@@ -174,39 +193,41 @@ bool Mobs::movementcollide(Map& map, int x, int y) {
 		returnvalue = false;
 		break;
 	case '!':
-		// collide with npc 
-		// make it capture the npc // if theres time
 		returnvalue = true;
 		break;
 	case '$':
-		// coolide with money
-		// make it steal the money? idk
 		returnvalue = false;
 		break;
 	case 'm':
 		returnvalue = true;
 		break;
 	case 'x':
-		//take damage
 		returnvalue = false;
 		break;
-	case 'P':
-		returnvalue = true;
-		break;
 	case 'B':
-		returnvalue = true;
+		for (int i = 0; i < 20; i++) {
+			if (enemyarray[i] != nullptr) {
+				if ((enemyarray[i]->returnPos().X == x) && (enemyarray[i]->returnPos().Y == y))
+					//	enemyarray[i]->takedamage(4);
+					continue;
+				if (enemyarray[i]->getalive() == false) {
+					delete enemyarray[i];
+					enemyarray[i] = nullptr;
+				}
+			}
+		}
+		returnvalue = false;
 		break;
 	}
 	return returnvalue;
+	if (playerarray[0] != nullptr)
+		if (checkmove(playerarray[0]->returnPos()) == false) {
+			trackplayermode = true;
+			}
 }
 
 
 void Mobs::AOEdamage(COORD playerpos){
 
 }
-//void Mobs::takedamage(int x) {
-//	if (gethealth() <= 0)
-//		setalive(false);
-//	else
-//		sethealth((gethealth() - x));
-//}
+

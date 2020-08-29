@@ -3,20 +3,6 @@
 #include "map.h" 
 #include "Entity.h"
 
-enum class MAPTILES {
-	WALL = '#',
-	COIN = '$',
-	PATH = ' ',
-	TRAP = 'x',
-	MOB = 'm',
-	NPC = '!',
-	BULLET = 'B',
-	TRAPBULLET = 'Q',
-	PLAYER = 'P',
-	//CHANGEPAD = 'T',
-	DEFAULT
-};
-
 struct SGameChar
 {
 	COORD m_cLocation;

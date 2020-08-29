@@ -1,6 +1,6 @@
 #include "player.h"
-
-Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health) :Entity(0, true, 'P',0,0) {
+#include "map.h"
+Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health,int damage) :Entity(0, true, 'P',0,0) {
 	COORD P;
 	P.X = x;
 	P.Y = y;
@@ -9,17 +9,18 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health) :Entity(0
 	map.editmap(x, y, 'P');
 	rescued = 0;
 	money = 0;
-	remainingammo = 20;
+	this->damage = damage;
 	sethealth(health);
+	for (int i = 0; i < 100; i++) {
+		plrbullarray[i] = nullptr;
+	}
 }
 
 void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 	COORD tempcord = pos;
 	bool moved = false;
-
 	switch (movementdir.UP) {
 	case true:
-		
 		if (movementcollide(map, tempcord.X, tempcord.Y-1) == false) {
 			tempcord.Y -= 1;
 			movementdir.UP = false;
@@ -33,13 +34,12 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 
 	switch (movementdir.DOWN) {
 	case true:
-		
 		if (movementcollide(map, tempcord.X, tempcord.Y+1) == false) {
 			tempcord.Y += 1;
 			movementdir.DOWN = false;
 			moved = true;
 		}
-		
+
 		break;
 	case false:
 		movementdir.DOWN = false;
@@ -51,7 +51,7 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 		if (movementcollide(map, tempcord.X-1, tempcord.Y) == false) {
 			tempcord.X -= 1;
 			movementdir.LEFT = false;
-				moved = true;
+			moved = true;
 		}
 		break;
 	case false:
@@ -74,15 +74,15 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 	}
 
 	if (moved == true) {
-		map.editmap(returnPos().X, returnPos().Y, ' ');
+		//map.editmap(returnPos().X, returnPos().Y, ' ');
 		setpos(tempcord);
 	}
 }
 
-void Player::shoot(BULLETDIRECTION bulletdir) {
+void Player::shoot(BULLETDIRECTION bulletdir,int index) {
 	for (int i = 0; i < 100; i++) {
-		if (bulletarray[i] == nullptr) {
-			bulletarray[i] = new Bullet(returnPos().X, returnPos().Y, bulletdir, bulletype);
+		if (plrbullarray[i] == nullptr) {
+			plrbullarray[i] = new Bullet(returnPos().X, returnPos().Y,BULLETOWNER::PLAYER,i,damage, bulletdir, bulletype);
 			break;
 		}
 	}
@@ -117,13 +117,12 @@ bool Player::movementcollide(Map &map,int x, int y){
 		}
 		break;
 	case 'm':
-		damage(1);
-		// take DOT
-		// check hp level if it is below zero 
+		takedamage(1);
+		// somehow get which enemy it is and kill it. // fix the fking movements as well, 
 		returnvalue = true;
 		break;
 	case 'x': // traps 
-		damage(1);
+		takedamage(1);
 		returnvalue = true;
 		break;
 		// samething check player hp.
@@ -139,20 +138,9 @@ bool Player::movementcollide(Map &map,int x, int y){
 	return returnvalue;
 }
 
-void Player::damage(int x) {
-	if (gethealth() - x > 0)
-		sethealth(gethealth() - x);
-	else
-		setalive(false);
-}
 
-void Player::setbulletype(BULLETYPE bulletype) {
+void Player::setbulletype(BULLETYPE bulletype){
 	this->bulletype = bulletype;
-}
-
-void Player::setammo(int ammo) {
-	remainingammo = ammo;
-
 }
 
 void Player::setrescued(int npcrescued) {
@@ -171,9 +159,31 @@ int Player::getrescued() {
 	return rescued;
 }
 
-int Player::getammo() {
-	return remainingammo;
-}
 int Player::getmoney() {
 	return money;
 }
+
+void Player::renderplayerbullet(Map &map) {
+	for (int i = 0; i < 100; i++) {
+		if (plrbullarray[i] != nullptr) {
+			if (plrbullarray[i]->getstatus() == true) {
+				map.editmap(plrbullarray[i]->returnPos().X, plrbullarray[i]->returnPos().Y, ' ');
+				delete plrbullarray[i];
+				plrbullarray[i] = nullptr;
+			}
+			else {
+				plrbullarray[i]->movebullet(map);
+				map.editmap(plrbullarray[i]->returnPos().X, plrbullarray[i]->returnPos().Y, 'B');
+			}	
+		}
+	}
+}
+
+
+
+
+
+
+
+
+

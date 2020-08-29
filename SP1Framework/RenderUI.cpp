@@ -25,7 +25,6 @@ void renderinfobar(Console& g_Console) {
 		g_Console.writeToBuffer(healthpos.X+10+i, healthpos.Y,"  ",healthcolor);
 	}
 
-	healthpos.X + 50;
 	renderplayerposition(g_Console);
 }
 void renderplayerposition(Console& g_Console) {

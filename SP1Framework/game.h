@@ -121,7 +121,6 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent);      // define this fun
 void gameplayKBHandler(const KEY_EVENT_RECORD& keyboardEvent);   // handles keyboard events for gameplay 
 void gameplayMouseHandler(const MOUSE_EVENT_RECORD& mouseEvent); // handles mouse events for gameplay 
 
-void rectangle(int x, int y, int width, int height, char ch, WORD bordercolor, WORD buttoncolor, std::string,bool fill);
 void moveEnemy();   //either create a file for this or just somehow put it in enemy 
 
 
@@ -132,9 +131,8 @@ void shootcharacter();
 // enemies related x
 
 //map related
-void shoottrap();
+void trapshoot();
 
 // bullet related
 void renderbullet();
-void Trenderbullet();
 #endif // _GAME_H

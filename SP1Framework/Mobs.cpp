@@ -11,8 +11,8 @@ Mobs::Mobs(int xpos, int ypos, int movenum, char symbol,bool canshoot, bool trac
 	this->movenum = movenum;
 	this->trackplayermode = trackplayermode;
 	this->mobdirection = mobdirection;
-	bool explode = false;
 	this->canshoot = canshoot;
+	
 	//Constructor for mobs
 }
 
@@ -20,7 +20,7 @@ Mobs::~Mobs() {
 	//destructor for mobs//  * * *
 }//							 * P *
 //							 * * * <-- like this
-bool Mobs::checkmove(COORD playerpos) { // check if the mob is around the position around the player // check if the player
+bool Mobs::checkmove(COORD playerpos) { // check if the mob is around the position around the player //
 	bool needtomove = true;
 	int i = 0;
 	while (i < 3) {
@@ -78,10 +78,11 @@ void Mobs::trackplayer(COORD playerpos, Map& map) { // make it so that if the pl
 		if (moved == true) {
 			map.editmap(returnPos().X, returnPos().Y, ' ');
 			setpos(mob);
-			map.editmap(returnPos().X, returnPos().Y, 'm');
+			map.editmap(mob.X,mob.Y, 'm');
 		}	
 	}
 }
+
 void Mobs::controlledmovement(Map& map) { 
 	bool moved = false;
 	COORD mp = returnPos();
@@ -152,16 +153,15 @@ void Mobs::controlledmovement(Map& map) {
 	}
 
 	if (moved == true) {
-		map.editmap(returnPos().X, returnPos().Y, ' ');
+		map.editmap(returnPos().X, returnPos().Y,' ');
 		setpos(mp);
-		map.editmap(mp.X,mp.Y,'m');
+		map.editmap(mp.X, mp.Y, 'm');
 	}
 }
 
 
-void Mobs::shoot(BULLETDIRECTION bulletdir) {
-
-
+void Mobs::shoot(BULLETDIRECTION bulletdir,int index) {
+	//left blank cuz mobs are unable to shoot for now (if there is time implement shooting for mobs) probably not
 }
 
 bool Mobs::movementcollide(Map& map, int x, int y) {
@@ -184,17 +184,13 @@ bool Mobs::movementcollide(Map& map, int x, int y) {
 		returnvalue = false;
 		break;
 	case 'm':
-		// collide with enemy
-		// ntg happens
-		returnvalue = false;
+		returnvalue = true;
 		break;
-		// collide with trap  
 	case 'x':
 		//take damage
 		returnvalue = false;
 		break;
 	case 'P':
-		trackplayermode = true;
 		returnvalue = true;
 		break;
 	case 'B':
@@ -204,6 +200,13 @@ bool Mobs::movementcollide(Map& map, int x, int y) {
 	return returnvalue;
 }
 
-void Mobs::damage(int x) {
-	// mob take damage. 
+
+void Mobs::AOEdamage(COORD playerpos){
+
 }
+//void Mobs::takedamage(int x) {
+//	if (gethealth() <= 0)
+//		setalive(false);
+//	else
+//		sethealth((gethealth() - x));
+//}

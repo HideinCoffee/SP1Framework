@@ -1,17 +1,26 @@
 #pragma once
 #include "position.h"
-#include "Entity.h"
+#include "entity.h"
+enum class BULLETOWNER {
+	PLAYER,
+	TRAP,
+	MOB // give the mobs a name ffs later
+};
+
 class Bullet
 {
+	
 private:
-//	int rdistance;
+	BULLETOWNER bulletowner;
 	Position position;
 	BULLETDIRECTION bulletdirection;
 	BULLETYPE bulletype;
+	int index;
 	int damage;
 	bool terminate;
+	double delay;
 public:
-	Bullet(int x, int y, BULLETDIRECTION bulletdirection,BULLETYPE bulletype);
+	Bullet(int x, int y, BULLETOWNER bulletowner,int index,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype);
 	~Bullet();
 	//set/get direction
 	BULLETDIRECTION getdirection();
@@ -39,5 +48,7 @@ public:
 	void setstatus(bool status);
 
 	bool bulletcollide(Map& map, int x, int y);
+
+	BULLETOWNER getbulletowner();
 };
 

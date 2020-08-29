@@ -18,12 +18,6 @@ struct direction {
 	COORD RIGHT = { 1,0 };
 };
 
-//direction variable
-//                //
-////Inside your enemy
-//position += variable
-//if position + variable have anything
-//if not then reverse direction
 
 enum class BULLETDIRECTION {
 		B_UP,
@@ -55,17 +49,16 @@ public:
 	virtual void move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) = 0; //Function prototype
 	
 	//Getters, to get private datamembers
-	int getX();
-	int getY(); 
 	COORD returnPos();
 	int gethealth();
 	char getsymbol();
+	bool getalive();
 	//setters to set private datamembers
 	void setpos(COORD pos);
 	void sethealth(int health);
 	void setalive(bool alive);
 	void setsymbol(char symbol);
-	virtual void shoot(BULLETDIRECTION bulletdir) = 0;
+	virtual void shoot(BULLETDIRECTION bulletdir,int index) = 0;
 	virtual bool movementcollide(Map &map,int x, int y) = 0;
-	virtual void damage(int x)=0;
+	void takedamage(int x);
 };

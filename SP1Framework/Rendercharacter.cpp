@@ -4,7 +4,8 @@ void rendercharacter(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* play
 	WORD charcolor = 0x23;
 	if (g_sChar.m_bActive == true)
 		charcolor = 0x0A;
-	map.editmap(playerarray[0]->returnPos().X, playerarray[0]->returnPos().Y, playerarray[0]->getsymbol());
-	g_Console.writeToBuffer((playerarray[0]->returnPos().X - g_sChar.offset.X) * 2, playerarray[0]->returnPos().Y - g_sChar.offset.Y, "  ", 0xff);
-	
+	//if (playerarray[0]->getalive() == true) {
+		//map.editmap(playerarray[0]->returnPos().X, playerarray[0]->returnPos().Y, playerarray[0]->getsymbol());
+		g_Console.writeToBuffer((playerarray[0]->returnPos().X - g_sChar.offset.X) * 2, playerarray[0]->returnPos().Y - g_sChar.offset.Y, "  ", 0xff);
+	//}
 }

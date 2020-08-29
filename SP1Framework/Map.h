@@ -29,7 +29,7 @@ public:
 	void changeread(bool status);
 // get char
 	char getchar(int x, int y);
-	char* getmaparray();
+//	char* getmaparray();
 	
 
 };

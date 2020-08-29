@@ -1,5 +1,4 @@
 #include "Entity.h"
-
 Entity::~Entity(){
 	//deconstructor
 }
@@ -15,7 +14,6 @@ Entity::Entity(int health,bool alive, char symbol,int x, int y) {
 }
 
 void Entity::setpos(COORD position) {
-	//this->position = position;
 	this->position.setPos(position);
 }
 
@@ -41,4 +39,14 @@ char Entity::getsymbol() {
 
 void Entity::setsymbol(char symbol) {
 	this->symbol = symbol;
+}
+void Entity::takedamage(int x) {
+	if (gethealth() <= 0)
+		setalive(false);
+	else
+		sethealth((gethealth() - x));
+}
+
+bool Entity::getalive() {
+	return alive;
 }

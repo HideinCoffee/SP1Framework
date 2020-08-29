@@ -94,10 +94,10 @@ char Map::getchar(int x, int y) {
 	return chartoreturn;
 }
 
-char* Map::getmaparray() {
-	char* ptrtomap = *maparray;
-	return ptrtomap;
-}
+//char* Map::getmaparray() {
+//	char* ptrtomap = *maparray;
+//	return ptrtomap;
+//}
 
 
 

@@ -7,6 +7,8 @@ enum class MISCTYPE {
 	COIN,
 	TRAP,
 	CHANGEPAD,
+	AMMO,
+	HEALTH
 };
 class misc
 {
@@ -20,13 +22,13 @@ private:
 	char symbol;
 
 public:
-
 	misc(MISCTYPE objectypetoset,Map &map,int x,int y, char miscsymbol);
 	~misc();
-	virtual void shoot(BULLETDIRECTION bulletdirection) = 0;
+	virtual void shoot(Map &map) = 0;
 	//setters
 	void setx(int x);
 	void sety(int y);
+	void setPos(COORD position);
 	void setdestroy(bool destruct);
 	void setsymbol(char symbol);
 	//getters

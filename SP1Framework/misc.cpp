@@ -62,3 +62,7 @@ COORD misc::returnPos() {
 void misc::setsymbol(char symbol) {
 	this->symbol = symbol;
 }
+
+void misc::setPos(COORD position) {
+	this->position.setPos(position);
+}

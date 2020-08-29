@@ -11,7 +11,7 @@ enum class MAPTILES {
 	MOB = 'm',
 	NPC = '!',
 	BULLET = 'B',
-	BULLET1 = 'R',
+	TRAPBULLET = 'Q',
 	//CHANGEPAD = 'T',
 	DEFAULT
 };

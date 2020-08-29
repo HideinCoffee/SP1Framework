@@ -26,18 +26,17 @@ void renderinfobar(Console& g_Console) {
 		g_Console.writeToBuffer(healthpos.X+10+i, healthpos.Y,"  ",healthcolor);
 	}
 	
-	healthpos.X + 50;
 	renderplayerposition(g_Console);
-
 	COORD moneypos;
 	moneypos = g_Console.getConsoleSize();
-	moneypos.X -= 120;
+	moneypos.X -= 105;
 	moneypos.Y -= 3;
 	int moneycolour = 0x66;
 	std::string renderplayermoney = std::to_string(((Player*)(playerarray[0]))->getmoney());
 	rendertext(g_Console, moneypos.X, moneypos.Y, "Coins:", 0x0f);
 	rendertext(g_Console, moneypos.X + 7, moneypos.Y, renderplayermoney, 0x0f);
 }
+
 void renderplayerposition(Console& g_Console) {
 	COORD c = g_Console.getConsoleSize();
 	c.X -= 150;

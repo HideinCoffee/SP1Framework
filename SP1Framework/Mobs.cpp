@@ -1,6 +1,6 @@
 #include "mobs.h"
 
-Mobs::Mobs(int xpos, int ypos, int movenum, char symbol,bool canshoot, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(0, true, 'm', 0, 0)
+Mobs::Mobs(int xpos, int ypos, int movenum, char symbol,bool canshoot, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(5, true, 'm', 0, 0)
 {
 	COORD mob;
 	mob.X = xpos;

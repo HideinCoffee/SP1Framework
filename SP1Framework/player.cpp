@@ -74,7 +74,6 @@ void Player::move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map) {
 	}
 
 	if (moved == true) {
-		//map.editmap(returnPos().X, returnPos().Y, ' ');
 		setpos(tempcord);
 	}
 }
@@ -134,7 +133,6 @@ bool Player::movementcollide(Map &map,int x, int y){
 		returnvalue = false;
 		break;
 	}
-	
 	return returnvalue;
 }
 

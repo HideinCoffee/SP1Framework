@@ -27,6 +27,8 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	case 'x':
 		returnvalue = MAPTILES::TRAP;
 		break;
+	case 'P':
+		returnvalue = MAPTILES::PLAYER;
 	//case 'T':
 	//	returnvalue = MAPTILES::CHANGEPAD;
 	//	break;
@@ -77,6 +79,9 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 				case MAPTILES::TRAP:
 					g_Console.writeToBuffer(col*2, row, "  ", 0x55);
 					break;
+				/*case MAPTILES::PLAYER:
+					g_Console.writeToBuffer(col * 2, row, "  ", 0xff);
+					break;*/
 				//case MAPTILES::CHANGEPAD:
 				//	g_Console.writeToBuffer(col* 2, row,"  ", 0xBB);
 				//	break;

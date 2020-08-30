@@ -52,7 +52,7 @@ void init(void)
     g_dElapsedTime = 0.0;    
 
     // sets the initial state for the game
-    g_eGameState = EGAMESTATES::S_GAME;
+    g_eGameState = EGAMESTATES::S_MAINMENU;
 
     g_sChar.m_cLocation.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
@@ -136,6 +136,7 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case EGAMESTATES::S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
+    case EGAMESTATES::S_MAINMENU: gameplayKBHandler(keyboardEvent);
     }
 }
 
@@ -251,7 +252,7 @@ void update(double dt)
             break;
         case EGAMESTATES::S_GAME: updateGame(); // gameplay logic when we are in the game
             break;
-        case EGAMESTATES::S_MAINMENU:rendermainmenu(g_Console);
+        case EGAMESTATES::S_MAINMENU:rendermainmenu(g_Console,g_mouseEvent,g_eGameState);
             break;
     }
 }
@@ -348,7 +349,7 @@ void render()
         break;
     case EGAMESTATES::S_GAME: renderGame();
         break;
-    case EGAMESTATES::S_MAINMENU: rendermainmenu(g_Console);
+    case EGAMESTATES::S_MAINMENU: rendermainmenu(g_Console,g_mouseEvent,g_eGameState);
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events

@@ -2,9 +2,9 @@
 #include "player.h"
 
 void renderinterface(Console& g_Console) {
-	//rectangle(g_Console, 130, 0, 29, 40, ' ', 0x99, 0x77);
+	rectangle(g_Console, 130, 0, 29, 40, ' ', 0x99, 0x77);
 	renderinfobar(g_Console); 
-//	renderlegend(g_Console);
+	renderlegend(g_Console);
 }
 
 void renderinfobar(Console& g_Console) {

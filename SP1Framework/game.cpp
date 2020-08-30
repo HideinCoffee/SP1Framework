@@ -504,7 +504,7 @@ void renderInputEvents()
     }
 
     // mouse events    
-    ss.str("");
+    /*ss.str("");
     ss << "Mouse position (" << g_mouseEvent.mousePosition.X << ", " << g_mouseEvent.mousePosition.Y << ")";
     g_Console.writeToBuffer(g_mouseEvent.mousePosition, ss.str(), 0x59);
     ss.str("");
@@ -540,7 +540,7 @@ void renderInputEvents()
         break;
     default:
         break;
-    }
+    }*/
 }
 
 void shootcharacter(){

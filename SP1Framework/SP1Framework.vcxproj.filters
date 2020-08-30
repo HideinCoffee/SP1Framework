@@ -116,9 +116,6 @@
     <ClInclude Include="misc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rendermap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Rendercharacter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -138,6 +135,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendermap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

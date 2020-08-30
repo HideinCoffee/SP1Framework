@@ -1,6 +1,6 @@
 #include "player.h"
 #include "map.h"
-Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health,int damage) :Entity(0, true, 'P',0,0) {
+Player::Player(Map& map, BULLETYPE bulletype, int index,int x, int y,int health,int damage) :Entity(health,true,0,0) {
 	COORD P;
 	P.X = x;
 	P.Y = y;
@@ -10,6 +10,7 @@ Player::Player(Map& map, BULLETYPE bulletype, int x, int y,int health,int damage
 	money = 0;
 	this->damage = damage;
 	sethealth(health);
+	this->index = index;
 	for (int i = 0; i < 100; i++) {
 		plrbullarray[i] = nullptr;
 	}
@@ -82,7 +83,7 @@ void Player::move(MOVEMENTDIRECTION& movementdir, COORD pos, Map& map) {
 void Player::shoot(BULLETDIRECTION bulletdir,int index) {
 	for (int i = 0; i < 100; i++) {
 		if (plrbullarray[i] == nullptr) {
-			plrbullarray[i] = new Bullet(returnPos().X, returnPos().Y,BULLETOWNER::PLAYER,damage, bulletdir, bulletype);
+			plrbullarray[i] = new Bullet(returnPos().X, returnPos().Y,index, damage,BULLETOWNER::PLAYER, bulletdir, bulletype);
 			break;
 		}
 	}
@@ -104,20 +105,30 @@ bool Player::movementcollide(Map &map,int x, int y){
 		returnvalue = false;
 		break;
 	case 'B':
-		switch (getbulletype()) { // check whos bullet if its enemy take damage
-		case BULLETYPE::B_P:
-			returnvalue = false;
-			break;
-		case BULLETYPE::B_B:
-			returnvalue = true;
-			break;
-		case BULLETYPE::B_C:
-			returnvalue = true;
-			break;
-		}
+		returnvalue = false;
+		//switch (getbulletype()) { // check whos bullet if its enemy take damage
+		//case BULLETYPE::B_P:
+		//	returnvalue = false;
+		//	break;
+		//case BULLETYPE::B_B:
+		//	returnvalue = true;
+		//	break;
+		//case BULLETYPE::B_E:
+		//	returnvalue = true;
+		//	break;
+		//case BULLETYPE::B_T:
+		//	returnvalue = true;
+		//	break;
+		//}
 		break;
 	case 'm':
-		takedamage(3);
+		for (int i = 0; i < 20; i++) {
+			if (enemyarray[i] != nullptr) {
+				if ((enemyarray[i]->returnPos().X == x) && (enemyarray[i]->returnPos().Y == y)) {
+					takedamage(enemyarray[i]->getdamage());
+				}
+			}
+		}
 		returnvalue = false;
 		break;
 	case 'x': // traps 
@@ -128,7 +139,6 @@ bool Player::movementcollide(Map &map,int x, int y){
 		returnvalue = false;
 		break;
 	case 'Q':
-		takedamage(3);
 		returnvalue = false;
 		
 	}
@@ -175,7 +185,9 @@ void Player::renderplayerbullet(Map &map) {
 	}
 }
 
-
+int Player::getdamage() {
+	return damage;
+}
 
 
 

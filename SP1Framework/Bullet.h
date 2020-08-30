@@ -14,13 +14,13 @@ private:
 	BULLETOWNER bulletowner;
 	Position position;
 	BULLETDIRECTION bulletdirection;
-	BULLETYPE bulletype;
+	//BULLETYPE bulletype;
 	int index;
 	int damage;
 	bool terminate;
 	double delay;
 public:
-	Bullet(int x, int y, BULLETOWNER bulletowner,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype);
+	Bullet(int x, int y,int index,int damage, BULLETOWNER bulletowner,BULLETDIRECTION bulletdirection,BULLETYPE bulletype);
 	~Bullet();
 	//set/get direction
 	BULLETDIRECTION getdirection();

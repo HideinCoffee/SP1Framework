@@ -18,6 +18,7 @@ enum class MAPTILES {
 	AMMO = 'A',
 	DOOR = 'D',
 	LAVA = 'L',
+	GOAL = 'G',
 	DEFAULT
 };
 
@@ -31,7 +32,6 @@ public:
 	// get camera_x value
 	// change the camera x and y value
 	bool read = false;
-	COORD movecamera(int direction,COORD playerpos);
 
 // depending on the file it will set the maparray to the contents of the textfile(precautions added to prevent it from crashing if it goes out of index) 
 	bool slotmap(std::string filename,Console &g_Console);

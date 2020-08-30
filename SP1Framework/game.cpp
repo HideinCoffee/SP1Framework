@@ -71,12 +71,11 @@ void init(void)
     g_sChar.offset.X = 0;
     g_sChar.offset.Y = 0;
       
-    playerarray[0] = new Player(map,BULLETYPE::B_P,5,5,35,5);
-     // fix the direction thing cuz now it is always setting it to left 
-    mobdirection.DOWN = true;
-    enemyarray[0] = new Mobs(10, 5,3,20, 'm', false,false,mobdirection);
-    mobdirection.DOWN = false;
-    traparray[0] = new Trap(map,15,5,5,BULLETDIRECTION::B_RIGHT, BULLETYPE::B_B, true, true, 1);
+    for (int i = 0; i < 20; i++) {
+        enemyarray[i] = nullptr;
+        traparray[i] = nullptr;
+    }
+    playerarray[0] = new Player(map,BULLETYPE::B_P,0,5,5,30,5);
 }
 
 //--------------------------------------------------------------

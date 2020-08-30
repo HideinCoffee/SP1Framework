@@ -6,6 +6,7 @@
 class Player : public Entity
 {
 private:
+	int index;
 	int rescued;
 	BULLETYPE bulletype;
 	int money;
@@ -13,7 +14,7 @@ private:
 	Bullet* plrbullarray[100];
 public:
 	// player constructor
-	Player(Map &map,BULLETYPE bulletype,int x, int y,int health,int damage);
+	Player(Map &map,BULLETYPE bulletype,int index,int x, int y,int health,int damage);
 	//void setpos(COORD pos);
 	void move(MOVEMENTDIRECTION &movementdir,COORD pos,Map &map);
 	void shoot(BULLETDIRECTION bulletdir,int index);
@@ -28,6 +29,7 @@ public:
 	int getrescued();
 	int getmoney();
 	void renderplayerbullet(Map &map);
+	int getdamage();
 };
 
 

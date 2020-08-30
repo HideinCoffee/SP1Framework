@@ -2,13 +2,13 @@
 Entity::~Entity(){
 	//deconstructor
 }
-Entity::Entity(int health,bool alive, char symbol,int x, int y) {
+Entity::Entity(int health,bool alive,int x, int y) {
 	COORD entitypos;
 	entitypos.X = x;
 	entitypos.Y = y;
 	this->health = health;
 	this->alive = alive;
-	this->symbol = symbol;
+
 	setpos(entitypos);
 	
 }
@@ -33,13 +33,6 @@ void Entity::setalive(bool alive) {
 	this->alive = alive;
 }
 
-char Entity::getsymbol() {
-	return symbol;
-}
-
-void Entity::setsymbol(char symbol) {
-	this->symbol = symbol;
-}
 void Entity::takedamage(int x) {
 	if (health <= 0)
 		setalive(false);

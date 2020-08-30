@@ -1,21 +1,29 @@
 #include "misc.h"
 
-misc::misc(MISCTYPE objectypetoset,Map &map,int x, int y,char miscsymbol) {
+misc::misc(MISCTYPE objectypetoset,int x, int y) {
 	switch (objectypetoset) {
 	case MISCTYPE::COIN:
 		setobjectype(objectypetoset);
 		moveable = false;
-		map.editmap(x, y, '$');
-		break;
 	case MISCTYPE::CHANGEPAD:
 		setobjectype(objectypetoset);
 		moveable = false;
-		map.editmap(x, y, 'T');
 		break;
 	case MISCTYPE::TRAP:
 		setobjectype(objectypetoset);
-		moveable = true;
-		map.editmap(x, y,'x');
+		moveable = false;
+		break;
+	case MISCTYPE::DOOR:
+		setobjectype(objectypetoset);
+		moveable = false;
+		break;
+	case MISCTYPE::LAVA:
+		setobjectype(objectypetoset);
+		moveable = false;
+		break;
+	case MISCTYPE::GOAL:
+		setobjectype(objectypetoset);
+		moveable = false;
 		break;
 	}
 	setx(x);
@@ -51,16 +59,9 @@ void misc::setdestroy(bool destruct) {
 	destroyed = destruct;
 }
 
-char misc::getsymbol() {
-	return symbol;
-}
+
 COORD misc::returnPos() {
 	return position.returnPos();
-}
-
-
-void misc::setsymbol(char symbol) {
-	this->symbol = symbol;
 }
 
 void misc::setPos(COORD position) {

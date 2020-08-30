@@ -45,6 +45,9 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	case 'L':
 		returnvalue = MAPTILES::LAVA;
 		break;
+	case 'G':
+		returnvalue = MAPTILES::GOAL;
+		break;
 	}
 	return returnvalue;
 }
@@ -57,7 +60,7 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
             map.changeread(true);
         }
     }
-    if ((playerarray[0]->returnPos().X > 33) && (playerarray[0]->returnPos().X < 150-33)) { // offset x
+    if ((playerarray[0]->returnPos().X > 33) && (playerarray[0]->returnPos().X < 150-30)) { // offset x
         g_sChar.offset.X = playerarray[0]->returnPos().X - 33;
     }
 
@@ -95,9 +98,9 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 				case MAPTILES::TOGGLE:
 					g_Console.writeToBuffer(col * 2, row, "  ", 0x99);
 					break;
-				case MAPTILES::HEALTH:
+				/*case MAPTILES::HEALTH:
 					g_Console.writeToBuffer(col * 2, row, "H ", 0x2F);
-					break;
+					break;*/
 				case MAPTILES::AMMO:
 					g_Console.writeToBuffer(col * 2, row, "A ", 0x2F);
 					break;
@@ -107,6 +110,8 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 				case MAPTILES::LAVA:
 					g_Console.writeToBuffer(col * 2, row, "  ", 0xcc);
 					break;
+				case MAPTILES::GOAL:
+					g_Console.writeToBuffer(col * 2, row, "G ", 0x0f);
 
 			}
         }

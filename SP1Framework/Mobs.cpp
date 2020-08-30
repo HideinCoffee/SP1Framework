@@ -1,18 +1,16 @@
 #include "mobs.h"
 
-Mobs::Mobs(int xpos, int ypos, int movenum,int health,char symbol,bool canshoot, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(health, true, 'm', 0, 0)
+Mobs::Mobs(int xpos,int ypos,int index,int damage,int health,bool canshoot, bool trackplayermode,MOVEMENTDIRECTION &mobdirection):Entity(health, true, 0, 0)
 {
 	COORD mob;
 	mob.X = xpos;
 	mob.Y = ypos;
-	movecount = 0;
 	setpos(mob);
-	setsymbol(symbol);
-	this->movenum = movenum;
 	this->trackplayermode = trackplayermode;
 	this->mobdirection = mobdirection;
 	this->canshoot = canshoot;
-	
+	this->index = index;
+	this->damage = damage;
 	//Constructor for mobs
 }
 
@@ -92,17 +90,10 @@ void Mobs::controlledmovement(Map& map) {
 		switch (mobdirection.UP) {
 		case true:
 			if ((movementcollide(map, mp.X, mp.Y - 1) == false) && (getalive() == true)) { // move up
-				if (movecount < movenum) {
 					mp.Y--;
 					moved = true;
-					movecount++;
-				}
-				else {
-					movecount = 0;
-					mobdirection.UP = false;
-					mobdirection.DOWN = true;
-				}
 			}
+
 			else {
 				mobdirection.UP = false;
 				mobdirection.DOWN = true;
@@ -112,36 +103,16 @@ void Mobs::controlledmovement(Map& map) {
 		switch (mobdirection.DOWN) {
 		case true:
 			if ((movementcollide(map, mp.X, mp.Y + 1) == false) && (getalive() == true)) {
-				if (movecount < movenum) {
 					mp.Y++;
 					moved = true;
-					movecount++;
-				}
-				else {
-					movecount = 0;
-					mobdirection.DOWN = false;
-					mobdirection.UP = true;
-				}
-			}
-			else {
-				mobdirection.UP = false;
-				mobdirection.DOWN = true;
 			}
 			break;
 		}
 		switch (mobdirection.LEFT) {
 		case true:
 			if ((movementcollide(map, mp.X - 1, mp.Y) == false) && (getalive() == true)) {
-				if (movecount < movenum) {
-					mp.X--;
-					moved = true;
-					movecount++;
-				}
-				else {
-					movecount = 0;
-					mobdirection.LEFT = false;
-					mobdirection.RIGHT = true;
-				}
+				mp.X -= 1;
+				moved = true;
 			}
 			else {
 				mobdirection.LEFT = false;
@@ -152,16 +123,8 @@ void Mobs::controlledmovement(Map& map) {
 		switch (mobdirection.RIGHT) {
 		case true:
 			if ((movementcollide(map, mp.X + 1, mp.Y) == false) && (getalive() == true)) {
-				if (movecount < movenum) {
-					mp.X++;
-					moved = true;
-					movecount++;
-				}
-				else {
-					movecount = 0;
-					mobdirection.RIGHT = false;
-					mobdirection.LEFT = true;
-				}
+				mp.X++;
+				moved = true;
 			}
 			else {
 				mobdirection.RIGHT = false;
@@ -231,3 +194,6 @@ void Mobs::AOEdamage(COORD playerpos){
 
 }
 
+int Mobs::getdamage() {
+	return damage;
+}

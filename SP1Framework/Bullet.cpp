@@ -1,26 +1,27 @@
 #include "Bullet.h"
 #include "global.h"
 
-Bullet::Bullet(int x, int y,BULLETOWNER bulletowner,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype) {
+Bullet::Bullet(int x, int y,int index,int damage, BULLETOWNER bulletowner,BULLETDIRECTION bulletdirection,BULLETYPE bulletype) {
 	COORD bulletpos;
 	bulletpos.X = x;
 	bulletpos.Y = y;
 	terminate = false;
 	this->damage = damage;
 	this->bulletowner = bulletowner;
+	this->index = index;
 	setpos(bulletpos);
 	this->bulletdirection = bulletdirection;
-	switch (bulletype) {
-	case BULLETYPE::B_B: // boss bullet 
-		this->bulletype = bulletype;
-		break;
-	case BULLETYPE::B_C: // corona bullet
-		this->bulletype = bulletype;
-		break;
-	case BULLETYPE::B_P: // player bullet
-		this->bulletype = bulletype;
-		break;
-	}
+	//switch (bulletype) {
+	//case BULLETYPE::B_B: // boss bullet 
+	//	this->bulletype = bulletype;
+	//	break;
+	//case BULLETYPE::B_E: // norma enemy bullet
+	//	this->bulletype = bulletype;
+	//	break;
+	//case BULLETYPE::B_P: // player bullet
+	//	this->bulletype = bulletype;
+	//	break;
+	//}
 }
 	
 Bullet::~Bullet() {
@@ -129,6 +130,7 @@ bool Bullet::bulletcollide(Map& map, int x, int y) {
 			finalreturnvalue = false;
 			break;
 		case 'Q':
+			
 			finalreturnvalue = false;
 			break;
 		case 'm':

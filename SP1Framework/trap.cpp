@@ -1,10 +1,10 @@
 #include "trap.h"
 #include "position.h"
 
-Trap::Trap(Map& map, int posx, int posy,int damage
-	, BULLETDIRECTION bulletdirection = BULLETDIRECTION::B_UP,
-	BULLETYPE bulletype = BULLETYPE::B_B, bool canshoot = false, bool activated = true, int speed = 1)
-	: misc(MISCTYPE::TRAP, map, posx, posy, 'x'){
+Trap::Trap(int posx, int posy,int damage
+	, BULLETDIRECTION bulletdirection,
+	BULLETYPE bulletype, bool canshoot = false, bool activated = true, int speed = 1)
+	: misc(MISCTYPE::TRAP, posx, posy){
 	this->canshoot = canshoot;
 	this->bulletdirection = bulletdirection;
 	this->bulletype = bulletype;
@@ -25,7 +25,7 @@ Trap::~Trap() {
 void Trap::shoot(Map& map) {
 	for (int i = 0; i < 100; i++) {
 		if (trapbulletarray[i] == nullptr){ // need to check if the object can shoot or not nigg
-			trapbulletarray[i] = new Bullet(returnPos().X,returnPos().Y,BULLETOWNER::TRAP,5,bulletdirection,bulletype);
+			trapbulletarray[i] = new Bullet(returnPos().X,returnPos().Y,i,damage,BULLETOWNER::TRAP,bulletdirection,bulletype);
 			break;
 		}
 	}

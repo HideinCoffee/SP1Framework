@@ -8,7 +8,10 @@ enum class MISCTYPE {
 	TRAP,
 	CHANGEPAD,
 	AMMO,
-	HEALTH
+	HEALTH,
+	DOOR,
+	LAVA,
+	GOAL
 };
 class misc
 {
@@ -19,10 +22,9 @@ private:
 	MISCTYPE objectype;
 	Position position;
 	BULLETYPE bulletype;
-	char symbol;
 
 public:
-	misc(MISCTYPE objectypetoset,Map &map,int x,int y, char miscsymbol);
+	misc(MISCTYPE objectypetoset,int x,int y);
 	~misc();
 	virtual void shoot(Map &map) = 0;
 	//setters
@@ -30,13 +32,12 @@ public:
 	void sety(int y);
 	void setPos(COORD position);
 	void setdestroy(bool destruct);
-	void setsymbol(char symbol);
 	//getters
 	bool getdestroystatus();
 	COORD returnPos();
 	void setobjectype(MISCTYPE objectypetoset);
 	void collide(Map &map);
-	char getsymbol();
+	
 
 };
 

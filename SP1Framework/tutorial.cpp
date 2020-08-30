@@ -71,5 +71,5 @@ void createtutobj(Map &map) {
 	enemyarray[43] = new Mobs(74, 98, 13, 2, 20, false, false, mobmovement);
 	mobmovement.LEFT = false;
 
-
+	//THIS IS A COMMENT
 }

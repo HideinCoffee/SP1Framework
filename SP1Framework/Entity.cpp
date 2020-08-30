@@ -8,11 +8,8 @@ Entity::Entity(int health,bool alive,int x, int y) {
 	entitypos.Y = y;
 	this->health = health;
 	this->alive = alive;
-
 	setpos(entitypos);
-	
 }
-
 void Entity::setpos(COORD position) {
 	this->position.setPos(position);
 }

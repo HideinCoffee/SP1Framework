@@ -95,8 +95,10 @@
     <ClCompile Include="Renderenemy.cpp" />
     <ClCompile Include="Rendermainmenu.cpp" />
     <ClCompile Include="Rendermap.cpp" />
+    <ClCompile Include="Renderoptions.cpp" />
     <ClCompile Include="Rendertrap.cpp" />
     <ClCompile Include="RenderUI.cpp" />
+    <ClCompile Include="Renderyoudied.cpp" />
     <ClCompile Include="trap.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -116,8 +118,10 @@
     <ClInclude Include="Renderenemy.h" />
     <ClInclude Include="Rendermainmenu.h" />
     <ClInclude Include="Rendermap.h" />
+    <ClInclude Include="Renderoptions.h" />
     <ClInclude Include="Rendertrap.h" />
     <ClInclude Include="RenderUI.h" />
+    <ClInclude Include="Renderyoudied.h" />
     <ClInclude Include="trap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

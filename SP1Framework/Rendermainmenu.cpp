@@ -1,20 +1,28 @@
 #include "Rendermainmenu.h"
 
 void rendermainmenu(Console& g_Console,SMouseEvent &g_mouseEvent,EGAMESTATES &g_eGameState) {
-	rectangle(g_Console, 0, 0, 160, 40,' ', 0xdd, 0xdd);
+	rectangle(g_Console, 0, 0, 160, 40,' ', 0xdd, 0xdd); // background 
 	
-	rectangle(g_Console, 70, 25, 20, 5,' ', 0x00, 0x88);
-	rendertext(g_Console, 77, 27, "START", 0x80);
+	rectangle(g_Console, 70, 15, 20, 5,' ', 0x00, 0x88); // START button
+	rendertext(g_Console, 77, 17, "START", 0x80);
+
+	rectangle(g_Console, 70, 25, 20, 5, ' ', 0x00, 0x88);  //QUIT button
+	rendertext(g_Console, 77, 27,"QUIT", 0x80);
 	
 	switch (g_mouseEvent.eventFlags) {
 	case 0:
-		if ((g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED) && (buttonpress(g_mouseEvent,70,25,20,5) == true)) {
+		// start button
+		if ((g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED) && (buttonpress(g_mouseEvent, 70, 15, 20, 5) == true)) {
 			g_eGameState = EGAMESTATES::S_GAME;
+		}
+			// quit button
+		if ((g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED) && (buttonpress(g_mouseEvent,70,25,20,5) == true)){
+			g_eGameState = EGAMESTATES::S_QUIT;
 		}
 	}
 }
 
-bool buttonpress(SMouseEvent &g_mouseEvent,int posx, int posy, int width, int height){
+bool buttonpress(SMouseEvent& g_mouseEvent, int posx, int posy, int width, int height) {
 	COORD mouseposition = { 0,0 };
 	bool returnvalue = false;
 	int startx = posx;

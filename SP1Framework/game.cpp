@@ -17,6 +17,8 @@
 #include "Global.h"
 #include "Map.h"
 #include "trap.h"
+#include "Renderyoudied.h"
+#include "Renderoptions.h"
 
 double  g_dElapsedTime;
 double  g_dDeltaTime;
@@ -136,7 +138,8 @@ void keyboardHandler(const KEY_EVENT_RECORD& keyboardEvent)
         break;
     case EGAMESTATES::S_GAME: gameplayKBHandler(keyboardEvent); // handle gameplay keyboard event 
         break;
-    case EGAMESTATES::S_MAINMENU: gameplayKBHandler(keyboardEvent);
+    case EGAMESTATES::S_OPTIONS:gameplayKBHandler(keyboardEvent);
+        break;
     }
 }
 
@@ -166,6 +169,10 @@ void mouseHandler(const MOUSE_EVENT_RECORD& mouseEvent)
     case EGAMESTATES::S_GAME: gameplayMouseHandler(mouseEvent); // handle gameplay mouse event
         break;
     case EGAMESTATES::S_MAINMENU: gameplayMouseHandler(mouseEvent); // handle main menu mousevent
+        break;
+    case EGAMESTATES::S_YOUDIED: gameplayMouseHandler(mouseEvent);
+        break;
+    case EGAMESTATES::S_OPTIONS: gameplayMouseHandler(mouseEvent);
         break;
     }
 }
@@ -254,6 +261,12 @@ void update(double dt)
             break;
         case EGAMESTATES::S_MAINMENU:rendermainmenu(g_Console,g_mouseEvent,g_eGameState);
             break;
+        case EGAMESTATES::S_QUIT:quitgame();
+            break;
+        case EGAMESTATES::S_OPTIONS:renderoptions(g_Console, g_mouseEvent, g_eGameState);
+            break;
+        case EGAMESTATES::S_YOUDIED:renderdeathscreen(g_Console,g_mouseEvent,g_eGameState);
+            break;
     }
 }
 
@@ -272,7 +285,7 @@ void updateGame()       // gameplay logic
     renderbullet();
     moveEnemy();        // sound can be played here too.
     checkcollision();
-    
+    checkstate();
 }
 
 void moveEnemy() { // get it to check for collision
@@ -329,7 +342,7 @@ void processUserInput()
 {
     // quits the game if player hits the escape key
     if (g_skKeyEvent[K_ESCAPE].keyReleased)
-        g_bQuitGame = true;
+        g_eGameState = EGAMESTATES::S_OPTIONS;
 }
 
 //--------------------------------------------------------------
@@ -350,6 +363,13 @@ void render()
     case EGAMESTATES::S_GAME: renderGame();
         break;
     case EGAMESTATES::S_MAINMENU: rendermainmenu(g_Console,g_mouseEvent,g_eGameState);
+        break;
+    case EGAMESTATES::S_OPTIONS: renderoptions(g_Console,g_mouseEvent,g_eGameState);
+        break;
+    case EGAMESTATES::S_YOUDIED:renderdeathscreen(g_Console, g_mouseEvent, g_eGameState);
+        break;
+    case EGAMESTATES::S_RESTART: init();
+        break;
     }
     renderFramerate();      // renders debug information, frame rate, elapsed time, etc
     renderInputEvents();    // renders status of input events
@@ -560,14 +580,24 @@ void checkcollision() {
 void checkstate() {
     for (int i = 0; i < 20; i++) {
         if (i == 0) {
-            if ((playerarray[i] != nullptr) && (playerarray[i]->getalive() == false)) {
+            if (playerarray[i]->getalive() == false) {
                 delete playerarray[i];
                 playerarray[i] = nullptr;
+                g_eGameState = EGAMESTATES::S_YOUDIED;
             }
         }
-        if ((enemyarray[i] != nullptr) &&(enemyarray[i]->getalive() == false)) {
+        if (g_eGameState == EGAMESTATES::S_YOUDIED) {
+            delete enemyarray[i];
+            enemyarray[i] = nullptr;
+            delete traparray[i];
+            traparray[i] = nullptr;
+            }
+        else if ((enemyarray[i] != nullptr) && (enemyarray[i]->getalive() == false)) {
             delete enemyarray[i];
             enemyarray[i] = nullptr;
         }
     }
+}
+void quitgame(){
+    g_bQuitGame = true;
 }

@@ -58,7 +58,14 @@ enum class EGAMESTATES{
     S_SPLASHSCREEN,
     S_GAME,
     S_MAINMENU,
+    S_YOUDIED,
+    S_OPTIONS,
+    S_QUIT,
+    S_LEVEL1,
+    S_TUTORIAL,
+    S_RESTART,
     S_COUNT
+   
 };
 
 
@@ -82,17 +89,7 @@ enum class COLOR {
     LIGHTYELLOW = 0XEE
 };
 
-// struct for the game character
-//struct SGameChar
-//{
-//    COORD m_cLocation;
-//    COORD m_cLocation1;
-//    COORD offset;
-//    
-//
-//    bool  m_bActive;
-//    bool abletomove;
-//};
+
 
 
 void init        ( void );      // initialize your variables, allocate memory, etc
@@ -138,4 +135,8 @@ void renderbullet();
 
 void checkcollision();
 void checkstate();
+void quitgame();
+
+
+
 #endif // _GAME_H

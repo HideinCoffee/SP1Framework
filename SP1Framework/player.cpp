@@ -122,7 +122,7 @@ bool Player::movementcollide(Map &map,int x, int y){
 		//}
 		break;
 	case 'm':
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 60; i++) {
 			if (enemyarray[i] != nullptr) {
 				if ((enemyarray[i]->returnPos().X == x) && (enemyarray[i]->returnPos().Y == y)) {
 					takedamage(enemyarray[i]->getdamage());

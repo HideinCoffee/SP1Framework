@@ -137,7 +137,7 @@ bool Bullet::bulletcollide(Map& map, int x, int y) {
 			switch (bulletowner) {
 			case BULLETOWNER::PLAYER:
 				finalreturnvalue = true;
-				for (int i = 0; i < 20; i++) {
+				for (int i = 0; i < 60; i++) {
 					if (enemyarray[i] != nullptr) {
 						if ((enemyarray[i]->returnPos().X) && (enemyarray[i]->returnPos().Y == y)) {
 							enemyarray[i]->takedamage(damage);

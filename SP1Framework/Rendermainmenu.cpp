@@ -1,13 +1,13 @@
 #include "Rendermainmenu.h"
 
 void rendermainmenu(Console& g_Console,SMouseEvent &g_mouseEvent,EGAMESTATES &g_eGameState) {
-	rectangle(g_Console, 0, 0, 160, 40,' ', 0xdd, 0xdd); // background 
+	rectangle(g_Console, 0, 0, 160, 40,' ', 0x00, 0x00); // background 
 	
-	rectangle(g_Console, 70, 15, 20, 5,' ', 0x00, 0x88); // START button
-	rendertext(g_Console, 77, 17, "START", 0x80);
+	rectangle(g_Console, 70, 15, 20, 5,' ', 0xff, 0x00); // START button
+	rendertext(g_Console, 77, 17, "START", 0xf0);
 
-	rectangle(g_Console, 70, 25, 20, 5, ' ', 0x00, 0x88);  //QUIT button
-	rendertext(g_Console, 77, 27,"QUIT", 0x80);
+	rectangle(g_Console, 70, 25, 20, 5, ' ', 0xff, 0x00);  //QUIT button
+	rendertext(g_Console, 77, 27,"QUIT", 0xf0);
 	
 	switch (g_mouseEvent.eventFlags) {
 	case 0:

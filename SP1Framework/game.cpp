@@ -19,11 +19,12 @@
 #include "trap.h"
 #include "Renderyoudied.h"
 #include "Renderoptions.h"
-
+#include "tutorial.h"
 double  g_dElapsedTime;
 double  g_dDeltaTime;
 SKeyEvent g_skKeyEvent[K_COUNT];
 SMouseEvent g_mouseEvent;
+
 
 // Game specific variables here
 EGAMESTATES g_eGameState = EGAMESTATES::S_SPLASHSCREEN;
@@ -39,7 +40,8 @@ Console g_Console(160, 40, "SP1 Framework");
 
 // map object
 Map map;
-
+// tutorial
+bool loadedtutorial = false;
 
 //--------------------------------------------------------------
 // Purpose  : Initialisation function
@@ -60,7 +62,7 @@ void init(void)
     g_sChar.m_cLocation.Y = g_Console.getConsoleSize().Y / 2;
     g_sChar.m_cLocation1.X = g_Console.getConsoleSize().X / 2;
     g_sChar.m_cLocation1.Y = g_Console.getConsoleSize().Y / 2 + 1;
-
+   
     g_sChar.m_bActive = true;
     g_sChar.abletomove = true;
     // sets the width, height and the font name to use in the console
@@ -78,6 +80,7 @@ void init(void)
         traparray[i] = nullptr;
     }
     playerarray[0] = new Player(map,BULLETYPE::B_P,0,5,5,30,5);
+    createtutobj(map);
 }
 
 //--------------------------------------------------------------
@@ -289,7 +292,7 @@ void updateGame()       // gameplay logic
 }
 
 void moveEnemy() { // get it to check for collision
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 60; i++) {
         if (enemyarray[i] != nullptr) {
             if (enemyarray[i]->getalive() == true) {
                 enemyarray[i]->move(movementdir, playerarray[0]->returnPos(), map);
@@ -360,7 +363,9 @@ void render()
     {
     case EGAMESTATES::S_SPLASHSCREEN: renderSplashScreen();
         break;
-    case EGAMESTATES::S_GAME: renderGame();
+    case EGAMESTATES::S_GAME:
+        renderGame();
+
         break;
     case EGAMESTATES::S_MAINMENU: rendermainmenu(g_Console,g_mouseEvent,g_eGameState);
         break;
@@ -567,7 +572,7 @@ void trapshoot() {
 
 
 void checkcollision() {
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 60; i++) {
         if ((i == 0) && (playerarray[i] != nullptr)) {
             playerarray[i]->movementcollide(map, playerarray[i]->returnPos().X, playerarray[i]->returnPos().Y);
         }
@@ -578,7 +583,7 @@ void checkcollision() {
 }
 
 void checkstate() {
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 60; i++) {
         if (i == 0) {
             if (playerarray[i]->getalive() == false) {
                 delete playerarray[i];

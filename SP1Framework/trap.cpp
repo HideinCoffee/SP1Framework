@@ -22,9 +22,10 @@ Trap::Trap(int posx, int posy,int damage
 Trap::~Trap() {
 	//leftblankfornow
 }
+
 void Trap::shoot(Map& map) {
 	for (int i = 0; i < 100; i++) {
-		if (trapbulletarray[i] == nullptr){ // need to check if the object can shoot or not nigg
+		if (trapbulletarray[i] == nullptr){ 
 			trapbulletarray[i] = new Bullet(returnPos().X,returnPos().Y,i,damage,BULLETOWNER::TRAP,bulletdirection,bulletype);
 			break;
 		}

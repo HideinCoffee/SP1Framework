@@ -4,7 +4,6 @@
 #include "trap.h"
 #include "Mobs.h"
 #include "Entity.h"
-
 Map::Map():maparray{0} {
 
 	for (int row = 0; row < 150; row++) {
@@ -58,13 +57,11 @@ bool Map::slotmap(std::string filename, Console& g_Console)
 	char symbol;
 
 	MOVEMENTDIRECTION movementdirectionslotmap;
-	BULLETDIRECTION bulletdirectionslotmap;
-	BULLETYPE bulletypeslotmap;
 	std::ostringstream ss;
 	std::string str;
 	int trapcounter = 0;
 	int mobcounter = 0;
-
+	symbol = ' ';
 
 	maps.open(pathway);
 	if (maps.is_open() == true) {

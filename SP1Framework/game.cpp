@@ -114,7 +114,7 @@ void shutdown( void )
 void getInput( void )
 {
     // resets all the keyboard events
-    //memset(g_skKeyEvent, 0, K_COUNT * sizeof(*g_skKeyEvent));
+     //memset(g_skKeyEvent, 0, K_COUNT * sizeof(*g_skKeyEvent));
     // then call the console to detect input from user
     g_Console.readConsoleInput();    
 }
@@ -268,7 +268,7 @@ void update(double dt)
             break;
         case EGAMESTATES::S_OPTIONS:renderoptions(g_Console, g_mouseEvent, g_eGameState);
             break;
-        case EGAMESTATES::S_YOUDIED:renderdeathscreen(g_Console,g_mouseEvent,g_eGameState);
+        case EGAMESTATES::S_YOUDIED:renderdeathscreen(g_Console, g_mouseEvent, g_eGameState, map);//,g_skKeyEvent[K_COUNT]);
             break;
     }
 }
@@ -314,12 +314,14 @@ void moveCharacter() {
         {
             movementdir.UP = true;
             playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+            movementdir.UP = false;
             //Beep(1440, 30);
         }
         if (g_skKeyEvent[K_LEFT].keyDown)
         {
             movementdir.LEFT = true;
             playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+            movementdir.LEFT = false;
 
             //Beep(1440, 30);
         }
@@ -328,6 +330,7 @@ void moveCharacter() {
         {
             movementdir.DOWN = true;
             playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+            movementdir.DOWN = false;
             //Beep(1440, 30);
         }
 
@@ -335,6 +338,7 @@ void moveCharacter() {
         {
             movementdir.RIGHT = true;
             playerarray[0]->move(movementdir, playerarray[0]->returnPos(), map);
+            movementdir.RIGHT = false;
             //Beep(1440, 30);
         }
     }
@@ -365,13 +369,12 @@ void render()
         break;
     case EGAMESTATES::S_GAME:
         renderGame();
-
         break;
     case EGAMESTATES::S_MAINMENU: rendermainmenu(g_Console,g_mouseEvent,g_eGameState);
         break;
     case EGAMESTATES::S_OPTIONS: renderoptions(g_Console,g_mouseEvent,g_eGameState);
         break;
-    case EGAMESTATES::S_YOUDIED:renderdeathscreen(g_Console, g_mouseEvent, g_eGameState);
+    case EGAMESTATES::S_YOUDIED:renderdeathscreen(g_Console, g_mouseEvent, g_eGameState,map);//
         break;
     case EGAMESTATES::S_RESTART: init();
         break;
@@ -409,8 +412,8 @@ void renderSplashScreen()  // renders the splash screen
 
 void renderGame()
 {
+    rendermap(g_Console, map, g_sChar, playerarray);// renders the map to the buffer first
     rendertrap(map, traparray);
-    rendermap(g_Console,map,g_sChar,playerarray);        // renders the map to the buffer first
     renderenemy(map, enemyarray);
     rendercharacter(g_Console,map,g_sChar,playerarray);  // renders the character into the buffer
     renderinterface(g_Console);

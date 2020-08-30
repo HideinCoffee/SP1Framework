@@ -80,7 +80,7 @@ void init(void)
         traparray[i] = nullptr;
     }
     playerarray[0] = new Player(map,BULLETYPE::B_P,0,5,5,30,5);
-    createtutobj(map);
+   // createtutobj(map);
 }
 
 //--------------------------------------------------------------

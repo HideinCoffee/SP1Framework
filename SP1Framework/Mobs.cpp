@@ -167,6 +167,12 @@ bool Mobs::movementcollide(Map& map, int x, int y) {
 	case 'x':
 		returnvalue = false;
 		break;
+	case 'L':
+		returnvalue = false;
+		break;
+	case 'D':
+		returnvalue = false;
+		break;
 	case 'B':
 		for (int i = 0; i < 20; i++) {
 			if (enemyarray[i] != nullptr) {

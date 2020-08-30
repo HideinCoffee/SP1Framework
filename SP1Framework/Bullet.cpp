@@ -130,7 +130,6 @@ bool Bullet::bulletcollide(Map& map, int x, int y) {
 			finalreturnvalue = false;
 			break;
 		case 'Q':
-			
 			finalreturnvalue = false;
 			break;
 		case 'm':

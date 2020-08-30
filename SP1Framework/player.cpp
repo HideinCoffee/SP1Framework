@@ -106,21 +106,20 @@ bool Player::movementcollide(Map &map,int x, int y){
 		break;
 	case 'B':
 		returnvalue = false;
-		//switch (getbulletype()) { // check whos bullet if its enemy take damage
-		//case BULLETYPE::B_P:
-		//	returnvalue = false;
-		//	break;
-		//case BULLETYPE::B_B:
-		//	returnvalue = true;
-		//	break;
-		//case BULLETYPE::B_E:
-		//	returnvalue = true;
-		//	break;
-		//case BULLETYPE::B_T:
-		//	returnvalue = true;
-		//	break;
-		//}
+	case 'L':
+		returnvalue = true;
 		break;
+	case 'H':
+		if (gethealth() + 5 <= 30)
+			sethealth(30);
+		else
+			sethealth(gethealth() + 5);
+		returnvalue = false;
+		break;
+	case 'd':
+		returnvalue = false;
+		break;
+
 	case 'm':
 		for (int i = 0; i < 60; i++) {
 			if (enemyarray[i] != nullptr) {

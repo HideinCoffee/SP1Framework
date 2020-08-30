@@ -1,7 +1,7 @@
 #include "Rendermap.h"
 MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 	MAPTILES returnvalue = MAPTILES::DEFAULT;
-	char mapchar =map.getchar(x, y);
+	char mapchar = map.getchar(x, y);
 	switch (mapchar) {
 	case '#':
 		returnvalue = MAPTILES::WALL;
@@ -98,9 +98,6 @@ void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarra
 				case MAPTILES::TOGGLE:
 					g_Console.writeToBuffer(col * 2, row, "  ", 0x99);
 					break;
-				/*case MAPTILES::HEALTH:
-					g_Console.writeToBuffer(col * 2, row, "H ", 0x2F);
-					break;*/
 				case MAPTILES::AMMO:
 					g_Console.writeToBuffer(col * 2, row, "A ", 0x2F);
 					break;

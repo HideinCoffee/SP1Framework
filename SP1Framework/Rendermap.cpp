@@ -56,7 +56,7 @@ MAPTILES getmaptile(Map& map, int x, int y,SGameChar &g_sChar) {
 
 void rendermap(Console &g_Console,Map &map,SGameChar &g_sChar,Entity* playerarray[]) {
     if (map.checkread() == false) {
-        if (map.slotmap("Tutorial.csv", g_Console) == true) {
+        if (map.slotmap(map,"Tutorial.csv", g_Console) == true) {
             map.changeread(true);
         }
     }

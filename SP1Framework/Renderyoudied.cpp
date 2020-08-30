@@ -16,9 +16,9 @@ void renderdeathscreen(Console& g_Console, SMouseEvent& g_mouseEvent, EGAMESTATE
 		if ((g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED) && buttonpress(g_mouseEvent, 70, 25, 20, 5)) {
 			g_eGameState = EGAMESTATES::S_GAME;
 			reload();
-			playerarray[0] = new Player(map, BULLETYPE::B_P, 0, 5, 5, 30, 5);
+			playerarray[0] = new Player(map, BULLETYPE::B_P, 0, 8, 8, 30, 5);
 			//memset(g_skKeyEvent, 0, K_COUNT * sizeof(*g_skKeyEvent));
-			map.slotmap("Tutorial.csv", g_Console);
+			map.slotmap(map,"Tutorial.csv", g_Console);
 		}
 		if ((g_mouseEvent.buttonState == FROM_LEFT_1ST_BUTTON_PRESSED) && buttonpress(g_mouseEvent, 70, 15, 20, 5)) {
 			g_eGameState = EGAMESTATES::S_QUIT;

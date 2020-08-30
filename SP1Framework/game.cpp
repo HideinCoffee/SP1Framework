@@ -79,7 +79,7 @@ void init(void)
         enemyarray[i] = nullptr;
         traparray[i] = nullptr;
     }
-    playerarray[0] = new Player(map,BULLETYPE::B_P,0,5,5,30,5);
+    playerarray[0] = new Player(map,BULLETYPE::B_P,0,8,8,30,5);
    // createtutobj(map);
 }
 

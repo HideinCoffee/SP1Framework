@@ -49,7 +49,7 @@ Map::~Map(){
 //	}
 //}
 
-bool Map::slotmap(std::string filename, Console& g_Console)
+bool Map::slotmap(Map& map,std::string filename, Console& g_Console)
 {
 	std::string pathway = "maps//" + filename;
 	std::ifstream maps;
@@ -102,18 +102,18 @@ bool Map::slotmap(std::string filename, Console& g_Console)
 				switch (symbol) {
 				case 'x': // trap: symbol->bulletype ->bulletdirection->damage->
 					switch (descr3) {
-					case 0:
+					case '0':
 						break;
-					case 1:
+					case '1':
 						damage = 2;
 						break;
-					case 2:
+					case '2':
 						damage = 4;
 						break;
-					case 3:
+					case '3':
 						damage = 6;
 						break;
-					case 4:
+					case '4':
 						damage = 8;
 						break;
 					}
@@ -122,32 +122,40 @@ bool Map::slotmap(std::string filename, Console& g_Console)
 						break;
 					case '1': // up
 						switch (descr1) { // 0 bulletrap
-						case 0:
-							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_UP, BULLETYPE::B_T, true, true, 1);
+						case '0':
+							break;
+						case '1':
+							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_UP, BULLETYPE::B_T,map, true, true, 1);
 							trapcounter++;
 							break;
 						}
 						break;
 					case '2': // down
 						switch (descr1) { // 0 bulletrap
-						case 0:
-							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_DOWN, BULLETYPE::B_T, true, true, 1);
+						case '0':
+							break;
+						case '1':
+							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_DOWN, BULLETYPE::B_T,map, true, true, 1);
 							trapcounter++;
 							break;
 						}
 						break;
 					case '3': //left
 						switch (descr1) { // 0 bulletrap
-						case 0:
-							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_LEFT, BULLETYPE::B_T, true, true, 1);
+						case '0':
+							break;
+						case '1':
+							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_LEFT, BULLETYPE::B_T,map, true, true, 1);
 							trapcounter++;
 							break;
 						}
 						break;
 					case '4': // right
 						switch (descr1) { // 0 bulletrap
-						case 0:
-							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_RIGHT, BULLETYPE::B_T, true, true, 1);
+						case '0':
+							break;
+						case '1':
+							traparray[trapcounter] = new Trap(col, row, damage, BULLETDIRECTION::B_RIGHT, BULLETYPE::B_T,map, true, true, 1);
 							trapcounter++;
 							break;
 						}

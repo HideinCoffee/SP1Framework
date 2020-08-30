@@ -34,7 +34,7 @@ public:
 	bool read = false;
 
 // depending on the file it will set the maparray to the contents of the textfile(precautions added to prevent it from crashing if it goes out of index) 
-	bool slotmap(std::string filename,Console &g_Console);
+	bool slotmap(Map &map,std::string filename,Console &g_Console);
 // draws out the map from the text file
 //	void drawmap(Console &g_Console,Player &player);
 // insert the position of the char to replace and what char to replace 

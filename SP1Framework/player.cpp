@@ -138,6 +138,7 @@ bool Player::movementcollide(Map &map,int x, int y){
 		returnvalue = false;
 		break;
 	case 'Q':
+		takedamage(1);
 		returnvalue = false;
 		
 	}

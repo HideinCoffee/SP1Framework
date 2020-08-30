@@ -13,7 +13,7 @@ private :
 	int speed; 
 	double g_dElapsedtime;
 public :
-	Trap(int posx, int posy,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype,bool shoot,bool activated,int speed);
+	Trap(int posx, int posy,int damage,BULLETDIRECTION bulletdirection,BULLETYPE bulletype,Map &map,bool shoot,bool activated,int speed);
 	~Trap();
 	void shoot(Map &map);
 	void renderbullet(Map& map);

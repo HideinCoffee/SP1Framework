@@ -3,7 +3,7 @@
 
 Trap::Trap(int posx, int posy,int damage
 	, BULLETDIRECTION bulletdirection,
-	BULLETYPE bulletype, bool canshoot = false, bool activated = true, int speed = 1)
+	BULLETYPE bulletype,Map &map, bool canshoot = false, bool activated = true, int speed = 1)
 	: misc(MISCTYPE::TRAP, posx, posy){
 	this->canshoot = canshoot;
 	this->bulletdirection = bulletdirection;
@@ -11,7 +11,7 @@ Trap::Trap(int posx, int posy,int damage
 	this->activated = activated;
 	this->speed = speed;
 	this->damage = damage;
-	
+	map.editmap(posx, posy, 'x');
 	for (int i = 0; i < 100; i++)
 	{
 		if (trapbulletarray[i] != nullptr)

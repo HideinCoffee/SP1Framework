@@ -101,7 +101,6 @@
     <ClCompile Include="RenderUI.cpp" />
     <ClCompile Include="Renderyoudied.cpp" />
     <ClCompile Include="trap.cpp" />
-    <ClCompile Include="tutorial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -126,7 +125,6 @@
     <ClInclude Include="RenderUI.h" />
     <ClInclude Include="Renderyoudied.h" />
     <ClInclude Include="trap.h" />
-    <ClInclude Include="tutorial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
